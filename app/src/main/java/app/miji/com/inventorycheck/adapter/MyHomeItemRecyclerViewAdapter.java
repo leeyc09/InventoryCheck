@@ -1,5 +1,7 @@
 package app.miji.com.inventorycheck.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +12,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.activity.StockInActivity;
 import app.miji.com.inventorycheck.object.HomeContent.HomeItem;
 
 
 public class MyHomeItemRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<HomeItem> mValues;
+    private Context mContext;
 
-    public MyHomeItemRecyclerViewAdapter(List<HomeItem> items) {
+    public MyHomeItemRecyclerViewAdapter(Context context, List<HomeItem> items) {
         mValues = items;
+        mContext = context;
     }
 
     @Override
@@ -29,13 +34,26 @@ public class MyHomeItemRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeIt
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         String title = mValues.get(position).title;
         Integer thumbId = mValues.get(position).thumbnail;
 
         holder.mTitleView.setText(title);
         holder.mImageView.setImageResource(thumbId);
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //start another activity
+                switch (position) {
+                    case 0:
+                        Intent appInfo = new Intent(mContext, StockInActivity.class);
+                        mContext.startActivity(appInfo);
+                        break;
+                }
+            }
+        });
     }
 
     @Override

@@ -6,4 +6,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="home_cardview_elevation">4dp</dimen>
     <dimen name="text_size_home">25sp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

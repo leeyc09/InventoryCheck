@@ -13,7 +13,7 @@ import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.MyHomeItemRecyclerViewAdapter;
 import app.miji.com.inventorycheck.object.HomeContent;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
 
     private MyHomeItemRecyclerViewAdapter mAdapter;
@@ -38,10 +38,11 @@ public class MainActivity extends AppCompatActivity{
         assert recyclerView != null;
         setupRecyclerView(recyclerView);
 
+
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new MyHomeItemRecyclerViewAdapter(HomeContent.HOME_ITEMS);
+        mAdapter = new MyHomeItemRecyclerViewAdapter(this, HomeContent.HOME_ITEMS);
         recyclerView.setAdapter(mAdapter);
     }
 
