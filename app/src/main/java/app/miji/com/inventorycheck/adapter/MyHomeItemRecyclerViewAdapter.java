@@ -13,7 +13,7 @@ import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.StockInActivity;
-import app.miji.com.inventorycheck.object.HomeContent.HomeItem;
+import app.miji.com.inventorycheck.model.HomeContent.HomeItem;
 
 
 public class MyHomeItemRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeItemRecyclerViewAdapter.ViewHolder> {

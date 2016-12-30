@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck.object;
+package app.miji.com.inventorycheck.model;
 
 import java.util.ArrayList;
 import java.util.List;

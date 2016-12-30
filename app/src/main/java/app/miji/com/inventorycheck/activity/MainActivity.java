@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.MyHomeItemRecyclerViewAdapter;
-import app.miji.com.inventorycheck.object.HomeContent;
+import app.miji.com.inventorycheck.model.HomeContent;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck.view;
+package app.miji.com.inventorycheck.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
