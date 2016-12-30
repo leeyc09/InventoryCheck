@@ -1,5 +1,6 @@
 package app.miji.com.inventorycheck.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -16,9 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.fabtransitionactivity.SheetLayout;
+
 import app.miji.com.inventorycheck.R;
 
-public class StockInActivity extends AppCompatActivity {
+public class StockInActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -32,6 +35,11 @@ public class StockInActivity extends AppCompatActivity {
 
     private FloatingActionButton fabDelivery;
     private FloatingActionButton fabTransfer;
+
+    private SheetLayout mSheetLayout;
+
+
+    private static final int REQUEST_CODE = 1;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -62,6 +70,7 @@ public class StockInActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        //when tab changes, fab should also change
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -80,7 +89,27 @@ public class StockInActivity extends AppCompatActivity {
             }
         });
 
+
+        //setup sheet layout
+        mSheetLayout = (SheetLayout) findViewById(R.id.bottom_sheet);
+        mSheetLayout.setFab(fabDelivery);
+
+        //TODO: setup also the sheet layout for fabTransfer
+        mSheetLayout.setFabAnimationEndListener(StockInActivity.this);
+
+        //fabDelivery click
+        fabDelivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSheetLayout.expandFab();
+            }
+        });
+
+        //TODO: setup fabTransfer click
+
     }
+
+
 
     private void showProperFab(int tab) {
         switch (tab) {
@@ -125,6 +154,20 @@ public class StockInActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFabAnimationEnd() {
+        Intent intent = new Intent(this, DeliveryActivity.class);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE){
+            mSheetLayout.contractFab();
+        }
     }
 
     /**

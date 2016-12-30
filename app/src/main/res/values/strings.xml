@@ -7,4 +7,5 @@
     <string name="transfer">Transfer</string>
     <string name="add_delivery">Add delivery</string>
     <string name="add_transfer">Add transfer</string>
+    <string name="title_activity_delivery">Delivery</string>
 </resources>

@@ -28,7 +28,9 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorPrimaryLight"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -46,7 +48,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_transfer"
-        app:backgroundTint="@color/orange"/>
+        app:backgroundTint="@color/colorAccent_2"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_delivery"
@@ -55,6 +57,15 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_delivery" />
+
+    <com.github.fabtransitionactivity.SheetLayout
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        app:ft_container_gravity="center"
+        app:ft_color="@color/colorPrimary"
+        android:elevation="2dp"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
