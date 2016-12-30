@@ -48,6 +48,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_transfer"
+        android:scaleType="center"
         app:backgroundTint="@color/colorAccent_2"/>
 
     <android.support.design.widget.FloatingActionButton
@@ -56,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
+        android:scaleType="center"
         android:src="@drawable/ic_delivery" />
 
     <com.github.fabtransitionactivity.SheetLayout
