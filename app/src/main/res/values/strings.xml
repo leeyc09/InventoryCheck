@@ -8,4 +8,7 @@
     <string name="add_delivery">Add delivery</string>
     <string name="add_transfer">Add transfer</string>
     <string name="title_activity_delivery">Delivery</string>
+    <string name="delivered_by">Delivered by:</string>
+    <string name="reference">Reference No.</string>
+    <string name="location">Location</string>
 </resources>
