@@ -15,33 +15,67 @@
     tools:showIn="@layout/activity_delivery">
 
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_date"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/txt_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/mdtp_date_v2_daymonthyear"
+            android:id="@+id/input_date"
+            android:hint="@string/mdtp_select_day"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:inputType="date"
-            android:textColorHint="#05ab9a" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_time"
-        android:layout_width="match_parent"
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/mdtp_select_day"
+            android:id="@+id/btn_date"
+            android:src="@drawable/ic_action_event"
+            android:layout_alignBottom="@+id/input_date"
+            android:layout_toRightOf="@+id/input_date"
+            android:layout_toEndOf="@+id/input_date" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/txt_time"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/mdtp_time"
+            android:id="@+id/btn_time"
+            android:src="@drawable/ic_action_time"
+            android:layout_alignBottom="@+id/input_time"
+            android:layout_toRightOf="@+id/input_time"
+            android:layout_toEndOf="@+id/input_time" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_time"
             android:hint="@string/mdtp_time"
-            android:inputType="time"
-            android:textColorHint="#05ab9a" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+    </RelativeLayout>
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_name"
