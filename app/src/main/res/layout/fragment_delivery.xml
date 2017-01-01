@@ -20,59 +20,54 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/txt_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_date"
-            android:hint="@string/mdtp_select_day"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:inputType="date"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+            android:hint="@string/select_date"
+            android:inputType="date" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/select_date"
             android:id="@+id/btn_date"
-            android:src="@drawable/ic_action_event"
-            android:layout_alignBottom="@+id/txt_date"
-            android:layout_toRightOf="@+id/txt_date"
-            android:layout_toEndOf="@+id/txt_date" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/mdtp_time"
-            android:id="@+id/btn_time"
-            android:src="@drawable/ic_action_time"
-            android:layout_alignBottom="@+id/txt_time"
-            android:layout_toRightOf="@+id/txt_time"
-            android:layout_toEndOf="@+id/txt_time" />
+            android:layout_alignBottom="@+id/txt_date"
+            android:layout_toEndOf="@+id/txt_date"
+            android:layout_toRightOf="@+id/txt_date"
+            android:contentDescription="@string/mdtp_select_day"
+            android:src="@drawable/ic_action_event" />
 
         <EditText
+            android:id="@+id/txt_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_time"
-            android:hint="@string/select_time"
+            android:layout_alignBottom="@+id/btn_date"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/btn_date"
+            android:layout_toRightOf="@+id/btn_date"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+            android:hint="@string/select_time" />
+
+        <ImageButton
+            android:id="@+id/btn_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/txt_time"
+            android:layout_toEndOf="@+id/txt_time"
+            android:layout_toRightOf="@+id/txt_time"
+            android:contentDescription="@string/mdtp_time"
+            android:src="@drawable/ic_action_time" />
 
     </RelativeLayout>
 
@@ -105,13 +100,38 @@
             android:textColorHint="#05ab9a" />
     </android.support.design.widget.TextInputLayout>
 
+
     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/android_material_design_spinner"
+        android:id="@+id/material_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/location"
         android:textColorHint="#05ab9a"
-        app:met_floatingLabel="normal" />
+        android:inputType="text"
+        app:met_floatingLabel="normal"
+        />
+
+    <TextView
+        android:id="@+id/txt_add_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_location"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle=""/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:text="@string/delivery_receipt"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/image_placeholder"
+        android:adjustViewBounds="true"/>
 
 
 </LinearLayout>

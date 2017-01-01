@@ -5,20 +5,27 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 
 /**
- * A placeholder fragment containing a simple view.
+ * A fragment for adding delivery information
  */
 public class DeliveryActivityFragment extends Fragment {
+
+
+    private static final String[] COUNTRIES = new String[] {
+            "Belgium", "France", "Italy", "Germany", "Spain"
+    };
 
     public DeliveryActivityFragment() {
     }
@@ -53,7 +60,7 @@ public class DeliveryActivityFragment extends Fragment {
                         txtDate.setText(pickedDate);
                     }
                 }, mYear, mMonth, mDay);
-                datePickerDialog.show(getActivity().getFragmentManager(), "Datepickerdialog");
+                datePickerDialog.show(getActivity().getFragmentManager(), getString(R.string.Datepickerdialog));
 
             }
         });
@@ -75,12 +82,24 @@ public class DeliveryActivityFragment extends Fragment {
                         String pickedTime = hourOfDay + ":" + minute;
                         txtTime.setText(pickedTime);
                     }
-                },mHour,mMinute,false);
-                timePickerDialog.show(getActivity().getFragmentManager(), "Timepickerdialog");
+                }, mHour, mMinute, false);
+                timePickerDialog.show(getActivity().getFragmentManager(), getString(R.string.Timepickerdialog));
             }
         });
 
+        setupSpinner(view);
 
         return view;
     }
-}
+
+    private void setupSpinner(View view) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
+        materialSpinner.setAdapter(adapter);
+    }
+
+
+    }
+
+

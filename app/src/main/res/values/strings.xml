@@ -8,10 +8,15 @@
     <string name="add_delivery">Add delivery</string>
     <string name="add_transfer">Add transfer</string>
     <string name="title_activity_delivery">Delivery</string>
-    <string name="delivered_by">Delivered by:</string>
+    <string name="delivered_by">Delivered by</string>
     <string name="reference">Reference No.</string>
     <string name="location">Location</string>
-    <string name="select_time">Select time</string>
-    <string name="select_date">Select date</string>
+    <string name="select_time">Time</string>
+    <string name="select_date">Date</string>
     <string name="save">save</string>
+
+    <string name="Datepickerdialog" translatable="false">Datepickerdialog</string>
+    <string name="Timepickerdialog" translatable="false">Timepickerdialog</string>
+    <string name="delivery_receipt">Delivery receipt:</string>
+    <string name="add_location"><u>Add location</u></string>
 </resources>
