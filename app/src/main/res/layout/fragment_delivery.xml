@@ -22,7 +22,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/input_date"
+            android:id="@+id/txt_date"
             android:hint="@string/mdtp_select_day"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:inputType="date"
@@ -37,12 +37,12 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/mdtp_select_day"
+            android:contentDescription="@string/select_date"
             android:id="@+id/btn_date"
             android:src="@drawable/ic_action_event"
-            android:layout_alignBottom="@+id/input_date"
-            android:layout_toRightOf="@+id/input_date"
-            android:layout_toEndOf="@+id/input_date" />
+            android:layout_alignBottom="@+id/txt_date"
+            android:layout_toRightOf="@+id/txt_date"
+            android:layout_toEndOf="@+id/txt_date" />
 
     </RelativeLayout>
 
@@ -57,15 +57,15 @@
             android:contentDescription="@string/mdtp_time"
             android:id="@+id/btn_time"
             android:src="@drawable/ic_action_time"
-            android:layout_alignBottom="@+id/input_time"
-            android:layout_toRightOf="@+id/input_time"
-            android:layout_toEndOf="@+id/input_time" />
+            android:layout_alignBottom="@+id/txt_time"
+            android:layout_toRightOf="@+id/txt_time"
+            android:layout_toEndOf="@+id/txt_time" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/input_time"
-            android:hint="@string/mdtp_time"
+            android:id="@+id/txt_time"
+            android:hint="@string/select_time"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_centerVertical="true"

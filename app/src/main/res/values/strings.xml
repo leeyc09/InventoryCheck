@@ -11,4 +11,7 @@
     <string name="delivered_by">Delivered by:</string>
     <string name="reference">Reference No.</string>
     <string name="location">Location</string>
+    <string name="select_time">Select time</string>
+    <string name="select_date">Select date</string>
+    <string name="save">save</string>
 </resources>
