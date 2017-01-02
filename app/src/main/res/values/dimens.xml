@@ -7,4 +7,8 @@
     <dimen name="home_cardview_elevation">4dp</dimen>
     <dimen name="text_size_home">25sp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="dialog_text_height">48dp</dimen>
+    <dimen name="dialog_text_marginTop">24dp</dimen>
+    <dimen name="dialog_text_marginBottom">8dp</dimen>
+    <dimen name="dialog_header_textSize">24sp</dimen>
 </resources>

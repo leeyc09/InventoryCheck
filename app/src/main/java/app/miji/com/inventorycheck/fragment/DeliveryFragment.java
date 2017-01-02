@@ -1,13 +1,17 @@
-package app.miji.com.inventorycheck.activity;
+package app.miji.com.inventorycheck.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -20,14 +24,15 @@ import app.miji.com.inventorycheck.R;
 /**
  * A fragment for adding delivery information
  */
-public class DeliveryActivityFragment extends Fragment {
+public class DeliveryFragment extends Fragment {
 
 
-    private static final String[] COUNTRIES = new String[] {
+    private static final String[] COUNTRIES = new String[]{
             "Belgium", "France", "Italy", "Germany", "Spain"
     };
 
-    public DeliveryActivityFragment() {
+
+    public DeliveryFragment() {
     }
 
     @Override
@@ -39,6 +44,7 @@ public class DeliveryActivityFragment extends Fragment {
         ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
+        TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
 
         //when btnDate is clicked, show DatePickerDiaolog
         btnDate.setOnClickListener(new View.OnClickListener() {
@@ -87,19 +93,56 @@ public class DeliveryActivityFragment extends Fragment {
             }
         });
 
+        //location spinner
         setupSpinner(view);
+
+
+        //when txt_add_location is clicked, show add new location dialog box
+        txtAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context mContext = getActivity();
+                LayoutInflater layoutInflaterAndroid = LayoutInflater.from(mContext);
+                View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_input, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(mContext);
+                alertDialogBuilderUserInput.setView(mView);
+
+
+                final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                alertDialogBuilderUserInput
+                        .setCancelable(false)
+                        .setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                // TODO get user input here
+
+                            }
+                        })
+
+                        .setNegativeButton(getString(R.string.cancel),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        dialogBox.cancel();
+                                    }
+                                });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
+
+            }
+        });
+
 
         return view;
     }
 
     private void setupSpinner(View view) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES);
         MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
         materialSpinner.setAdapter(adapter);
     }
 
 
-    }
+}
 
 

@@ -13,10 +13,11 @@
     <string name="location">Location</string>
     <string name="select_time">Time</string>
     <string name="select_date">Date</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
 
     <string name="Datepickerdialog" translatable="false">Datepickerdialog</string>
     <string name="Timepickerdialog" translatable="false">Timepickerdialog</string>
     <string name="delivery_receipt">Delivery receipt:</string>
     <string name="add_location"><u>Add location</u></string>
+    <string name="cancel">Cancel</string>
 </resources>
