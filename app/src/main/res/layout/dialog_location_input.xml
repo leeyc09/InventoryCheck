@@ -39,11 +39,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_text_height"
         android:layout_marginBottom="@dimen/dialog_text_marginBottom"
-        android:layout_marginEnd="@dimen/text_margin"
-        android:layout_marginLeft="@dimen/text_margin"
-        android:layout_marginRight="@dimen/text_margin"
-        android:layout_marginStart="@dimen/text_margin"
-        android:layout_marginTop="@dimen/dialog_text_marginTop"
+        android:layout_marginEnd="@dimen/dialog_text_margin"
+        android:layout_marginLeft="@dimen/dialog_text_margin"
+        android:layout_marginRight="@dimen/dialog_text_margin"
+        android:layout_marginStart="@dimen/dialog_text_margin"
+        android:layout_marginTop="@dimen/dialog_text_margin"
         android:inputType="textAutoComplete"
         android:maxLines="1" />
 

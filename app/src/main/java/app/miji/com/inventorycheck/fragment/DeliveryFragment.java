@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.model.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 /**
@@ -108,8 +110,8 @@ public class DeliveryFragment extends Fragment {
         txtAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Context mContext = getActivity();
-                LayoutInflater layoutInflaterAndroid = LayoutInflater.from(mContext);
+                final Context mContext = getActivity();
+                final LayoutInflater layoutInflaterAndroid = LayoutInflater.from(mContext);
                 View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_input, null);
                 AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(mContext);
                 alertDialogBuilderUserInput.setView(mView);
@@ -120,7 +122,30 @@ public class DeliveryFragment extends Fragment {
                         .setCancelable(false)
                         .setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
-                                // TODO get user input here
+                                // get user input here
+                                String input = userInputDialogEditText.getText().toString();
+                                //TODO: add input to database
+
+                                //TODO: determine if success or not in saving location
+
+                                boolean flagSuccess = true; //success, can be false
+
+                                if(flagSuccess){
+                                    //inform user that location is saved
+                                    //check if user stills wants to be informed based on sharedPref
+
+                                    int status = Utility.getLocationMessageDialogStatus(mContext);
+                                    if(status==0){
+                                        //show dialog message
+                                        showLocationDialogMessage(layoutInflaterAndroid, mContext, flagSuccess);
+                                    }
+                                }else{
+                                    //need to inform user that there is failurein saving location
+                                    showLocationDialogMessage(layoutInflaterAndroid, mContext, flagSuccess);
+                                }
+
+
+
 
                             }
                         })
@@ -170,6 +195,59 @@ public class DeliveryFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void showLocationDialogMessage(LayoutInflater layoutInflaterAndroid, final Context mContext, boolean flagSuccess) {
+        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_message, null);
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(mContext);
+        alertDialogBuilderUserInput.setView(mView);
+
+        //inflate layouts
+        TextView txtTitle = (TextView) mView.findViewById(R.id.location_message_title);
+        TextView txtMessage = (TextView) mView.findViewById(R.id.location_message);
+        final CheckBox chkNoMessage = (CheckBox) mView.findViewById(R.id.no_message);
+
+        //set header and message
+        if (flagSuccess) {
+            txtTitle.setText(getString(R.string.location_succes_header));
+            txtMessage.setText(getString(R.string.location_succes_message));
+            chkNoMessage.setVisibility(View.VISIBLE);
+        } else {
+            txtTitle.setText(getString(R.string.location_failed_header));
+            txtMessage.setText(getString(R.string.location_failed_message));
+            chkNoMessage.setVisibility(View.INVISIBLE);
+        }
+
+        alertDialogBuilderUserInput
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.mdtp_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //TODO: insert checkbox logic here
+
+
+                        //checked: 1 - don't show message again
+                        //unchecked: 0 - can show message
+                        int checkBoxResult = 0;
+                        if (chkNoMessage.isChecked()) {
+                            checkBoxResult = 1;
+                        }
+
+                        Utility.saveLocationMessageDialogStatus(mContext, checkBoxResult);
+
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                dialogBox.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+        alertDialogAndroid.show();
+
+
     }
 
     private void setupSpinner(View view) {

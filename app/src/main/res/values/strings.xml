@@ -20,4 +20,9 @@
     <string name="delivery_receipt">Delivery receipt:</string>
     <string name="add_location"><u>Add location</u></string>
     <string name="cancel">Cancel</string>
+    <string name="location_succes_header">Successfully added location!</string>
+    <string name="location_succes_message">Your saved location is now available at the location list.</string>
+    <string name="dont_show_message">Do not show this message again</string>
+    <string name="location_failed_header">Failed to add location!</string>
+    <string name="location_failed_message">Please try again.</string>
 </resources>

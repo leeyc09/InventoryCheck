@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/dialog_text_marginBottom"
+    >
+
+    <TextView
+        android:id="@+id/location_message_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/location_succes_header"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:layout_marginTop="@dimen/dialog_text_margin"
+        android:layout_marginStart="@dimen/dialog_text_margin"
+        android:layout_marginEnd="@dimen/dialog_text_margin"
+        />
+
+    <TextView
+        android:id="@+id/location_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/location_succes_message"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:layout_marginTop="@dimen/dialog_text_marginTop"
+        android:layout_marginBottom="@dimen/dialog_text_margin"
+        android:layout_marginStart="@dimen/dialog_text_margin"
+        android:layout_marginEnd="@dimen/dialog_text_margin"
+        />
+
+    <CheckBox
+        android:id="@+id/no_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dont_show_message"
+
+        android:layout_marginStart="@dimen/dialog_text_margin"
+        android:layout_marginEnd="@dimen/dialog_text_margin"
+        android:layout_marginBottom="@dimen/dialog_text_marginBottom"/>
+
+</LinearLayout>
