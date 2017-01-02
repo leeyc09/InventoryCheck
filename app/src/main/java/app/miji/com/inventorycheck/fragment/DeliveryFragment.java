@@ -2,6 +2,9 @@ package app.miji.com.inventorycheck.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -11,15 +14,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.io.InputStream;
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
+import gun0912.tedbottompicker.TedBottomPicker;
 
 /**
  * A fragment for adding delivery information
@@ -45,6 +51,7 @@ public class DeliveryFragment extends Fragment {
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
         TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
+        final ImageView imgReceipt = (ImageView) view.findViewById(R.id.img_receipt);
 
         //when btnDate is clicked, show DatePickerDiaolog
         btnDate.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +134,36 @@ public class DeliveryFragment extends Fragment {
 
                 AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
                 alertDialogAndroid.show();
+
+            }
+        });
+
+
+        //setup receipt imageview
+        imgReceipt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Start TedBottomPicker
+                TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(getActivity())
+                        .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
+                            @Override
+                            public void onImageSelected(Uri uri) {
+                                //Do something with selected uri
+                                InputStream inputStream;
+                                try {
+                                    inputStream = getActivity().getContentResolver().openInputStream(uri);
+                                    //the "image" received here is the image itself
+                                    Bitmap image = BitmapFactory.decodeStream(inputStream);
+                                    //assign image to your imageview
+                                    imgReceipt.setImageBitmap(image);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .create();
+
+                tedBottomPicker.show(getActivity().getSupportFragmentManager());
 
             }
         });

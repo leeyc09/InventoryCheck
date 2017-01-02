@@ -132,9 +132,11 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <app.miji.com.inventorycheck.widget.PlaceholderImageView
+                android:id="@+id/img_receipt"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/image_placeholder" />
 
         </LinearLayout>
