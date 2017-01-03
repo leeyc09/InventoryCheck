@@ -14,6 +14,15 @@
     tools:context="app.miji.com.inventorycheck.fragment.DeliveryFragment"
     tools:showIn="@layout/activity_delivery">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/save"
+        app:srcCompat="@drawable/ic_action_done" />
+
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -82,7 +91,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_name"
+                android:id="@+id/input_delivery_name"
                 style="@style/CustomTextInputLayout"
                 app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
@@ -95,7 +104,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_email"
+                android:id="@+id/input_ref"
                 style="@style/CustomTextInputLayout"
                 app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
@@ -107,14 +116,20 @@
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
-
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                android:id="@+id/material_spinner"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/location"
-                android:inputType="text"
-                app:met_floatingLabel="normal" />
+                app:hintEnabled="false">
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/material_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/location"
+                    android:inputType="text"
+                    app:met_floatingLabel="normal" />
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:id="@+id/txt_add_location"

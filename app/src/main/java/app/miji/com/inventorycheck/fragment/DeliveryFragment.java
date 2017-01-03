@@ -6,8 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,8 @@ public class DeliveryFragment extends Fragment {
     };
 
 
+    private final String LOG_TAG = DeliveryFragment.class.getSimpleName();
+
     public DeliveryFragment() {
     }
 
@@ -48,12 +53,19 @@ public class DeliveryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_delivery, container, false);
 
-        ImageButton btnDate = (ImageButton) view.findViewById(R.id.btn_date);
-        ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
+        final ImageButton btnDate = (ImageButton) view.findViewById(R.id.btn_date);
+        final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
-        TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
+        final EditText txtDelivery = (EditText) view.findViewById(R.id.txt_delivery);
+        final EditText txtReference = (EditText) view.findViewById(R.id.txt_reference);
+        final TextInputLayout txtInDelivery = (TextInputLayout) view.findViewById(R.id.input_delivery_name);
+        final TextInputLayout txtInRefNo = (TextInputLayout) view.findViewById(R.id.input_ref);
+        final TextInputLayout txtInLocation = (TextInputLayout) view.findViewById(R.id.input_location);
+        final MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
+        final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final ImageView imgReceipt = (ImageView) view.findViewById(R.id.img_receipt);
+        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
 
         // Get Current Date
@@ -111,7 +123,7 @@ public class DeliveryFragment extends Fragment {
         });
 
         //location spinner
-        setupSpinner(view);
+        setupSpinner(view, materialSpinner);
 
 
         //when txt_add_location is clicked, show add new location dialog box
@@ -200,6 +212,47 @@ public class DeliveryFragment extends Fragment {
         });
 
 
+        //setup floating action button
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //validate form
+                String deliveredBy = txtDelivery.getText().toString();
+                String refNo = txtReference.getText().toString();
+                String location = materialSpinner.getText().toString();
+
+                Log.v(LOG_TAG, "Delivered By: " + deliveredBy);
+                Log.v(LOG_TAG, "Reference No: " + refNo);
+                Log.v(LOG_TAG, "Location: " + location);
+
+                //check if delivery is null
+                if (deliveredBy.length() == 0) {
+                    //show error
+                    txtInDelivery.setErrorEnabled(true);
+                    txtInDelivery.setError(getString(R.string.required_field));
+                } else {
+                    txtInDelivery.setErrorEnabled(false);
+                }
+
+                //check if reference no. is null
+                if (refNo.length() == 0) {
+                    txtInRefNo.setErrorEnabled(true);
+                    txtInRefNo.setError(getString(R.string.required_field));
+                } else {
+                    txtInRefNo.setErrorEnabled(false);
+                }
+
+                //check if location is null
+                if (location.length() == 0) {
+                    txtInLocation.setErrorEnabled(true);
+                    txtInLocation.setError(getString(R.string.required_field));
+                } else {
+                    txtInLocation.setErrorEnabled(false);
+                }
+            }
+        });
+
+
         return view;
     }
 
@@ -254,10 +307,9 @@ public class DeliveryFragment extends Fragment {
 
     }
 
-    private void setupSpinner(View view) {
+    private void setupSpinner(View view, MaterialBetterSpinner materialSpinner) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
         materialSpinner.setAdapter(adapter);
     }
 

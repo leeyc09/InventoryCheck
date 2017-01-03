@@ -25,4 +25,5 @@
     <string name="dont_show_message">Do not show this message again</string>
     <string name="location_failed_header">Failed to add location!</string>
     <string name="location_failed_message">Please try again.</string>
+    <string name="required_field">This field is required.</string>
 </resources>
