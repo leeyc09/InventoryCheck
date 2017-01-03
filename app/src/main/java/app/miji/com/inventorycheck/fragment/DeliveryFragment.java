@@ -2,6 +2,7 @@ package app.miji.com.inventorycheck.fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -29,6 +30,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.activity.MainActivity;
 import app.miji.com.inventorycheck.model.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -217,16 +219,23 @@ public class DeliveryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //validate form
-                String deliveredBy = txtDelivery.getText().toString();
-                String refNo = txtReference.getText().toString();
-                String location = materialSpinner.getText().toString();
+                int deliveredBy = txtDelivery.getText().toString().length();
+                int refNo = txtReference.getText().toString().length();
+                int location = materialSpinner.getText().toString().length();
+                boolean isValid = deliveredBy != 0 && refNo != 0 && location != 0; //if formed is properly filled out
 
                 Log.v(LOG_TAG, "Delivered By: " + deliveredBy);
                 Log.v(LOG_TAG, "Reference No: " + refNo);
                 Log.v(LOG_TAG, "Location: " + location);
 
+                //if valid proceed to the next activity
+                if (isValid) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+
                 //check if delivery is null
-                if (deliveredBy.length() == 0) {
+                if (deliveredBy == 0) {
                     //show error
                     txtInDelivery.setErrorEnabled(true);
                     txtInDelivery.setError(getString(R.string.required_field));
@@ -235,7 +244,7 @@ public class DeliveryFragment extends Fragment {
                 }
 
                 //check if reference no. is null
-                if (refNo.length() == 0) {
+                if (refNo == 0) {
                     txtInRefNo.setErrorEnabled(true);
                     txtInRefNo.setError(getString(R.string.required_field));
                 } else {
@@ -243,12 +252,13 @@ public class DeliveryFragment extends Fragment {
                 }
 
                 //check if location is null
-                if (location.length() == 0) {
+                if (location == 0) {
                     txtInLocation.setErrorEnabled(true);
                     txtInLocation.setError(getString(R.string.required_field));
                 } else {
                     txtInLocation.setErrorEnabled(false);
                 }
+
             }
         });
 
