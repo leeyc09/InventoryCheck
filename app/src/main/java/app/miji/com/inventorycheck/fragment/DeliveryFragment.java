@@ -55,17 +55,30 @@ public class DeliveryFragment extends Fragment {
         TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final ImageView imgReceipt = (ImageView) view.findViewById(R.id.img_receipt);
 
+
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        final int mYear, mMonth, mDay;
+        final int mHour, mMinute;
+
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+
+        //display current date and time
+        String dateNow = mDay + "-" + (mMonth + 1) + "-" + mYear;
+        String timeNow = mHour + ":" + mMinute;
+        txtDate.setText(dateNow);
+        txtTime.setText(timeNow);
+
+
         //when btnDate is clicked, show DatePickerDiaolog
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                final int mYear, mMonth, mDay;
-
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
 
                 //launch datepicker dialog initially picking current date
                 DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(new DatePickerDialog.OnDateSetListener() {
@@ -84,11 +97,6 @@ public class DeliveryFragment extends Fragment {
         btnTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get Current Time
-                final Calendar c = Calendar.getInstance();
-                final int mHour, mMinute;
-                mHour = c.get(Calendar.HOUR_OF_DAY);
-                mMinute = c.get(Calendar.MINUTE);
 
                 //launch datepicker dialog initially picking current time
                 TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
@@ -130,21 +138,19 @@ public class DeliveryFragment extends Fragment {
 
                                 boolean flagSuccess = true; //success, can be false
 
-                                if(flagSuccess){
+                                if (flagSuccess) {
                                     //inform user that location is saved
                                     //check if user stills wants to be informed based on sharedPref
 
                                     int status = Utility.getLocationMessageDialogStatus(mContext);
-                                    if(status==0){
+                                    if (status == 0) {
                                         //show dialog message
                                         showLocationDialogMessage(layoutInflaterAndroid, mContext, flagSuccess);
                                     }
-                                }else{
+                                } else {
                                     //need to inform user that there is failurein saving location
                                     showLocationDialogMessage(layoutInflaterAndroid, mContext, flagSuccess);
                                 }
-
-
 
 
                             }
@@ -223,9 +229,7 @@ public class DeliveryFragment extends Fragment {
                 .setPositiveButton(getString(R.string.mdtp_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //TODO: insert checkbox logic here
-
-
+                        // checkbox logic
                         //checked: 1 - don't show message again
                         //unchecked: 0 - can show message
                         int checkBoxResult = 0;
