@@ -1,7 +1,6 @@
 package app.miji.com.inventorycheck.fragment;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,13 +9,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,7 +27,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.activity.MainActivity;
+import app.miji.com.inventorycheck.activity.TransferActivity;
 import app.miji.com.inventorycheck.model.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -59,7 +56,7 @@ public class DeliveryFragment extends Fragment {
         final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
-        final EditText txtDelivery = (EditText) view.findViewById(R.id.txt_delivery);
+        final EditText txtDelivery = (EditText) view.findViewById(R.id.txt_trans_id);
         final EditText txtReference = (EditText) view.findViewById(R.id.txt_reference);
         final TextInputLayout txtInDelivery = (TextInputLayout) view.findViewById(R.id.input_delivery_name);
         final TextInputLayout txtInRefNo = (TextInputLayout) view.findViewById(R.id.input_ref);
@@ -125,7 +122,7 @@ public class DeliveryFragment extends Fragment {
         });
 
         //location spinner
-        setupSpinner(view, materialSpinner);
+        setupSpinner(materialSpinner);
 
 
         //when txt_add_location is clicked, show add new location dialog box
@@ -135,50 +132,10 @@ public class DeliveryFragment extends Fragment {
                 final Context mContext = getActivity();
                 final LayoutInflater layoutInflaterAndroid = LayoutInflater.from(mContext);
                 View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_input, null);
-                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(mContext);
-                alertDialogBuilderUserInput.setView(mView);
-
-
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
-                alertDialogBuilderUserInput
-                        .setCancelable(false)
-                        .setPositiveButton(getString(R.string.save), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogBox, int id) {
-                                // get user input here
-                                String input = userInputDialogEditText.getText().toString();
-                                //TODO: add input to database
 
-                                //TODO: determine if success or not in saving location
-
-                                boolean flagSuccess = true; //success, can be false
-
-                                if (flagSuccess) {
-                                    //inform user that location is saved
-                                    //check if user stills wants to be informed based on sharedPref
-
-                                    int status = Utility.getLocationMessageDialogStatus(mContext);
-                                    if (status == 0) {
-                                        //show dialog message
-                                        showLocationDialogMessage(layoutInflaterAndroid, mContext, flagSuccess);
-                                    }
-                                } else {
-                                    //need to inform user that there is failurein saving location
-                                    showLocationDialogMessage(layoutInflaterAndroid, mContext, flagSuccess);
-                                }
-
-
-                            }
-                        })
-
-                        .setNegativeButton(getString(R.string.cancel),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialogBox, int id) {
-                                        dialogBox.cancel();
-                                    }
-                                });
-
-                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-                alertDialogAndroid.show();
+                //show location dialog box
+                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
 
             }
         });
@@ -230,7 +187,7 @@ public class DeliveryFragment extends Fragment {
 
                 //if valid proceed to the next activity
                 if (isValid) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), TransferActivity.class);
                     startActivity(intent);
                 }
 
@@ -266,58 +223,8 @@ public class DeliveryFragment extends Fragment {
         return view;
     }
 
-    private void showLocationDialogMessage(LayoutInflater layoutInflaterAndroid, final Context mContext, boolean flagSuccess) {
-        View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_message, null);
-        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(mContext);
-        alertDialogBuilderUserInput.setView(mView);
 
-        //inflate layouts
-        TextView txtTitle = (TextView) mView.findViewById(R.id.location_message_title);
-        TextView txtMessage = (TextView) mView.findViewById(R.id.location_message);
-        final CheckBox chkNoMessage = (CheckBox) mView.findViewById(R.id.no_message);
-
-        //set header and message
-        if (flagSuccess) {
-            txtTitle.setText(getString(R.string.location_succes_header));
-            txtMessage.setText(getString(R.string.location_succes_message));
-            chkNoMessage.setVisibility(View.VISIBLE);
-        } else {
-            txtTitle.setText(getString(R.string.location_failed_header));
-            txtMessage.setText(getString(R.string.location_failed_message));
-            chkNoMessage.setVisibility(View.INVISIBLE);
-        }
-
-        alertDialogBuilderUserInput
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.mdtp_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // checkbox logic
-                        //checked: 1 - don't show message again
-                        //unchecked: 0 - can show message
-                        int checkBoxResult = 0;
-                        if (chkNoMessage.isChecked()) {
-                            checkBoxResult = 1;
-                        }
-
-                        Utility.saveLocationMessageDialogStatus(mContext, checkBoxResult);
-
-                    }
-                })
-                .setNegativeButton(getString(R.string.cancel),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogBox, int id) {
-                                dialogBox.cancel();
-                            }
-                        });
-
-        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-        alertDialogAndroid.show();
-
-
-    }
-
-    private void setupSpinner(View view, MaterialBetterSpinner materialSpinner) {
+    private void setupSpinner(MaterialBetterSpinner materialSpinner) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line, COUNTRIES);
         materialSpinner.setAdapter(adapter);
