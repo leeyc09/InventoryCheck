@@ -40,6 +40,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
 
 
     private static final int REQUEST_CODE = 1;
+    private int selectedTab;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -75,7 +76,8 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
-                showProperFab(tab.getPosition());
+                selectedTab = tab.getPosition();
+                showProperFab(selectedTab);
             }
 
             @Override
@@ -93,6 +95,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         //setup sheet layout
         mSheetLayout = (SheetLayout) findViewById(R.id.bottom_sheet);
         mSheetLayout.setFab(fabDelivery);
+        mSheetLayout.setFab(fabTransfer);
 
         //TODO: setup also the sheet layout for fabTransfer
         mSheetLayout.setFabAnimationEndListener(StockInActivity.this);
@@ -106,6 +109,12 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         });
 
         //TODO: setup fabTransfer click
+        fabTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSheetLayout.expandFab();
+            }
+        });
 
     }
 
@@ -158,8 +167,19 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
 
     @Override
     public void onFabAnimationEnd() {
-        Intent intent = new Intent(this, DeliveryActivity.class);
-        startActivityForResult(intent, REQUEST_CODE);
+        Intent intent;
+        switch (selectedTab){
+            case 0:
+                intent = new Intent(this, DeliveryActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case 1:
+                intent = new Intent(this, TransferActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+        }
+
+
     }
 
     @Override

@@ -11,8 +11,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.miji.com.inventorycheck.fragment.DeliveryFragment"
-    tools:showIn="@layout/activity_delivery">
+    tools:context="app.miji.com.inventorycheck.fragment.TransferFragment"
+    tools:showIn="@layout/activity_transfer">>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -90,43 +90,41 @@
             </RelativeLayout>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_delivery_name"
-                style="@style/CustomTextInputLayout"
-                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+            <TextView
+                android:id="@+id/txt_trans_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/text_margin"
+                android:text="@string/trans_id"
+                android:textAppearance="?android:textAppearanceMedium" />
 
-                <EditText
-                    android:id="@+id/txt_trans_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/delivered_by"
-                    android:inputType="textAutoComplete" />
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_ref"
-                style="@style/CustomTextInputLayout"
-                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
-
-                <EditText
-                    android:id="@+id/txt_reference"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/reference"
-                    android:inputType="number" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_location"
+                android:id="@+id/input_from_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false">
 
                 <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/material_spinner"
+                    android:id="@+id/material_spinner_from_loc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/location"
+                    android:hint="@string/from_location"
+                    android:inputType="text"
+                    app:met_floatingLabel="normal" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_to_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false">
+
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/material_spinner_to_loc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/to_location"
                     android:inputType="text"
                     app:met_floatingLabel="normal" />
             </android.support.design.widget.TextInputLayout>
@@ -139,20 +137,6 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/colorAccent_2" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/text_margin"
-                android:text="@string/delivery_receipt"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <app.miji.com.inventorycheck.widget.PlaceholderImageView
-                android:id="@+id/img_receipt"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/image_placeholder" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

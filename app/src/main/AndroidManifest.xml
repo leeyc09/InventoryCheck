@@ -43,6 +43,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.miji.com.inventorycheck.activity.StockInActivity" />
         </activity>
+        <activity
+            android:name=".activity.TransferActivity"
+            android:label="@string/title_activity_transfer"
+            android:parentActivityName=".activity.DeliveryActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.miji.com.inventorycheck.activity.DeliveryActivity" />
+        </activity>
     </application>
 
 </manifest>

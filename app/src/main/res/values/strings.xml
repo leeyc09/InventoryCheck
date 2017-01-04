@@ -22,8 +22,13 @@
     <string name="cancel">Cancel</string>
     <string name="location_succes_header">Successfully added location!</string>
     <string name="location_succes_message">Your saved location is now available at the location list.</string>
-    <string name="dont_show_message">Do not show this message again</string>
+    <string name="dont_show_message">Do not show this message again.</string>
     <string name="location_failed_header">Failed to add location!</string>
     <string name="location_failed_message">Please try again.</string>
     <string name="required_field">This field is required.</string>
+
+    <string name="title_activity_transfer">Transfer</string>
+    <string name="trans_id">Transfer ID</string>
+    <string name="from_location">From location</string>
+    <string name="to_location">To location</string>
 </resources>
