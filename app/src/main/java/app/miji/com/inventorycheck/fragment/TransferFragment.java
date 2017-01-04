@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,8 +51,6 @@ public class TransferFragment extends Fragment {
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
         final TextView txtTransferId = (TextView) view.findViewById(R.id.txt_trans_id);
-        final TextInputLayout txtInFromLocation = (TextInputLayout) view.findViewById(R.id.input_from_location);
-        final TextInputLayout txtInToLocation = (TextInputLayout) view.findViewById(R.id.input_to_location);
         final MaterialBetterSpinner spinnerFromLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner_from_loc);
         final MaterialBetterSpinner spinnerToLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner_to_loc);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
@@ -156,18 +153,16 @@ public class TransferFragment extends Fragment {
 
                 //check if reference no. is null
                 if (toLocation == 0) {
-                    txtInToLocation.setErrorEnabled(true);
-                    txtInToLocation.setError(getString(R.string.required_field));
+                    spinnerToLocation.setError(getString(R.string.required_field));
                 } else {
-                    txtInToLocation.setErrorEnabled(false);
+                    spinnerToLocation.setError(null);
                 }
 
                 //check if location is null
                 if (fromLocation == 0) {
-                    txtInFromLocation.setErrorEnabled(true);
-                    txtInFromLocation.setError(getString(R.string.required_field));
+                    spinnerFromLocation.setError(getString(R.string.required_field));
                 } else {
-                    txtInFromLocation.setErrorEnabled(false);
+                    spinnerFromLocation.setError(null);
                 }
 
             }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,6 @@ public class DeliveryFragment extends Fragment {
         final EditText txtReference = (EditText) view.findViewById(R.id.txt_reference);
         final TextInputLayout txtInDelivery = (TextInputLayout) view.findViewById(R.id.input_delivery_name);
         final TextInputLayout txtInRefNo = (TextInputLayout) view.findViewById(R.id.input_ref);
-        final TextInputLayout txtInLocation = (TextInputLayout) view.findViewById(R.id.input_location);
         final MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final ImageView imgReceipt = (ImageView) view.findViewById(R.id.img_receipt);
@@ -210,10 +210,9 @@ public class DeliveryFragment extends Fragment {
 
                 //check if location is null
                 if (location == 0) {
-                    txtInLocation.setErrorEnabled(true);
-                    txtInLocation.setError(getString(R.string.required_field));
+                    materialSpinner.setError(getString(R.string.required_field));
                 } else {
-                    txtInLocation.setErrorEnabled(false);
+                    materialSpinner.setError(null);
                 }
 
             }

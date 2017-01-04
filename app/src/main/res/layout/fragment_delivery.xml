@@ -116,20 +116,14 @@
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_location"
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/material_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintEnabled="false">
+                android:hint="@string/location"
+                android:inputType="text"
+                app:met_floatingLabel="highlight" />
 
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/material_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/location"
-                    android:inputType="text"
-                    app:met_floatingLabel="normal" />
-            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:id="@+id/txt_add_location"
