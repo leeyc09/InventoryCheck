@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         //setup recycler view
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_home);
-        int mColumnCount = 1;
+        int mColumnCount = getResources().getInteger(R.integer.list_column_count);;
         //set Layout Manager
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

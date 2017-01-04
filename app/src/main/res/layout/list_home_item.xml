@@ -6,8 +6,6 @@
     android:name="app.miji.com.inventorycheck.HomeItemFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:padding="@dimen/list_side_margin"
     app:layoutManager="LinearLayoutManager"
-    tools:context="app.miji.com.inventorycheck.HomeItemFragment"
     tools:listitem="@layout/item_home" />
