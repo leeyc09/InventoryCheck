@@ -36,4 +36,16 @@
     <string name="title_activity_sales">Sales</string>
     <string name="customer">Customer</string>
     <string name="sales_receipt">Sales receipt</string>
+    <string name="title_activity_product">Products</string>
+    <string name="title_activity_new_product">New Product</string>
+    <string name="prod_code">Product code</string>
+    <string name="barcode">Barcode</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="qty">Quantity</string>
+    <string name="unit">Unit</string>
+    <string name="price">Price</string>
+    <string name="item_image">Item image</string>
+    <string name="low_stock">Notify low stock</string>
+    <string name="notes">Notes</string>
 </resources>

@@ -56,16 +56,6 @@
                     android:hint="@string/select_date"
                     android:inputType="date" />
 
-                <ImageButton
-                    android:id="@+id/btn_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/txt_date"
-                    android:layout_toEndOf="@+id/txt_date"
-                    android:layout_toRightOf="@+id/txt_date"
-                    android:contentDescription="@string/mdtp_select_day"
-                    android:src="@drawable/ic_action_event" />
-
                 <EditText
                     android:id="@+id/txt_time"
                     android:layout_width="wrap_content"
@@ -90,6 +80,15 @@
                     android:layout_toRightOf="@+id/txt_time"
                     android:contentDescription="@string/mdtp_time"
                     android:src="@drawable/ic_action_time" />
+
+                <ImageButton
+                    android:id="@+id/btn_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/mdtp_select_day"
+                    android:src="@drawable/ic_action_event"
+                    android:layout_alignBottom="@+id/txt_date"
+                    android:layout_toEndOf="@+id/txt_date" />
 
             </RelativeLayout>
 

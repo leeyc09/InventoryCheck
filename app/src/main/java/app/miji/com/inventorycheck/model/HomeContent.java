@@ -24,7 +24,7 @@ public class HomeContent {
             "Stock Out",
             "Stock Take",
             "Inventory Adjustment",
-            "Items",
+            "Products",
             "Report",
             "Setup"
     };

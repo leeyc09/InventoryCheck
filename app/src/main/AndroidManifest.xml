@@ -70,6 +70,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.miji.com.inventorycheck.activity.StockInActivity" />
         </activity>
+        <activity
+            android:name=".activity.ProductActivity"
+            android:label="@string/title_activity_product"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.miji.com.inventorycheck.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.NewProductActivity"
+            android:label="@string/title_activity_new_product"
+            android:parentActivityName=".activity.ProductActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.miji.com.inventorycheck.activity.ProductActivity" />
+        </activity>
     </application>
 
 </manifest>

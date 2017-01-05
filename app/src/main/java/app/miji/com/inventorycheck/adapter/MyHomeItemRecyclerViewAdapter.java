@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.activity.ProductActivity;
 import app.miji.com.inventorycheck.activity.StockOutActivity;
 import app.miji.com.inventorycheck.activity.StockInActivity;
 import app.miji.com.inventorycheck.model.HomeContent.HomeItem;
@@ -50,12 +51,30 @@ public class MyHomeItemRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeIt
                 Intent appInfo;
                 switch (position) {
                     case 0:
+                        //STOCK IN
                         appInfo = new Intent(mContext, StockInActivity.class);
                         mContext.startActivity(appInfo);
                         break;
                     case 1:
+                        //STOCK OUT
                         appInfo = new Intent(mContext, StockOutActivity.class);
                         mContext.startActivity(appInfo);
+                        break;
+                    case 2:
+                        //TODO: start STOCK TAKE
+                        break;
+                    case 3:
+                        //TODO: start INVENTORY ADJUSTMENT
+                        break;
+                    case 4:
+                        appInfo = new Intent(mContext, ProductActivity.class);
+                        mContext.startActivity(appInfo);
+                        break;
+                    case 5:
+                        //TODO: start REPORT
+                        break;
+                    case 6:
+                        //TODO: start SETUP
                         break;
                 }
             }
