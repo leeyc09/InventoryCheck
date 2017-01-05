@@ -1,9 +1,8 @@
-package app.miji.com.inventorycheck;
+package app.miji.com.inventorycheck.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -22,9 +21,7 @@ import android.widget.TextView;
 
 import com.github.fabtransitionactivity.SheetLayout;
 
-import app.miji.com.inventorycheck.activity.DeliveryActivity;
-import app.miji.com.inventorycheck.activity.StockInActivity;
-import app.miji.com.inventorycheck.activity.TransferActivity;
+import app.miji.com.inventorycheck.R;
 
 public class StockOutActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener {
 

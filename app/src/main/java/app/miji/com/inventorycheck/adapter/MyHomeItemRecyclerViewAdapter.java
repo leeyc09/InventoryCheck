@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.StockOutActivity;
+import app.miji.com.inventorycheck.activity.StockOutActivity;
 import app.miji.com.inventorycheck.activity.StockInActivity;
 import app.miji.com.inventorycheck.model.HomeContent.HomeItem;
 

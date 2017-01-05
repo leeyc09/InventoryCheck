@@ -53,7 +53,7 @@
                 android:value="app.miji.com.inventorycheck.activity.DeliveryActivity" />
         </activity>
         <activity
-            android:name=".StockOutActivity"
+            android:name=".activity.StockOutActivity"
             android:label="@string/title_activity_stock_out"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
