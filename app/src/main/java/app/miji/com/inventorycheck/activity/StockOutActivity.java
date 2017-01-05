@@ -175,11 +175,12 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
         Intent intent;
         switch (selectedTab){
             case 0:
-                //TODO change activity
-                intent = new Intent(this, DeliveryActivity.class);
+                //Sales activity
+                intent = new Intent(this, SalesActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case 1:
+                //Sales activity
                 intent = new Intent(this, TransferActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;

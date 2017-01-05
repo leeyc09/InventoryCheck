@@ -33,4 +33,7 @@
     <string name="to_location">To location</string>
     <string name="title_activity_stock_out">Stock Out</string>
     <string name="sales">Sales</string>
+    <string name="title_activity_sales">Sales</string>
+    <string name="customer">Customer</string>
+    <string name="sales_receipt">Sales receipt</string>
 </resources>
