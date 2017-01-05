@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="app.miji.com.inventorycheck.activity.StockInActivity">
+    tools:context="app.miji.com.inventorycheck.StockOutActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -29,10 +29,10 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMaxWidth="0dp"
             app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabIndicatorColor="@color/colorPrimaryLight"/>
+            app:tabIndicatorColor="@color/colorPrimaryLight"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -49,27 +49,26 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_transfer"
         android:scaleType="center"
-        app:backgroundTint="@color/colorAccent_2"/>
+        android:src="@drawable/ic_transfer"
+        app:backgroundTint="@color/colorAccent_2" />
+
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_delivery"
+        android:id="@+id/fab_sales"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:scaleType="center"
-        android:src="@drawable/ic_delivery" />
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_action_sales" />
 
     <com.github.fabtransitionactivity.SheetLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        app:ft_container_gravity="center"
+        android:elevation="2dp"
         app:ft_color="@color/colorPrimary"
-        android:elevation="2dp"/>
-
+        app:ft_container_gravity="center" />
 
 </android.support.design.widget.CoordinatorLayout>

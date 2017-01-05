@@ -1,27 +1,33 @@
-package app.miji.com.inventorycheck.activity;
+package app.miji.com.inventorycheck;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.TextView;
 
 import com.github.fabtransitionactivity.SheetLayout;
 
-import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.activity.DeliveryActivity;
+import app.miji.com.inventorycheck.activity.StockInActivity;
+import app.miji.com.inventorycheck.activity.TransferActivity;
 
-public class StockInActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener {
+public class StockOutActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener {
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -33,31 +39,29 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    private FloatingActionButton fabDelivery;
-    private FloatingActionButton fabTransfer;
-
-    private SheetLayout mSheetLayout;
-
-
-    private static final int REQUEST_CODE = 1;
-    private int selectedTab;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private int selectedTab;
+
+    private FloatingActionButton fabSales;
+    private FloatingActionButton fabTransfer;
+    private SheetLayout mSheetLayout;
+
+    private static final int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock_in);
+        setContentView(R.layout.activity_stock_out);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //setup floating action buttons
-        fabDelivery = (FloatingActionButton) findViewById(R.id.fab_delivery);
+        fabSales = (FloatingActionButton) findViewById(R.id.fab_sales);
         fabTransfer = (FloatingActionButton) findViewById(R.id.fab_transfer);
 
         // Create the adapter that will return a fragment for each of the three
@@ -91,15 +95,14 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
             }
         });
 
-
         //setup sheet layout
         mSheetLayout = (SheetLayout) findViewById(R.id.bottom_sheet);
-        mSheetLayout.setFab(fabDelivery);
+        mSheetLayout.setFab(fabSales);
         mSheetLayout.setFab(fabTransfer);
-        mSheetLayout.setFabAnimationEndListener(StockInActivity.this);
+        mSheetLayout.setFabAnimationEndListener(StockOutActivity.this);
 
         //fabDelivery click
-        fabDelivery.setOnClickListener(new View.OnClickListener() {
+        fabSales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSheetLayout.expandFab();
@@ -114,9 +117,8 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
             }
         });
 
+
     }
-
-
 
     private void showProperFab(int tab) {
         switch (tab) {
@@ -124,13 +126,13 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
                 fabTransfer.hide(new FloatingActionButton.OnVisibilityChangedListener() {
                     @Override
                     public void onHidden(FloatingActionButton fab) {
-                        fabDelivery.show();
+                        fabSales.show();
                     }
                 });
                 break;
 
             case 1:
-                fabDelivery.hide(new FloatingActionButton.OnVisibilityChangedListener() {
+                fabSales.hide(new FloatingActionButton.OnVisibilityChangedListener() {
                     @Override
                     public void onHidden(FloatingActionButton fab) {
                         fabTransfer.show();
@@ -142,9 +144,17 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
 
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE){
+            mSheetLayout.contractFab();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stock_in, menu);
+        getMenuInflater().inflate(R.menu.menu_stock_out, menu);
         return true;
     }
 
@@ -168,6 +178,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         Intent intent;
         switch (selectedTab){
             case 0:
+                //TODO change activity
                 intent = new Intent(this, DeliveryActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
@@ -177,15 +188,6 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
                 break;
         }
 
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE){
-            mSheetLayout.contractFab();
-        }
     }
 
     /**
@@ -216,7 +218,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_stock_in, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_stock_out, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -242,18 +244,18 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
 
         @Override
         public int getCount() {
-            // Show 2 total pages.
+            // Show 3 total pages.
             return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            String delivery = getString(R.string.delivery);
+            String sales = getString(R.string.sales);
             String transfer = getString(R.string.transfer);
 
             switch (position) {
                 case 0:
-                    return delivery;
+                    return sales;
                 case 1:
                     return transfer;
             }

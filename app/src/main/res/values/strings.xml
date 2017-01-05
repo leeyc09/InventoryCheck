@@ -31,4 +31,6 @@
     <string name="trans_id">Transfer ID</string>
     <string name="from_location">From location</string>
     <string name="to_location">To location</string>
+    <string name="title_activity_stock_out">Stock Out</string>
+    <string name="sales">Sales</string>
 </resources>
