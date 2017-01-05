@@ -1,15 +1,17 @@
 package app.miji.com.inventorycheck.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import app.miji.com.inventorycheck.R;
 
 public class TransferActivity extends AppCompatActivity {
+
+    //for determining floating label for spinner location
+    //FLAG 0: from StockInActivity
+    //FLAG 1: from StockOutActivity
+    public static final String FLAG = "spinner_label";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -168,11 +168,15 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         Intent intent;
         switch (selectedTab){
             case 0:
+                //DELIVERY ACTIVITY
                 intent = new Intent(this, DeliveryActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case 1:
+                //TRANSFER ACTIVITY
                 intent = new Intent(this, TransferActivity.class);
+                //0 -> from stockin
+                intent.putExtra(TransferActivity.FLAG, 0);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
         }

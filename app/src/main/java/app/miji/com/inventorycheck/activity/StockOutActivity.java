@@ -1,22 +1,20 @@
 package app.miji.com.inventorycheck.activity;
 
 import android.content.Intent;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import com.github.fabtransitionactivity.SheetLayout;
@@ -143,7 +141,7 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE){
+        if (requestCode == REQUEST_CODE) {
             mSheetLayout.contractFab();
         }
     }
@@ -173,15 +171,17 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
     @Override
     public void onFabAnimationEnd() {
         Intent intent;
-        switch (selectedTab){
+        switch (selectedTab) {
             case 0:
                 //Sales activity
                 intent = new Intent(this, SalesActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
             case 1:
-                //Sales activity
+                //Transfer activity
                 intent = new Intent(this, TransferActivity.class);
+                //1 -> from stockout
+                intent.putExtra(TransferActivity.FLAG, 1);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
         }

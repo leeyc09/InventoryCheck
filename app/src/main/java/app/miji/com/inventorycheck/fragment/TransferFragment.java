@@ -22,6 +22,7 @@ import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.DeliveryActivity;
+import app.miji.com.inventorycheck.activity.TransferActivity;
 import app.miji.com.inventorycheck.model.Utility;
 
 /**
@@ -45,7 +46,6 @@ public class TransferFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transfer, container, false);
 
-
         final ImageButton btnDate = (ImageButton) view.findViewById(R.id.btn_date);
         final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
@@ -55,6 +55,27 @@ public class TransferFragment extends Fragment {
         final MaterialBetterSpinner spinnerToLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner_to_loc);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+
+
+        //get flag for spinner hint label
+        Intent intent = getActivity().getIntent();
+        int flag = 0;
+        if (intent != null) {
+            flag = intent.getIntExtra(TransferActivity.FLAG, 0);
+        }
+        switch (flag) {
+            case 0:
+                //from stock in
+                spinnerFromLocation.setHint(getString(R.string.from_location));
+                spinnerToLocation.setHint(getString(R.string.to_location));
+                break;
+            case 1:
+                //from stock out
+                spinnerFromLocation.setHint(getString(R.string.to_location));
+                spinnerToLocation.setHint(getString(R.string.from_location));
+                break;
+        }
+
 
         // Get Current Date
         final Calendar c = Calendar.getInstance();
