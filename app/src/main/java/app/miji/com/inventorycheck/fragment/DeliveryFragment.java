@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.activity.TransferActivity;
 import app.miji.com.inventorycheck.model.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
@@ -187,7 +188,7 @@ public class DeliveryFragment extends Fragment {
 
                 //if valid proceed to the next activity
                 if (isValid) {
-                    Intent intent = new Intent(getActivity(), TransferActivity.class);
+                    Intent intent = new Intent(getActivity(), NewItemsActivity.class);
                     startActivity(intent);
                 }
 
