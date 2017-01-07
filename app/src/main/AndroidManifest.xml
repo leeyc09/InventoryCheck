@@ -88,6 +88,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.miji.com.inventorycheck.activity.ProductActivity" />
         </activity>
+        <activity
+            android:name=".activity.NewItemsActivity"
+            android:label="@string/title_activity_new_items"
+            android:parentActivityName=".activity.DeliveryActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.miji.com.inventorycheck.activity.DeliveryActivity" />
+        </activity>
     </application>
 
 </manifest>

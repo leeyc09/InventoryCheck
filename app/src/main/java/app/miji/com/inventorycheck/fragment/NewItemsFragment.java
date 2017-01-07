@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck.activity;
+package app.miji.com.inventorycheck.fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -11,14 +11,14 @@ import app.miji.com.inventorycheck.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class NewProductActivityFragment extends Fragment {
+public class NewItemsFragment extends Fragment {
 
-    public NewProductActivityFragment() {
+    public NewItemsFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_new_product, container, false);
+        return inflater.inflate(R.layout.list_new_items, container, false);
     }
 }

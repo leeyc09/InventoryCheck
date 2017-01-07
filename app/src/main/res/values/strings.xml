@@ -48,4 +48,5 @@
     <string name="item_image">Item image</string>
     <string name="low_stock">Notify low stock</string>
     <string name="notes">Notes</string>
+    <string name="title_activity_new_items">NewItemsActivity</string>
 </resources>

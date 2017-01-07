@@ -11,7 +11,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.miji.com.inventorycheck.activity.NewProductActivityFragment"
+    tools:context="app.miji.com.inventorycheck.fragment.NewProductFragment"
     tools:showIn="@layout/activity_new_product">
 
     <android.support.design.widget.FloatingActionButton
@@ -79,7 +79,7 @@
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
                     <EditText
-                        android:id="@+id/txt_bar_code"
+                        android:id="@+id/txt_barcode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/barcode"
@@ -88,6 +88,7 @@
 
 
                 <ImageView
+                    android:id="@+id/img_scan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/input_barcode"
@@ -145,7 +146,7 @@
 
 
                 <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/material_spinner"
+                    android:id="@+id/spinner_unit"
                     android:layout_width="@dimen/unit_width"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/input_qty"
@@ -153,6 +154,16 @@
                     android:hint="@string/unit"
                     android:inputType="text"
                     app:met_floatingLabel="highlight" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/text_margin"
+                    android:layout_marginStart="@dimen/text_margin"
+                    android:layout_toEndOf="@+id/spinner_unit"
+                    android:src="@drawable/ic_small_add" />
+
 
             </RelativeLayout>
 
