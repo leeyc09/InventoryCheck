@@ -126,6 +126,7 @@ public class DeliveryFragment extends Fragment {
         setupSpinner(materialSpinner);
 
 
+
         //when txt_add_location is clicked, show add new location dialog box
         txtAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -16,5 +16,6 @@
     <dimen name="qty_width">150dp</dimen>
     <dimen name="unit_width">80dp</dimen>
     <dimen name="txtBarcode_width">200dp</dimen>
-    <dimen name="list_cardview_margin">4dp</dimen>
+    <dimen name="list_cardview_margin">8dp</dimen>
+    <dimen name="cardview_padding_bottom">16dp</dimen>
 </resources>
