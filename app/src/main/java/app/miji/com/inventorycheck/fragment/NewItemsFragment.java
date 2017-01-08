@@ -63,7 +63,7 @@ public class NewItemsFragment extends Fragment {
 
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new NewItemRecyclerViewAdapter(getContext(), recyclerviewItemQty++);
+        mAdapter = new NewItemRecyclerViewAdapter(getContext(), recyclerviewItemQty++,getFragmentManager());
         recyclerView.setAdapter(mAdapter);
         //scroll to last item
         recyclerView.scrollToPosition(mAdapter.getItemCount()-1);
