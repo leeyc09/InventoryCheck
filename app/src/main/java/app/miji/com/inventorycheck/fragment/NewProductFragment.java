@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -39,7 +40,7 @@ public class NewProductFragment extends Fragment {
         EditText txtNotes = (EditText) view.findViewById(R.id.txt_notes);
         final TextInputLayout txtInName = (TextInputLayout) view.findViewById(R.id.input_name);
         ImageView imgScan = (ImageView) view.findViewById(R.id.img_scan);
-        MaterialBetterSpinner spinnerUnit = (MaterialBetterSpinner) view.findViewById(R.id.spinner_unit);
+        AutoCompleteTextView spinnerUnit = (AutoCompleteTextView) view.findViewById(R.id.spinner_unit);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         //setup fab

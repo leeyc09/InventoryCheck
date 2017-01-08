@@ -24,17 +24,26 @@
             android:src="@drawable/image_placeholder" />
 
 
-        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_name"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/text_margin"
-            android:layout_marginLeft="@dimen/text_margin"
-            android:layout_marginRight="@dimen/text_margin"
-            android:layout_marginStart="@dimen/text_margin"
-            android:hint="@string/name"
-            android:paddingTop="@dimen/cardview_top_bottom_margin"
-            app:met_floatingLabel="highlight" />
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/spinner_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
+                android:layout_marginStart="@dimen/text_margin"
+                android:hint="@string/item"
+                android:paddingTop="@dimen/cardview_top_bottom_margin" />
+
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -60,16 +69,21 @@
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
-
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                android:id="@+id/spinner_unit"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_unit"
                 android:layout_width="@dimen/unit_width"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/input_qty"
                 android:layout_toEndOf="@+id/input_qty"
-                android:hint="@string/unit"
-                android:inputType="text"
-                app:met_floatingLabel="highlight" />
+                app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_unit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/unit"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
 
 

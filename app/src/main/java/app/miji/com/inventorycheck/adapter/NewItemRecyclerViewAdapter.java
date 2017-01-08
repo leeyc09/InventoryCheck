@@ -10,9 +10,11 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,10 +49,20 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         setupItemSpinner(holder.spinnerName);
         setupUnitSpinner(holder.spinnerUnit);
         setupImagePicker(holder.mItemImageView);
+
+
+        holder.spinnerName.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                //always show the dropdown list
+                holder.spinnerName.showDropDown();
+                return false;
+            }
+        });
     }
 
 
@@ -60,19 +72,19 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
     }
 
 
-    private void setupItemSpinner(MaterialBetterSpinner materialSpinner) {
+    private void setupItemSpinner(AutoCompleteTextView autoCompleteTextView) {
         //dummy items to show in spinner
         final String[] ITEMS = new String[]{"Cupcake", "Brownies", "Tiramisu", "Cake", "Burger"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.simple_dropdown_item_1line, ITEMS);
-        materialSpinner.setAdapter(adapter);
+        autoCompleteTextView.setAdapter(adapter);
     }
 
-    private void setupUnitSpinner(MaterialBetterSpinner materialSpinner) {
+    private void setupUnitSpinner(AutoCompleteTextView autoCompleteTextView) {
         final String[] UNITS = new String[]{"pcs", "kg", "m"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.simple_dropdown_item_1line, UNITS);
-        materialSpinner.setAdapter(adapter);
+        autoCompleteTextView.setAdapter(adapter);
     }
 
 
@@ -113,8 +125,8 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
         final TextInputLayout mTxtInQty;
         final TextView mTxtQty;
 
-        final MaterialBetterSpinner spinnerName;
-        final MaterialBetterSpinner spinnerUnit;
+        final AutoCompleteTextView spinnerName;
+        final AutoCompleteTextView spinnerUnit;
 
 
         public ViewHolder(View itemView) {
@@ -123,8 +135,8 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
             mItemImageView = (ImageView) itemView.findViewById(R.id.img_receipt);
             mTxtInQty = (TextInputLayout) itemView.findViewById(R.id.input_name);
             mTxtQty = (TextView) itemView.findViewById(R.id.txt_qty);
-            spinnerName = (MaterialBetterSpinner) itemView.findViewById(R.id.spinner_name);
-            spinnerUnit = (MaterialBetterSpinner) itemView.findViewById(R.id.spinner_unit);
+            spinnerName = (AutoCompleteTextView) itemView.findViewById(R.id.spinner_name);
+            spinnerUnit = (AutoCompleteTextView) itemView.findViewById(R.id.spinner_unit);
 
         }
     }

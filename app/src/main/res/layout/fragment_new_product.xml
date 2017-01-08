@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/save"
         app:srcCompat="@drawable/ic_action_done" />
 
@@ -102,7 +103,7 @@
                 style="@style/CustomTextInputLayout"
                 app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/txt_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,25 +144,22 @@
                         android:inputType="number" />
                 </android.support.design.widget.TextInputLayout>
 
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/spinner_unit"
-                    android:layout_width="@dimen/unit_width"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_unit"
                     android:layout_height="wrap_content"
+                    android:layout_width="@dimen/qty_width"
                     android:layout_alignBottom="@+id/input_qty"
                     android:layout_toEndOf="@+id/input_qty"
-                    android:hint="@string/unit"
-                    android:inputType="text"
-                    app:met_floatingLabel="highlight" />
+                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_unit"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="@dimen/text_margin"
-                    android:layout_marginStart="@dimen/text_margin"
-                    android:layout_toEndOf="@+id/spinner_unit"
-                    android:src="@drawable/ic_small_add" />
+                    android:layout_width="@dimen/unit_width"
+                    android:hint="@string/unit"
+                    android:inputType="text"/>
+                </android.support.design.widget.TextInputLayout>
+
 
 
             </RelativeLayout>
