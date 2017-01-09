@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context="app.miji.com.inventorycheck.activity.NewItemsActivity">
 
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +22,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_new_items" />
 
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <include layout="@layout/item_detail" />
+
+        <include layout="@layout/content_new_items" />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

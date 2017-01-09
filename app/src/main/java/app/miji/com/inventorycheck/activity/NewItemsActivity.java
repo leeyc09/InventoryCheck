@@ -1,13 +1,17 @@
 package app.miji.com.inventorycheck.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
 
 public class NewItemsActivity extends AppCompatActivity {
+
+    public static final String DETAIL = "detail";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +20,17 @@ public class NewItemsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        String detail = null;
+        if (intent != null) {
+            detail = intent.getStringExtra(DETAIL);
+        }
+
+
+        TextView txtDetail = (TextView) findViewById(R.id.txt_details);
+        txtDetail.setText(detail);
+
     }
 
 

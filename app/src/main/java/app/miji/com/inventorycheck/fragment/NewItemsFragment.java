@@ -18,6 +18,7 @@ import app.miji.com.inventorycheck.adapter.NewItemRecyclerViewAdapter;
  */
 public class NewItemsFragment extends Fragment {
 
+
     private NewItemRecyclerViewAdapter mAdapter;
     private int recyclerviewItemQty = 1;
 
@@ -28,7 +29,6 @@ public class NewItemsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_new_items, container, false);
-
 
         //setup recyclerview
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_new_items);
@@ -63,9 +63,9 @@ public class NewItemsFragment extends Fragment {
 
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new NewItemRecyclerViewAdapter(getContext(), recyclerviewItemQty++,getFragmentManager());
+        mAdapter = new NewItemRecyclerViewAdapter(getContext(), recyclerviewItemQty++, getFragmentManager());
         recyclerView.setAdapter(mAdapter);
         //scroll to last item
-        recyclerView.scrollToPosition(mAdapter.getItemCount()-1);
+        recyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
     }
 }

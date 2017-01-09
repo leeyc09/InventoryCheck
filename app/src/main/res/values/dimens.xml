@@ -20,4 +20,5 @@
     <dimen name="cardview_padding_bottom">16dp</dimen>
     <dimen name="cardview_item_image_height">250dp</dimen>
     <dimen name="cardview_top_bottom_margin">24dp</dimen>
+    <dimen name="cardview_detail_margin">16dp</dimen>
 </resources>

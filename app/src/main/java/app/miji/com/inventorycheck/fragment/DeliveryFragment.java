@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
-import app.miji.com.inventorycheck.activity.TransferActivity;
 import app.miji.com.inventorycheck.model.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -126,7 +124,6 @@ public class DeliveryFragment extends Fragment {
         setupSpinner(materialSpinner);
 
 
-
         //when txt_add_location is clicked, show add new location dialog box
         txtAddLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,21 +174,23 @@ public class DeliveryFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String strDeliveredBy = txtDelivery.getText().toString();
+                String strRef = txtReference.getText().toString();
+                String strLoc = materialSpinner.getText().toString();
+                String strDate = txtDate.getText().toString();
+                String strTime = txtTime.getText().toString();
+
+
                 //validate form
-                int deliveredBy = txtDelivery.getText().toString().length();
-                int refNo = txtReference.getText().toString().length();
-                int location = materialSpinner.getText().toString().length();
+                int deliveredBy = strDeliveredBy.length();
+                int refNo = strRef.length();
+                int location = strLoc.length();
                 boolean isValid = deliveredBy != 0 && refNo != 0 && location != 0; //if formed is properly filled out
 
                 Log.v(LOG_TAG, "Delivered By: " + deliveredBy);
                 Log.v(LOG_TAG, "Reference No: " + refNo);
                 Log.v(LOG_TAG, "Location: " + location);
 
-                //if valid proceed to the next activity
-                if (isValid) {
-                    Intent intent = new Intent(getActivity(), NewItemsActivity.class);
-                    startActivity(intent);
-                }
 
                 //check if delivery is null
                 if (deliveredBy == 0) {
@@ -215,6 +214,36 @@ public class DeliveryFragment extends Fragment {
                     materialSpinner.setError(getString(R.string.required_field));
                 } else {
                     materialSpinner.setError(null);
+                }
+
+
+                //if valid proceed to the next activity
+                if (isValid) {
+                    Intent intent = new Intent(getActivity(), NewItemsActivity.class);
+
+                    //create detail string
+                    StringBuffer stringBuffer = new StringBuffer();
+
+                    //Delivery details
+                    stringBuffer.append(getResources().getString(R.string.delivery_details).toUpperCase());
+                    stringBuffer.append("\n"); //new line
+                    stringBuffer.append("\n"); //new line
+                    //"Date: and Time "
+                    stringBuffer.append(getResources().getString(R.string.mdtp_date) + ": " + strDate);
+                    stringBuffer.append(" " + strTime);
+                    stringBuffer.append("\n"); //new line
+                    //"Delivered by: "
+                    stringBuffer.append(getResources().getString(R.string.delivered_by) + ": " + strDeliveredBy);
+                    stringBuffer.append("\n"); //new line
+                    //"Reference No: "
+                    stringBuffer.append(getResources().getString(R.string.reference) + ": " + strRef);
+                    stringBuffer.append("\n"); //new line
+                    //"Location: "
+                    stringBuffer.append(getResources().getString(R.string.location) + ": " + strLoc);
+                    stringBuffer.append("\n"); //new line
+
+                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
+                    startActivity(intent);
                 }
 
             }
