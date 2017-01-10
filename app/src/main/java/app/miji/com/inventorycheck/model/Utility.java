@@ -3,6 +3,8 @@ package app.miji.com.inventorycheck.model;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
@@ -11,7 +13,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 
 import app.miji.com.inventorycheck.R;
 
@@ -131,18 +136,20 @@ public class Utility {
 
     }
 
-    public static int getScreenHeight(WindowManager windowManager) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getMetrics(metrics);
-        int height = metrics.heightPixels;
-        return height;
-    }
-
-    public static int getScreenWidth(WindowManager windowManager) {
+    public static void showImagePopup(Context context, ImageView imageView, WindowManager windowManager, Drawable drawable){
+        //get screen's height and width
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
-        return width;
+        int height = metrics.heightPixels;
+
+        final ImagePopup imagePopup = new ImagePopup(context);
+        imagePopup.setBackgroundColor(Color.BLACK);
+        imagePopup.setWindowWidth(width);
+        imagePopup.setWindowHeight(height);
+
+        imagePopup.initiatePopup(drawable);
+
     }
 
 }
