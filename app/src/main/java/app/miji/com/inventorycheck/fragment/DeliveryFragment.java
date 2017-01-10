@@ -225,7 +225,8 @@ public class DeliveryFragment extends Fragment {
                     StringBuffer stringBuffer = new StringBuffer();
 
                     //Delivery details
-                    stringBuffer.append(getResources().getString(R.string.delivery_details).toUpperCase());
+                    String title = getResources().getString(R.string.delivery_details).toUpperCase();
+                    stringBuffer.append(title);
                     stringBuffer.append("\n"); //new line
                     stringBuffer.append("\n"); //new line
                     //"Date: and Time "
