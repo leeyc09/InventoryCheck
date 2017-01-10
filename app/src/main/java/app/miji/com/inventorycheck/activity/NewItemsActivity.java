@@ -1,17 +1,20 @@
 package app.miji.com.inventorycheck.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
@@ -21,7 +24,7 @@ public class NewItemsActivity extends AppCompatActivity {
 
     public static final String DETAIL = "detail";
 
-    private LinearLayout card_detail;
+    private CardView card_detail;
 
     private boolean mSwitch = false;
 
@@ -39,7 +42,7 @@ public class NewItemsActivity extends AppCompatActivity {
         if (intent != null) {
             detail = intent.getStringExtra(DETAIL);
         }
-        card_detail = (LinearLayout) findViewById(R.id.root_detail);
+        card_detail = (CardView) findViewById(R.id.cardview_details);
         TextView txtDetail = (TextView) findViewById(R.id.txt_details);
         txtDetail.setText(detail);
 
@@ -108,12 +111,37 @@ public class NewItemsActivity extends AppCompatActivity {
 
 
     private void showDetails() {
-        card_detail.setVisibility(View.VISIBLE);
         mSwitch = false;
+
+        // Prepare the View for the animation
+        card_detail.setAlpha(0.0f);
+
+        // Start the animation
+        card_detail.animate()
+                .translationY(0)
+                .alpha(1.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        card_detail.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 
     private void hideDetails() {
-        card_detail.setVisibility(View.GONE);
         mSwitch = true;
+        // Start the animation
+        card_detail.animate()
+                .translationY(card_detail.getHeight()/2)
+                .alpha(0.0f)
+                .setDuration(500)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        card_detail.setVisibility(View.GONE);
+                    }
+                });
     }
 }
