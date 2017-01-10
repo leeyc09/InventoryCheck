@@ -23,7 +23,7 @@ import java.util.Calendar;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.DeliveryActivity;
 import app.miji.com.inventorycheck.activity.TransferActivity;
-import app.miji.com.inventorycheck.model.Utility;
+import app.miji.com.inventorycheck.utility.Utility;
 
 /**
  * A placeholder fragment containing a simple view.

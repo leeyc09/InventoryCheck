@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck.model;
+package app.miji.com.inventorycheck.utility;
 
 import android.content.Context;
 import android.content.DialogInterface;

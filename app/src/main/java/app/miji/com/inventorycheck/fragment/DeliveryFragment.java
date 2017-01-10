@@ -28,7 +28,7 @@ import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
-import app.miji.com.inventorycheck.model.Utility;
+import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 /**

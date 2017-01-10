@@ -13,12 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.model.Utility;
+import app.miji.com.inventorycheck.utility.Utility;
 
 public class NewItemsActivity extends AppCompatActivity {
 
