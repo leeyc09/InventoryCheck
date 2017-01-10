@@ -1,16 +1,23 @@
 package app.miji.com.inventorycheck.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ceylonlabs.imageviewpopup.ImagePopup;
+
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.model.Utility;
 
 public class NewItemsActivity extends AppCompatActivity {
 
@@ -49,6 +56,23 @@ public class NewItemsActivity extends AppCompatActivity {
 
         //initially hide details
         showDetails();
+
+
+        //show image view popup
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        final ImagePopup imagePopup = new ImagePopup(this);
+        imagePopup.setBackgroundColor(Color.BLACK);
+        imagePopup.setWindowWidth(Utility.getScreenWidth(getWindowManager()));
+        imagePopup.setWindowHeight(Utility.getScreenHeight(getWindowManager()));
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+                //TODO change drawable image dynamically
+                imagePopup.initiatePopup(getDrawable(R.drawable.warehouse));
+            }
+        });
 
     }
 

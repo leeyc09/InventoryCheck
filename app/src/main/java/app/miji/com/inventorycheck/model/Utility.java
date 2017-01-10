@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -128,6 +130,21 @@ public class Utility {
 
 
     }
+
+    public static int getScreenHeight(WindowManager windowManager) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        int height = metrics.heightPixels;
+        return height;
+    }
+
+    public static int getScreenWidth(WindowManager windowManager) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        return width;
+    }
+
 }
 
 
