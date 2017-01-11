@@ -52,4 +52,5 @@
     <string name="scan">Scan</string>
     <string name="item">Item</string>
     <string name="delivery_details">Delivery details</string>
+    <string name="add">Add</string>
 </resources>

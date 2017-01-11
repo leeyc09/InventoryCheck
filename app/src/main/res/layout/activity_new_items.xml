@@ -23,6 +23,7 @@
     </android.support.design.widget.AppBarLayout>
 
 
+
     <LinearLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
@@ -31,9 +32,11 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/item_detail" />
-
         <include layout="@layout/content_new_items" />
 
     </LinearLayout>
+
+
+
 
 </android.support.design.widget.CoordinatorLayout>

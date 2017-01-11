@@ -8,12 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
@@ -23,7 +23,7 @@ public class NewItemsActivity extends AppCompatActivity {
 
     public static final String DETAIL = "detail";
 
-    private CardView card_detail;
+    private LinearLayout card_detail;
 
     private boolean mSwitch = false;
 
@@ -41,7 +41,7 @@ public class NewItemsActivity extends AppCompatActivity {
         if (intent != null) {
             detail = intent.getStringExtra(DETAIL);
         }
-        card_detail = (CardView) findViewById(R.id.cardview_details);
+        card_detail = (LinearLayout) findViewById(R.id.cardview_details);
         TextView txtDetail = (TextView) findViewById(R.id.txt_details);
         txtDetail.setText(detail);
 
@@ -112,9 +112,6 @@ public class NewItemsActivity extends AppCompatActivity {
     private void showDetails() {
         mSwitch = false;
 
-        // Prepare the View for the animation
-        card_detail.setAlpha(0.0f);
-
         // Start the animation
         card_detail.animate()
                 .translationY(0)
@@ -132,9 +129,9 @@ public class NewItemsActivity extends AppCompatActivity {
         mSwitch = true;
         // Start the animation
         card_detail.animate()
-                .translationY(card_detail.getHeight()/2)
+                .translationY(card_detail.getHeight() / 2)
                 .alpha(0.0f)
-                .setDuration(500)
+                .setDuration(300)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {

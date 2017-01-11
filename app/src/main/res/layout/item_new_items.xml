@@ -53,7 +53,7 @@
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginRight="@dimen/text_margin"
             android:layout_marginStart="@dimen/text_margin"
-            android:paddingBottom="@dimen/cardview_top_bottom_margin">
+            android:paddingBottom="@dimen/text_margin">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_qty"
