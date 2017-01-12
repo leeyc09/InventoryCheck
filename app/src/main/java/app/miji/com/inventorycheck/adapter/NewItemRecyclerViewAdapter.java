@@ -50,19 +50,11 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        setupItemSpinner(holder.spinnerName);
-        setupUnitSpinner(holder.spinnerUnit);
-        setupImagePicker(holder.mItemImageView);
+
+        holder.mTxtName.setText("Dog Food");
+        holder.mTxtQty.setText("10 kgs");
 
 
-        holder.spinnerName.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //always show the dropdown list
-                holder.spinnerName.showDropDown();
-                return false;
-            }
-        });
     }
 
 
@@ -72,71 +64,20 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
     }
 
 
-    private void setupItemSpinner(AutoCompleteTextView autoCompleteTextView) {
-        //dummy items to show in spinner
-        final String[] ITEMS = new String[]{"Cupcake", "Brownies", "Tiramisu", "Cake", "Burger"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_dropdown_item_1line, ITEMS);
-        autoCompleteTextView.setAdapter(adapter);
-    }
-
-    private void setupUnitSpinner(AutoCompleteTextView autoCompleteTextView) {
-        final String[] UNITS = new String[]{"pcs", "kg", "m"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_dropdown_item_1line, UNITS);
-        autoCompleteTextView.setAdapter(adapter);
-    }
-
-
-    private void setupImagePicker(final ImageView mItemImageView) {
-        mItemImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Start TedBottomPicker
-                TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(mContext)
-                        .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
-                            @Override
-                            public void onImageSelected(Uri uri) {
-                                //Do something with selected uri
-                                InputStream inputStream;
-                                try {
-                                    inputStream = mContext.getContentResolver().openInputStream(uri);
-                                    //the "image" received here is the image itself
-                                    Bitmap b = BitmapFactory.decodeStream(inputStream);
-                                    mItemImageView.setImageBitmap(b);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        })
-                        .create();
-
-                tedBottomPicker.show(fragmentManager);
-            }
-        });
-
-    }
-
-
     class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
         final ImageView mItemImageView;
 
-        final TextInputLayout mTxtInQty;
+        final TextView mTxtName;
         final TextView mTxtQty;
-
-        final AutoCompleteTextView spinnerName;
-        final AutoCompleteTextView spinnerUnit;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
             mItemImageView = (ImageView) itemView.findViewById(R.id.img_receipt);
-            mTxtInQty = (TextInputLayout) itemView.findViewById(R.id.input_name);
             mTxtQty = (TextView) itemView.findViewById(R.id.txt_qty);
-            spinnerName = (AutoCompleteTextView) itemView.findViewById(R.id.spinner_name);
-            spinnerUnit = (AutoCompleteTextView) itemView.findViewById(R.id.spinner_unit);
+            mTxtName = (TextView) itemView.findViewById(R.id.txt_name);
 
         }
     }

@@ -14,9 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@android:color/white"
-        app:layout_anchor="@+id/add_details"
+        app:layout_anchor="@+id/detail_container"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_input_add"
+        android:elevation="6dp"
         app:layout_behavior="app.miji.com.inventorycheck.widget.ScrollAwareFabBehavior"/>
 
     <LinearLayout

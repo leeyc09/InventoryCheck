@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="list_column_count">3</integer>
+    <integer name="list_item_column_count">5</integer>
     <dimen name="list_side_margin">32dp</dimen>
 </resources>

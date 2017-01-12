@@ -3,4 +3,5 @@
     <!--list-->
     <dimen name="list_side_margin">8dp</dimen>
     <integer name="list_column_count">1</integer>
+    <integer name="list_item_column_count">2</integer>
 </resources>
