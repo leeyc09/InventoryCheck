@@ -3,6 +3,7 @@ package app.miji.com.inventorycheck.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import app.miji.com.inventorycheck.utility.Utility;
 public class NewItemsActivity extends AppCompatActivity {
 
     public static final String DETAIL = "detail";
+    public static final String BASE64_IMAGE = "image";
 
     private LinearLayout card_detail;
 
@@ -37,13 +39,18 @@ public class NewItemsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String detail = null;
+        String base64Image = null;
 
         if (intent != null) {
             detail = intent.getStringExtra(DETAIL);
+            base64Image = intent.getStringExtra(BASE64_IMAGE);
         }
+
+        //details
         card_detail = (LinearLayout) findViewById(R.id.cardview_details);
         TextView txtDetail = (TextView) findViewById(R.id.txt_details);
         txtDetail.setText(detail);
+
 
         //hide details when clicked
         txtDetail.setOnClickListener(new View.OnClickListener() {
@@ -60,12 +67,23 @@ public class NewItemsActivity extends AppCompatActivity {
 
         //show image view popup
         final ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        //image
+        if (base64Image != null) {
+            //show imageview
+            imageView.setVisibility(View.VISIBLE);
+            Bitmap bitmap = Utility.decodeBase64Image(base64Image);
+            imageView.setImageBitmap(bitmap);
+        } else {
+            //no image, hide it
+            imageView.setVisibility(View.GONE);
+        }
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                //TODO change drawable image dynamically
+                //show imageview popup
                 Drawable drawable = imageView.getDrawable();
                 Utility.showImagePopup(NewItemsActivity.this, imageView, getWindowManager(), drawable);
             }

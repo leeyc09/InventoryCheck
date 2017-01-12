@@ -3,10 +3,13 @@ package app.miji.com.inventorycheck.utility;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import app.miji.com.inventorycheck.R;
 
@@ -136,7 +143,7 @@ public class Utility {
 
     }
 
-    public static void showImagePopup(Context context, ImageView imageView, WindowManager windowManager, Drawable drawable){
+    public static void showImagePopup(Context context, ImageView imageView, WindowManager windowManager, Drawable drawable) {
         //get screen's height and width
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(metrics);
@@ -151,6 +158,61 @@ public class Utility {
         imagePopup.initiatePopup(drawable);
 
     }
+
+    public static String convertBitmapToBase64(Bitmap bitmap) {
+        String encodedString = "";
+
+
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOS);
+
+        encodedString = Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+
+        return encodedString;
+    }
+
+
+    public static Bitmap decodeBase64Image(String base64String) {
+        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        return decodedByte;
+    }
+
+
+    public static Bitmap resizeImageFromFile(InputStream in) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = in.read(buffer)) > -1) {
+                baos.write(buffer, 0, len);
+            }
+            baos.flush();
+            InputStream is1 = new ByteArrayInputStream(baos.toByteArray());
+            InputStream is2 = new ByteArrayInputStream(baos.toByteArray());
+
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(is1, null, o);
+
+            final int IMAGE_MAX_SIZE = 512;
+
+            System.out.println("h:" + o.outHeight + " w:" + o.outWidth);
+            int scale = 100;
+            if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
+                scale = (int) Math.pow(2, (int) Math.round(Math.log(IMAGE_MAX_SIZE /
+                        (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+            }
+
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(is2, null, o2);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 
 }
 

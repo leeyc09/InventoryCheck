@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardview_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -14,11 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginBottom="@dimen/cardview_padding_bottom"
-        android:layout_marginLeft="@dimen/cardview_detail_margin"
-        android:layout_marginRight="@dimen/cardview_detail_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:paddingBottom="@dimen/text_margin"
+        android:paddingLeft="@dimen/cardview_detail_margin"
+        android:paddingRight="@dimen/cardview_detail_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="2">
 
 
         <TextView
@@ -28,8 +26,8 @@
             android:layout_weight="1"
             android:hint="@string/add_delivery"
             android:padding="@dimen/text_margin"
-            android:textColor="@android:color/white"
-            android:textAppearance="?android:textAppearanceMedium" />
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@android:color/white" />
 
         <ImageView
             android:id="@+id/imageView"

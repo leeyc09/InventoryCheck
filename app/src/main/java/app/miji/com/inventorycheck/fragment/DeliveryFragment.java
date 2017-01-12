@@ -3,7 +3,6 @@ package app.miji.com.inventorycheck.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -43,6 +42,7 @@ public class DeliveryFragment extends Fragment {
 
 
     private final String LOG_TAG = DeliveryFragment.class.getSimpleName();
+    private String base64Image;
 
     public DeliveryFragment() {
     }
@@ -152,11 +152,20 @@ public class DeliveryFragment extends Fragment {
                                 //Do something with selected uri
                                 InputStream inputStream;
                                 try {
+                                    //the "inputStream" received here is the image itself
                                     inputStream = getActivity().getContentResolver().openInputStream(uri);
-                                    //the "image" received here is the image itself
-                                    Bitmap image = BitmapFactory.decodeStream(inputStream);
+
+                                    //resize image before saving
+                                    Bitmap image = Utility.resizeImageFromFile(inputStream);
+
                                     //assign image to your imageview
                                     imgReceipt.setImageBitmap(image);
+
+                                    //Convert bitmap to base64 to so you
+                                    base64Image = Utility.convertBitmapToBase64(image);
+
+
+                                    Log.e(LOG_TAG, "BASE 64 ------------> " + base64Image);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -244,6 +253,8 @@ public class DeliveryFragment extends Fragment {
                     stringBuffer.append("\n"); //new line
 
                     intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
+                    intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);
+
                     startActivity(intent);
                 }
 
