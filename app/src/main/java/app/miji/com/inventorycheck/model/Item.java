@@ -11,18 +11,20 @@ public class Item implements Parcelable{
     String name;
     String qty;
     String unit;
-    //TODO add image
+    String image;
 
-    public Item(String name, String qty, String unit) {
+    public Item(String name, String qty, String unit, String image) {
         this.name = name;
         this.qty = qty;
         this.unit = unit;
+        this.image = image;
     }
 
     protected Item(Parcel in) {
         name = in.readString();
         qty = in.readString();
         unit = in.readString();
+        image = in.readString();
     }
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {
@@ -57,6 +59,14 @@ public class Item implements Parcelable{
         return unit;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public void setUnit(String unit) {
         this.unit = unit;
     }
@@ -71,5 +81,6 @@ public class Item implements Parcelable{
         parcel.writeString(name);
         parcel.writeString(qty);
         parcel.writeString(unit);
+        parcel.writeString(image);
     }
 }

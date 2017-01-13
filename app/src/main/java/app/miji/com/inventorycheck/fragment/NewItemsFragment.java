@@ -2,7 +2,6 @@ package app.miji.com.inventorycheck.fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,9 +21,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.NewItemRecyclerViewAdapter;
+import app.miji.com.inventorycheck.model.Item;
+import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
 /**
@@ -35,13 +38,15 @@ public class NewItemsFragment extends Fragment {
 
     private static final String LOG_TAG = NewItemsFragment.class.getSimpleName();
     private NewItemRecyclerViewAdapter mAdapter;
-    private int recyclerviewItemQty = 1;
-    Context mContext;
+    private Context mContext;
 
 
-    TextInputLayout mTxtInQty;
-    TextInputLayout mTxtInItem;
-    TextInputLayout mTxtInUnit;
+    private TextInputLayout mTxtInQty;
+    private TextInputLayout mTxtInItem;
+    private TextInputLayout mTxtInUnit;
+
+    private List<Item> itemList;
+    private String base64Image = null;
 
     public NewItemsFragment() {
     }
@@ -49,9 +54,12 @@ public class NewItemsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_new_items, container, false);
+        final View view = inflater.inflate(R.layout.list_new_items, container, false);
 
         mContext = getContext();
+
+        //create new list
+        itemList = new ArrayList<>();
 
         //setup recyclerview
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_new_items);
@@ -66,8 +74,8 @@ public class NewItemsFragment extends Fragment {
         assert recyclerView != null;
         setupRecyclerView(recyclerView);
 
-
-        ImageView mItemImageView = (ImageView) view.findViewById(R.id.imageView);
+        //inflate views
+        final ImageView mItemImageView = (ImageView) view.findViewById(R.id.imageView);
         mTxtInItem = (TextInputLayout) view.findViewById(R.id.input_item);
         mTxtInQty = (TextInputLayout) view.findViewById(R.id.input_qty);
         mTxtInUnit = (TextInputLayout) view.findViewById(R.id.input_unit);
@@ -75,14 +83,10 @@ public class NewItemsFragment extends Fragment {
         final AutoCompleteTextView spinnerName = (AutoCompleteTextView) view.findViewById(R.id.spinner_name);
         final AutoCompleteTextView spinnerUnit = (AutoCompleteTextView) view.findViewById(R.id.spinner_unit);
 
-
+        //setup drop down list items
         setupItemSpinner(spinnerName);
         setupUnitSpinner(spinnerUnit);
         setupImagePicker(mItemImageView);
-
-
-        //inflate textviews
-
 
         //setup fab
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -92,17 +96,30 @@ public class NewItemsFragment extends Fragment {
                 String item = spinnerName.getText().toString();
                 String qty = mTxtQty.getText().toString();
                 String unit = spinnerUnit.getText().toString();
+                String image = base64Image;
 
                 //validate form before adding item to list
                 boolean isvalid = validateInput(item, qty, unit);
                 if (isvalid) {
-                    //add another item in recyclerview
-                    setupRecyclerView(recyclerView);
 
-                    //clear textviews
+                    //create new item
+                    Item myItem = new Item(item, qty, unit, image);
+                    //add item to list
+                    itemList.add(myItem);
+                    //set list
+                    mAdapter.setItemList(itemList);
+                    //notify recycler view that there's a change
+                    mAdapter.notifyDataSetChanged();
+                    recyclerView.getAdapter().notifyDataSetChanged();
+
+                    //clear views
                     mTxtQty.setText("");
                     spinnerName.setText("");
                     spinnerUnit.setText("");
+
+                    mItemImageView.setImageResource(R.drawable.image_placeholder);
+                    //reset image to default
+                    base64Image = null;
                 }
 
 
@@ -154,10 +171,10 @@ public class NewItemsFragment extends Fragment {
 
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new NewItemRecyclerViewAdapter(getContext(), recyclerviewItemQty++, getFragmentManager());
+        mAdapter = new NewItemRecyclerViewAdapter(itemList, R.drawable.image_placeholder);
         recyclerView.setAdapter(mAdapter);
         //scroll to last item
-        recyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+        //recyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
     }
 
     private void setupItemSpinner(final AutoCompleteTextView autoCompleteTextView) {
@@ -184,7 +201,6 @@ public class NewItemsFragment extends Fragment {
                 android.R.layout.simple_dropdown_item_1line, UNITS);
         autoCompleteTextView.setAdapter(adapter);
 
-
         //show drop down list on click
         autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -209,10 +225,18 @@ public class NewItemsFragment extends Fragment {
                                 //Do something with selected uri
                                 InputStream inputStream;
                                 try {
+                                    //the "inputStream" received here is the image itself
                                     inputStream = mContext.getContentResolver().openInputStream(uri);
-                                    //the "image" received here is the image itself
-                                    Bitmap b = BitmapFactory.decodeStream(inputStream);
-                                    mItemImageView.setImageBitmap(b);
+
+                                    //resize image before saving
+                                    Bitmap image = Utility.resizeImageFromFile(inputStream);
+
+                                    //assign image to your imageview
+                                    mItemImageView.setImageBitmap(image);
+
+                                    //Convert bitmap to base64 to so you
+                                    base64Image = Utility.convertBitmapToBase64(image);
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -225,4 +249,6 @@ public class NewItemsFragment extends Fragment {
         });
 
     }
+
+
 }

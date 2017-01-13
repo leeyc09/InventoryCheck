@@ -1,45 +1,32 @@
 package app.miji.com.inventorycheck.adapter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.RectF;
-import android.net.Uri;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
-import java.io.InputStream;
+import java.util.List;
 
 import app.miji.com.inventorycheck.R;
-import gun0912.tedbottompicker.TedBottomPicker;
+import app.miji.com.inventorycheck.model.Item;
+import app.miji.com.inventorycheck.utility.Utility;
 
 /**
- * Created by isse on 08/01/2017.
+ * Adapter for adding items in the list
  */
 
 public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecyclerViewAdapter.ViewHolder> {
 
-    private Context mContext;
-    private int mItemQty;
-    private FragmentManager fragmentManager;
+    private List<Item> itemList;
+    private int defaultImageId;
 
 
-    public NewItemRecyclerViewAdapter(Context mContext, int recyclerviewItemQty, FragmentManager fragmentManager) {
-        this.mContext = mContext;
-        this.mItemQty = recyclerviewItemQty;
-        this.fragmentManager = fragmentManager;
+    public NewItemRecyclerViewAdapter(List<Item> itemList, int defaultImageId) {
+        this.itemList = itemList;
+        this.defaultImageId = defaultImageId;
     }
 
     @Override
@@ -50,32 +37,58 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.mItem = itemList.get(position);
 
-        holder.mTxtName.setText("Dog Food");
-        holder.mTxtQty.setText("10 kgs");
+        //TODO: add also the image
+
+        //get values
+        String name = itemList.get(position).getName();
+        String qty = itemList.get(position).getQty() + " " + itemList.get(position).getUnit();
+        String image = itemList.get(position).getImage();
+
+        holder.mTxtName.setText(name);
+        holder.mTxtQty.setText(qty);
 
 
+        //image
+        if (image != null) {
+            //convert base64
+            Bitmap bitmap = Utility.decodeBase64Image(image);
+            //display image
+            holder.mItemImageView.setImageBitmap(bitmap);
+        } else {
+            //no image, display default image
+            holder.mItemImageView.setImageResource(defaultImageId);
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        return mItemQty;
+        if (itemList != null)
+            return itemList.size();
+        return 0;
+    }
+
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
     }
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
         final ImageView mItemImageView;
-
         final TextView mTxtName;
         final TextView mTxtQty;
 
+        Item mItem;
 
-        public ViewHolder(View itemView) {
+
+        ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            mItemImageView = (ImageView) itemView.findViewById(R.id.img_receipt);
+            mItemImageView = (ImageView) itemView.findViewById(R.id.imageView);
             mTxtQty = (TextView) itemView.findViewById(R.id.txt_qty);
             mTxtName = (TextView) itemView.findViewById(R.id.txt_name);
 
