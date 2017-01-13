@@ -53,7 +53,7 @@ public class NewItemsActivity extends AppCompatActivity {
 
 
         //hide details when clicked
-        txtDetail.setOnClickListener(new View.OnClickListener() {
+        card_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 hideDetails();
