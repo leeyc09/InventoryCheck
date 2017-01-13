@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,9 +33,15 @@ import gun0912.tedbottompicker.TedBottomPicker;
 public class NewItemsFragment extends Fragment {
 
 
+    private static final String LOG_TAG = NewItemsFragment.class.getSimpleName();
     private NewItemRecyclerViewAdapter mAdapter;
     private int recyclerviewItemQty = 1;
     Context mContext;
+
+
+    TextInputLayout mTxtInQty;
+    TextInputLayout mTxtInItem;
+    TextInputLayout mTxtInUnit;
 
     public NewItemsFragment() {
     }
@@ -60,24 +67,13 @@ public class NewItemsFragment extends Fragment {
         setupRecyclerView(recyclerView);
 
 
-        //setup fab
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //add another item in recyclerview
-                setupRecyclerView(recyclerView);
-
-
-            }
-        });
-
-
         ImageView mItemImageView = (ImageView) view.findViewById(R.id.imageView);
-        TextInputLayout mTxtInQty = (TextInputLayout) view.findViewById(R.id.input_name);
-        TextView mTxtQty = (TextView) view.findViewById(R.id.txt_qty);
+        mTxtInItem = (TextInputLayout) view.findViewById(R.id.input_item);
+        mTxtInQty = (TextInputLayout) view.findViewById(R.id.input_qty);
+        mTxtInUnit = (TextInputLayout) view.findViewById(R.id.input_unit);
+        final TextView mTxtQty = (TextView) view.findViewById(R.id.txt_qty);
         final AutoCompleteTextView spinnerName = (AutoCompleteTextView) view.findViewById(R.id.spinner_name);
-        AutoCompleteTextView spinnerUnit = (AutoCompleteTextView) view.findViewById(R.id.spinner_unit);
+        final AutoCompleteTextView spinnerUnit = (AutoCompleteTextView) view.findViewById(R.id.spinner_unit);
 
 
         setupItemSpinner(spinnerName);
@@ -95,7 +91,75 @@ public class NewItemsFragment extends Fragment {
         });
 
 
+        //inflate textviews
+
+
+        //setup fab
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String item = spinnerName.getText().toString();
+                String qty = mTxtQty.getText().toString();
+                String unit = spinnerUnit.getText().toString();
+
+                //validate form before adding item to list
+                boolean isvalid = validateInput(item, qty, unit);
+                if (isvalid) {
+                    //add another item in recyclerview
+                    setupRecyclerView(recyclerView);
+
+                    //clear textviews
+                    mTxtQty.setText("");
+                    spinnerName.setText("");
+                    spinnerUnit.setText("");
+                }
+
+
+            }
+        });
+
         return view;
+    }
+
+    private boolean validateInput(String item, String qty, String unit) {
+        int mItem = item.length();
+        int mQty = qty.length();
+        int mUnit = unit.length();
+
+        boolean isValid = mItem != 0 && mQty != 0 && mUnit != 0; //if formed is properly filled out
+
+        Log.v(LOG_TAG, "ITEM ------------> " + item);
+        Log.v(LOG_TAG, "QTY------------> " + qty);
+        Log.v(LOG_TAG, "UNIT------------> " + unit);
+
+
+        //check if delivery is null
+        if (mItem == 0) {
+            //show error
+            mTxtInItem.setErrorEnabled(true);
+            mTxtInItem.setError(getString(R.string.required_field));
+        } else {
+            mTxtInItem.setErrorEnabled(false);
+        }
+
+        //check if reference no. is null
+        if (mQty == 0) {
+            mTxtInQty.setErrorEnabled(true);
+            mTxtInQty.setError(getString(R.string.required_field));
+        } else {
+            mTxtInQty.setErrorEnabled(false);
+        }
+
+        //check if location is null
+        if (mUnit == 0) {
+            mTxtInUnit.setError(getString(R.string.required_field));
+        } else {
+            mTxtInUnit.setError(null);
+        }
+
+
+        return isValid;
     }
 
 

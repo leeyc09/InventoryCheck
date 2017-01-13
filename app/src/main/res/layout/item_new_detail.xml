@@ -19,14 +19,14 @@
         android:layout_marginRight="@dimen/cardview_detail_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="@integer/newDetail_weightSum">
 
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="@integer/newDetail_ImageView_weight"
             android:adjustViewBounds="true"
             android:contentDescription="@string/add_image"
             android:scaleType="fitXY"
@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="@integer/newDetail_LinearLayout_weight"
             android:orientation="vertical">
 
 
@@ -43,16 +43,16 @@
                 android:id="@+id/input_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
+                android:layout_marginStart="@dimen/text_margin"
                 app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
                 <AutoCompleteTextView
                     android:id="@+id/spinner_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/text_margin"
-                    android:layout_marginLeft="@dimen/text_margin"
-                    android:layout_marginRight="@dimen/text_margin"
-                    android:layout_marginStart="@dimen/text_margin"
                     android:hint="@string/item"
                     android:paddingTop="@dimen/cardview_top_bottom_margin" />
 
@@ -86,9 +86,8 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/input_unit"
-                    android:layout_width="@dimen/unit_width"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/input_qty"
                     android:layout_toEndOf="@+id/input_qty"
                     app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
@@ -96,8 +95,7 @@
                         android:id="@+id/spinner_unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/unit"
-                        android:inputType="text" />
+                        android:hint="@string/unit" />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
 

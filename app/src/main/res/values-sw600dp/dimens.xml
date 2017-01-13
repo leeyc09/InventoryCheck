@@ -3,5 +3,5 @@
     <dimen name="activity_horizontal_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">32dp</dimen>
     <dimen name="fragment_form_margin">64dp</dimen>
-    <dimen name="cardview_detail_margin">32dp</dimen>
+    <dimen name="cardview_detail_margin">64dp</dimen>
 </resources>
