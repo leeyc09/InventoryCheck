@@ -81,16 +81,6 @@ public class NewItemsFragment extends Fragment {
         setupImagePicker(mItemImageView);
 
 
-        spinnerName.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //always show the dropdown list
-                spinnerName.showDropDown();
-                return false;
-            }
-        });
-
-
         //inflate textviews
 
 
@@ -170,19 +160,40 @@ public class NewItemsFragment extends Fragment {
         recyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
     }
 
-    private void setupItemSpinner(AutoCompleteTextView autoCompleteTextView) {
+    private void setupItemSpinner(final AutoCompleteTextView autoCompleteTextView) {
         //dummy items to show in spinner
         final String[] ITEMS = new String[]{"Cupcake", "Brownies", "Tiramisu", "Cake", "Burger"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.simple_dropdown_item_1line, ITEMS);
         autoCompleteTextView.setAdapter(adapter);
+
+        //show drop down list on click
+        autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                //always show the dropdown list
+                autoCompleteTextView.showDropDown();
+                return false;
+            }
+        });
     }
 
-    private void setupUnitSpinner(AutoCompleteTextView autoCompleteTextView) {
+    private void setupUnitSpinner(final AutoCompleteTextView autoCompleteTextView) {
         final String[] UNITS = new String[]{"pcs", "kg", "m"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.simple_dropdown_item_1line, UNITS);
         autoCompleteTextView.setAdapter(adapter);
+
+
+        //show drop down list on click
+        autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                //always show the dropdown list
+                autoCompleteTextView.showDropDown();
+                return false;
+            }
+        });
     }
 
 
