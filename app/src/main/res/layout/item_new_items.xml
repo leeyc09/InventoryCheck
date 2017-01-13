@@ -65,6 +65,7 @@
                 android:contentDescription="@string/edit_item"/>
 
             <ImageView
+                android:id="@+id/img_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/img_edit"

@@ -8,12 +8,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,6 +36,7 @@ import app.miji.com.inventorycheck.R;
 
 public class Utility {
     private static final String NO_LOCATION_MESSAGE = "LocationMesageStatus";
+    private static final String LOG_TAG = Utility.class.getSimpleName();
 
     public static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -211,6 +215,50 @@ public class Utility {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static boolean validateItemInput(Context context, AutoCompleteTextView spinnerName, TextView mTxtQty, AutoCompleteTextView spinnerUnit, TextInputLayout mTxtInItem, TextInputLayout mTxtInQty, TextInputLayout mTxtInUnit) {
+        String item = spinnerName.getText().toString();
+        String qty = mTxtQty.getText().toString();
+        String unit = spinnerUnit.getText().toString();
+
+        Log.e(LOG_TAG, "ITEM------------------>" + item);
+        Log.e(LOG_TAG, "QTY------------------>" + qty);
+        Log.e(LOG_TAG, "UNIT------------------>" + unit);
+
+        int mItem = item.length();
+        int mQty = qty.length();
+        int mUnit = unit.length();
+
+        boolean isValid = mItem != 0 && mQty != 0 && mUnit != 0; //if formed is properly filled out
+
+
+        //check if name is null
+        if (mItem == 0) {
+            //show error
+            mTxtInItem.setErrorEnabled(true);
+            mTxtInItem.setError(context.getString(R.string.required_field));
+        } else {
+            mTxtInItem.setErrorEnabled(false);
+        }
+
+        //check if quantity no. is null
+        if (mQty == 0) {
+            mTxtInQty.setErrorEnabled(true);
+            mTxtInQty.setError(context.getString(R.string.required_field));
+        } else {
+            mTxtInQty.setErrorEnabled(false);
+        }
+
+        //check if unit is null
+        if (mUnit == 0) {
+            mTxtInUnit.setError(context.getString(R.string.required_field));
+        } else {
+            mTxtInUnit.setError(null);
+        }
+
+
+        return isValid;
     }
 
 

@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -93,14 +92,15 @@ public class NewItemsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String item = spinnerName.getText().toString();
-                String qty = mTxtQty.getText().toString();
-                String unit = spinnerUnit.getText().toString();
-                String image = base64Image;
 
                 //validate form before adding item to list
-                boolean isvalid = validateInput(item, qty, unit);
+                boolean isvalid = Utility.validateItemInput(getActivity(), spinnerName, mTxtQty, spinnerUnit, mTxtInItem, mTxtInQty, mTxtInUnit);
                 if (isvalid) {
+
+                    String item = spinnerName.getText().toString();
+                    String qty = mTxtQty.getText().toString();
+                    String unit = spinnerUnit.getText().toString();
+                    String image = base64Image;
 
                     //create new item
                     Item myItem = new Item(item, qty, unit, image);
@@ -129,49 +129,8 @@ public class NewItemsFragment extends Fragment {
         return view;
     }
 
-    private boolean validateInput(String item, String qty, String unit) {
-        int mItem = item.length();
-        int mQty = qty.length();
-        int mUnit = unit.length();
-
-        boolean isValid = mItem != 0 && mQty != 0 && mUnit != 0; //if formed is properly filled out
-
-        Log.v(LOG_TAG, "ITEM ------------> " + item);
-        Log.v(LOG_TAG, "QTY------------> " + qty);
-        Log.v(LOG_TAG, "UNIT------------> " + unit);
-
-
-        //check if delivery is null
-        if (mItem == 0) {
-            //show error
-            mTxtInItem.setErrorEnabled(true);
-            mTxtInItem.setError(getString(R.string.required_field));
-        } else {
-            mTxtInItem.setErrorEnabled(false);
-        }
-
-        //check if reference no. is null
-        if (mQty == 0) {
-            mTxtInQty.setErrorEnabled(true);
-            mTxtInQty.setError(getString(R.string.required_field));
-        } else {
-            mTxtInQty.setErrorEnabled(false);
-        }
-
-        //check if location is null
-        if (mUnit == 0) {
-            mTxtInUnit.setError(getString(R.string.required_field));
-        } else {
-            mTxtInUnit.setError(null);
-        }
-
-
-        return isValid;
-    }
-
-
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new NewItemRecyclerViewAdapter(itemList, R.drawable.image_placeholder);
+        mAdapter = new NewItemRecyclerViewAdapter(getActivity(), itemList, R.drawable.image_placeholder, getActivity().getLayoutInflater(), getFragmentManager());
         recyclerView.setAdapter(mAdapter);
         //scroll to last item
         //recyclerView.scrollToPosition(mAdapter.getItemCount() - 1);

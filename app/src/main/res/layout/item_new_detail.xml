@@ -17,7 +17,7 @@
         android:layout_marginBottom="@dimen/cardview_padding_bottom"
         android:layout_marginLeft="@dimen/cardview_detail_margin"
         android:layout_marginRight="@dimen/cardview_detail_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/cardview_padding_bottom"
         android:orientation="horizontal"
         android:weightSum="@integer/newDetail_weightSum">
 
