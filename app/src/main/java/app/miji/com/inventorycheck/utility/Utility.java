@@ -19,7 +19,6 @@ import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
@@ -30,20 +29,17 @@ import java.io.InputStream;
 
 import app.miji.com.inventorycheck.R;
 
-/**
- * Created by isse on 02/01/2017.
- */
 
 public class Utility {
     private static final String NO_LOCATION_MESSAGE = "LocationMesageStatus";
     private static final String LOG_TAG = Utility.class.getSimpleName();
 
-    public static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
+    private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        preferences.edit().putInt(NO_LOCATION_MESSAGE, checkStatus).commit();
+        preferences.edit().putInt(NO_LOCATION_MESSAGE, checkStatus).apply();
     }
 
-    public static int getLocationMessageDialogStatus(Context context) {
+    private static int getLocationMessageDialogStatus(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(NO_LOCATION_MESSAGE, 0);
     }
@@ -147,7 +143,7 @@ public class Utility {
 
     }
 
-    public static void showImagePopup(Context context, ImageView imageView, WindowManager windowManager, Drawable drawable) {
+    public static void showImagePopup(Context context, WindowManager windowManager, Drawable drawable) {
         //get screen's height and width
         DisplayMetrics metrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(metrics);

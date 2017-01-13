@@ -85,7 +85,7 @@ public class NewItemsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //show imageview popup
                 Drawable drawable = imageView.getDrawable();
-                Utility.showImagePopup(NewItemsActivity.this, imageView, getWindowManager(), drawable);
+                Utility.showImagePopup(NewItemsActivity.this, getWindowManager(), drawable);
             }
         });
 

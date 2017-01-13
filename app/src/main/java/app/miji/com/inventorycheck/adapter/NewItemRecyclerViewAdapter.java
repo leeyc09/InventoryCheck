@@ -58,8 +58,6 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = itemList.get(position);
 
-        //TODO: add also the image
-
         //get values
         String name = itemList.get(position).getName();
         String qty = itemList.get(position).getQty() + " " + itemList.get(position).getUnit();
@@ -95,8 +93,7 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
         holder.imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //TODO show dialog
+                // show edit dialog
                 showEditDialog(position);
             }
         });
