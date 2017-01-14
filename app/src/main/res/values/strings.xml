@@ -56,4 +56,7 @@
     <string name="add_image">add image</string>
     <string name="edit_item">Edit item</string>
     <string name="delete_item">delete item</string>
+    <string name="transfer_details">Transfer Details</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
 </resources>

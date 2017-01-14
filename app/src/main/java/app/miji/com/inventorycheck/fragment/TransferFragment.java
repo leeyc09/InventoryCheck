@@ -21,7 +21,7 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.activity.DeliveryActivity;
+import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.activity.TransferActivity;
 import app.miji.com.inventorycheck.utility.Utility;
 
@@ -145,6 +145,7 @@ public class TransferFragment extends Fragment {
                 View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_input, null);
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
 
+
                 //show location dialog box
                 Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
 
@@ -157,33 +158,63 @@ public class TransferFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //validate form
-                int toLocation = spinnerFromLocation.getText().toString().length();
-                int fromLocation = spinnerToLocation.getText().toString().length();
-                boolean isValid = toLocation != 0 && toLocation != 0; //if formed is properly filled out
+                int toLocation = spinnerToLocation.getText().toString().length();
+                int fromLocation = spinnerFromLocation.getText().toString().length();
+                boolean isValid = toLocation != 0 && fromLocation != 0; //if formed is properly filled out
 
 
                 Log.v(LOG_TAG, "To Location: " + toLocation);
                 Log.v(LOG_TAG, "From Location: " + fromLocation);
 
-                //if valid proceed to the next activity
-                if (isValid) {
-                    Intent intent = new Intent(getActivity(), DeliveryActivity.class);
-                    startActivity(intent);
-                }
-
-
-                //check if reference no. is null
-                if (toLocation == 0) {
-                    spinnerToLocation.setError(getString(R.string.required_field));
-                } else {
-                    spinnerToLocation.setError(null);
-                }
 
                 //check if location is null
                 if (fromLocation == 0) {
                     spinnerFromLocation.setError(getString(R.string.required_field));
                 } else {
                     spinnerFromLocation.setError(null);
+                }
+
+                //check if location is null
+                if (toLocation == 0) {
+                    spinnerToLocation.setError(getString(R.string.required_field));
+                } else {
+                    spinnerToLocation.setError(null);
+                }
+
+
+                //if valid proceed to the next activity
+                if (isValid) {
+                    Intent intent = new Intent(getActivity(), NewItemsActivity.class);
+
+                    String strTime = txtTime.getText().toString();
+                    String strDate = txtDate.getText().toString();
+                    String strFromLocation = spinnerFromLocation.getText().toString();
+                    String strToLocation = spinnerToLocation.getText().toString();
+                    //TODO generate unique transfer id, include in transfer details
+                    String strTransferId = txtTransferId.getText().toString();
+
+
+                    //create detail string
+                    StringBuffer stringBuffer = new StringBuffer();
+
+                    //Delivery details
+                    String title = getResources().getString(R.string.transfer_details).toUpperCase();
+                    stringBuffer.append(title);
+                    stringBuffer.append("\n"); //new line
+                    stringBuffer.append("\n"); //new line
+                    //"Date: and Time "
+                    stringBuffer.append(getResources().getString(R.string.mdtp_date) + ": " + strDate);
+                    stringBuffer.append(" " + strTime);
+                    stringBuffer.append("\n"); //new line
+                    //"From Location: "
+                    stringBuffer.append(getResources().getString(R.string.from) + ": " + strFromLocation);
+                    stringBuffer.append("\n"); //new line
+                    //"To Location: "
+                    stringBuffer.append(getResources().getString(R.string.to) + ": " + strToLocation);
+                    stringBuffer.append("\n"); //new line
+
+                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
+                    startActivity(intent);
                 }
 
             }

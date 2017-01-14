@@ -12,15 +12,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="app.miji.com.inventorycheck.fragment.TransferFragment"
-    tools:showIn="@layout/activity_transfer">>
+    tools:showIn="@layout/activity_transfer">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:contentDescription="@string/save"
         android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/save"
         app:srcCompat="@drawable/ic_action_done" />
 
     <android.support.v4.widget.NestedScrollView
