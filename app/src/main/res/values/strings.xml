@@ -60,4 +60,5 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="sales_details">Sales Details</string>
+    <string name="title_activity_stock_take">Stock Take</string>
 </resources>
