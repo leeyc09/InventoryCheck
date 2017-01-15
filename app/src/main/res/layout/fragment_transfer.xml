@@ -95,7 +95,7 @@
 
 
             <TextView
-                android:id="@+id/txt_trans_id"
+                android:id="@+id/txt_transferID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/text_margin"

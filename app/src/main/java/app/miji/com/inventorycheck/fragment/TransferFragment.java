@@ -50,7 +50,7 @@ public class TransferFragment extends Fragment {
         final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
-        final TextView txtTransferId = (TextView) view.findViewById(R.id.txt_trans_id);
+        final TextView txtTransferId = (TextView) view.findViewById(R.id.txt_transferID);
         final MaterialBetterSpinner spinnerFromLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner_from_loc);
         final MaterialBetterSpinner spinnerToLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner_to_loc);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
@@ -191,7 +191,7 @@ public class TransferFragment extends Fragment {
                     String strFromLocation = spinnerFromLocation.getText().toString();
                     String strToLocation = spinnerToLocation.getText().toString();
                     //TODO generate unique transfer id, include in transfer details
-                    String strTransferId = txtTransferId.getText().toString();
+                    String strTransferId = "0000011251";
 
 
                     //create detail string
@@ -205,6 +205,9 @@ public class TransferFragment extends Fragment {
                     //"Date: and Time "
                     stringBuffer.append(getResources().getString(R.string.mdtp_date) + ": " + strDate);
                     stringBuffer.append(" " + strTime);
+                    stringBuffer.append("\n"); //new line
+                    //"Transfer ID: "
+                    stringBuffer.append(getResources().getString(R.string.trans_id) + ": " + strTransferId);
                     stringBuffer.append("\n"); //new line
                     //"From Location: "
                     stringBuffer.append(getResources().getString(R.string.from) + ": " + strFromLocation);

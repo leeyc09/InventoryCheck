@@ -56,9 +56,9 @@ public class DeliveryFragment extends Fragment {
         final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
-        final EditText txtDelivery = (EditText) view.findViewById(R.id.txt_trans_id);
+        final EditText txtDelivery = (EditText) view.findViewById(R.id.txt_delivery);
         final EditText txtReference = (EditText) view.findViewById(R.id.txt_reference);
-        final TextInputLayout txtInDelivery = (TextInputLayout) view.findViewById(R.id.input_delivery_name);
+        final TextInputLayout txtInDelivery = (TextInputLayout) view.findViewById(R.id.input_delivery);
         final TextInputLayout txtInRefNo = (TextInputLayout) view.findViewById(R.id.input_ref);
         final MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
