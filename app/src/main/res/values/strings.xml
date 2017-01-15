@@ -59,4 +59,5 @@
     <string name="transfer_details">Transfer Details</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="sales_details">Sales Details</string>
 </resources>

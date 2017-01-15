@@ -3,7 +3,6 @@ package app.miji.com.inventorycheck.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,7 +26,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.activity.MainActivity;
+import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -35,6 +34,8 @@ import gun0912.tedbottompicker.TedBottomPicker;
  * A placeholder fragment containing a simple view.
  */
 public class SalesFragment extends Fragment {
+
+    private String base64Image = null;
 
     public SalesFragment() {
     }
@@ -55,11 +56,11 @@ public class SalesFragment extends Fragment {
         final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
-        final EditText txtDelivery = (EditText) view.findViewById(R.id.txt_trans_id);
+        final EditText txtCustomer = (EditText) view.findViewById(R.id.txt_customer);
         final EditText txtReference = (EditText) view.findViewById(R.id.txt_reference);
-        final TextInputLayout txtInDelivery = (TextInputLayout) view.findViewById(R.id.input_delivery_name);
+        final TextInputLayout txtInCustomer = (TextInputLayout) view.findViewById(R.id.input_customer);
         final TextInputLayout txtInRefNo = (TextInputLayout) view.findViewById(R.id.input_ref);
-        final MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
+        final MaterialBetterSpinner spinnerLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final ImageView imgReceipt = (ImageView) view.findViewById(R.id.img_receipt);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -119,7 +120,7 @@ public class SalesFragment extends Fragment {
         });
 
         //location spinner
-        setupSpinner(materialSpinner);
+        setupSpinner(spinnerLocation);
 
 
         //when txt_add_location is clicked, show add new location dialog box
@@ -150,11 +151,20 @@ public class SalesFragment extends Fragment {
                                 //Do something with selected uri
                                 InputStream inputStream;
                                 try {
+                                    //the "inputStream" received here is the image itself
                                     inputStream = getActivity().getContentResolver().openInputStream(uri);
-                                    //the "image" received here is the image itself
-                                    Bitmap image = BitmapFactory.decodeStream(inputStream);
+
+                                    //resize image before saving
+                                    Bitmap image = Utility.resizeImageFromFile(inputStream);
+
                                     //assign image to your imageview
                                     imgReceipt.setImageBitmap(image);
+
+                                    //Convert bitmap to base64 to so you
+                                    base64Image = Utility.convertBitmapToBase64(image);
+
+
+                                    Log.e(LOG_TAG, "BASE 64 ------------> " + base64Image);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -173,29 +183,29 @@ public class SalesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //validate form
-                int deliveredBy = txtDelivery.getText().toString().length();
-                int refNo = txtReference.getText().toString().length();
-                int location = materialSpinner.getText().toString().length();
-                boolean isValid = deliveredBy != 0 && refNo != 0 && location != 0; //if formed is properly filled out
+                String strDate = txtDate.getText().toString();
+                String strTime = txtTime.getText().toString();
+                String strCustomer = txtCustomer.getText().toString();
+                String strRefNo = txtReference.getText().toString();
+                String strLocation = spinnerLocation.getText().toString();
 
-                Log.v(LOG_TAG, "Delivered By: " + deliveredBy);
+                int customer = txtCustomer.getText().toString().length();
+                int refNo = txtReference.getText().toString().length();
+                int location = spinnerLocation.getText().toString().length();
+                boolean isValid = customer != 0 && refNo != 0 && location != 0; //if formed is properly filled out
+
+                Log.v(LOG_TAG, "Delivered By: " + customer);
                 Log.v(LOG_TAG, "Reference No: " + refNo);
                 Log.v(LOG_TAG, "Location: " + location);
 
-                //if valid proceed to the next activity
-                if (isValid) {
-                    //TODO change activity
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                }
 
                 //check if delivery is null
-                if (deliveredBy == 0) {
+                if (customer == 0) {
                     //show error
-                    txtInDelivery.setErrorEnabled(true);
-                    txtInDelivery.setError(getString(R.string.required_field));
+                    txtInCustomer.setErrorEnabled(true);
+                    txtInCustomer.setError(getString(R.string.required_field));
                 } else {
-                    txtInDelivery.setErrorEnabled(false);
+                    txtInCustomer.setErrorEnabled(false);
                 }
 
                 //check if reference no. is null
@@ -208,9 +218,43 @@ public class SalesFragment extends Fragment {
 
                 //check if location is null
                 if (location == 0) {
-                    materialSpinner.setError(getString(R.string.required_field));
+                    spinnerLocation.setError(getString(R.string.required_field));
                 } else {
-                    materialSpinner.setError(null);
+                    spinnerLocation.setError(null);
+                }
+
+
+                //if valid proceed to the next activity
+                if (isValid) {
+                    // go to NewItemsActivity
+                    Intent intent = new Intent(getActivity(), NewItemsActivity.class);
+
+                    //create detail string
+                    StringBuffer stringBuffer = new StringBuffer();
+
+                    //Delivery details
+                    String title = getResources().getString(R.string.sales_details).toUpperCase();
+                    stringBuffer.append(title);
+                    stringBuffer.append("\n"); //new line
+                    stringBuffer.append("\n"); //new line
+                    //"Date: and Time "
+                    stringBuffer.append(getResources().getString(R.string.mdtp_date) + ": " + strDate);
+                    stringBuffer.append(" " + strTime);
+                    stringBuffer.append("\n"); //new line
+                    //"Delivered by: "
+                    stringBuffer.append(getResources().getString(R.string.customer) + ": " + strCustomer);
+                    stringBuffer.append("\n"); //new line
+                    //"Reference No: "
+                    stringBuffer.append(getResources().getString(R.string.reference) + ": " + strRefNo);
+                    stringBuffer.append("\n"); //new line
+                    //"Location: "
+                    stringBuffer.append(getResources().getString(R.string.location) + ": " + strLocation);
+                    stringBuffer.append("\n"); //new line
+
+                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
+                    intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);
+
+                    startActivity(intent);
                 }
 
             }
