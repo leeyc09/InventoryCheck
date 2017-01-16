@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_stock_take"
     android:layout_width="match_parent"
@@ -11,5 +12,47 @@
     tools:context="app.miji.com.inventorycheck.StockTakeActivityFragment"
     tools:showIn="@layout/activity_stock_take">
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_action_done" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/spinner_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/location" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input"
+            style="@style/CustomTextInputLayout"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_item" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/item_stock_take">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
