@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.miji.com.inventorycheck.StockTakeActivityFragment"
+    tools:context="app.miji.com.inventorycheck.StockTakeFragment"
     tools:showIn="@layout/activity_stock_take">
 
 
@@ -33,11 +33,12 @@
             android:hint="@string/location" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/input"
+            android:id="@+id/input_item"
             style="@style/CustomTextInputLayout"
             app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
             <AutoCompleteTextView
+                android:id="@+id/txt_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/search_item" />
@@ -45,6 +46,7 @@
 
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"

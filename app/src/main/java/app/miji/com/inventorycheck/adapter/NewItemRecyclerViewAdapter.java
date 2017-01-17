@@ -125,7 +125,7 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
 
 
         //setup drop down list items
-        setupItemSpinner(spinnerName);
+        Utility.setupItemSpinner(mContext, spinnerName);
         setupUnitSpinner(spinnerUnit);
         setupImagePicker(mItemImageView);
 
@@ -222,24 +222,6 @@ public class NewItemRecyclerViewAdapter extends RecyclerView.Adapter<NewItemRecy
             }
         });
 
-    }
-
-    private void setupItemSpinner(final AutoCompleteTextView autoCompleteTextView) {
-        //dummy items to show in spinner
-        final String[] ITEMS = new String[]{"Cupcake", "Brownies", "Tiramisu", "Cake", "Burger"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
-                android.R.layout.simple_dropdown_item_1line, ITEMS);
-        autoCompleteTextView.setAdapter(adapter);
-
-        //show drop down list on click
-        autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //always show the dropdown list
-                autoCompleteTextView.showDropDown();
-                return false;
-            }
-        });
     }
 
     private void setupUnitSpinner(final AutoCompleteTextView autoCompleteTextView) {

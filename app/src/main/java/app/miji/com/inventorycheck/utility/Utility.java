@@ -14,6 +14,7 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -36,9 +37,6 @@ public class Utility {
     private static final String NO_LOCATION_MESSAGE = "LocationMesageStatus";
     private static final String LOG_TAG = Utility.class.getSimpleName();
 
-    private static final String[] COUNTRIES = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -265,10 +263,35 @@ public class Utility {
 
 
     public static void setupLocationSpinner(Context context, MaterialBetterSpinner materialSpinner) {
+        //TODO change this dummy location
+        final String[] LOCATIONS = new String[]{
+                "Belgium", "France", "Italy", "Germany", "Spain"
+        };
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+                android.R.layout.simple_dropdown_item_1line, LOCATIONS);
         materialSpinner.setAdapter(adapter);
     }
+
+    public static void setupItemSpinner(Context context, final AutoCompleteTextView autoCompleteTextView) {
+        //TODO change this dummy items
+        final String[] ITEMS = new String[]{"Cupcake", "Brownies", "Tiramisu", "Cake", "Burger"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, ITEMS);
+        autoCompleteTextView.setAdapter(adapter);
+
+        //show drop down list on click
+        autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                //always show the dropdown list
+                autoCompleteTextView.showDropDown();
+                return false;
+            }
+        });
+    }
+
+
 }
 
 
