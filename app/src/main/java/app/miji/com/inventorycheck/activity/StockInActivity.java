@@ -22,6 +22,7 @@ import com.github.fabtransitionactivity.SheetLayout;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.fragment.DeliveryListFragment;
+import app.miji.com.inventorycheck.fragment.TransferListFragment;
 
 public class StockInActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener, DeliveryListFragment.OnFragmentInteractionListener {
 
@@ -119,7 +120,6 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
     }
 
 
-
     private void showProperFab(int tab) {
         switch (tab) {
             case 0:
@@ -168,7 +168,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
     @Override
     public void onFabAnimationEnd() {
         Intent intent;
-        switch (selectedTab){
+        switch (selectedTab) {
             case 0:
                 //DELIVERY ACTIVITY
                 intent = new Intent(this, DeliveryActivity.class);
@@ -189,7 +189,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE){
+        if (requestCode == REQUEST_CODE) {
             mSheetLayout.contractFab();
         }
     }
@@ -250,13 +250,13 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
             // Return a PlaceholderFragment (defined as a static inner class below).
 
             Fragment fragment = null;
-            switch (position){
+            switch (position) {
 
                 case 0:
-                    fragment = DeliveryListFragment.newInstance(null,null);
+                    fragment = DeliveryListFragment.newInstance(null, null);
                     break;
                 case 1:
-                    fragment = PlaceholderFragment.newInstance(position + 1);
+                    fragment = new TransferListFragment();
                     break;
             }
 

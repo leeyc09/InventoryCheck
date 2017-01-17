@@ -41,7 +41,7 @@ public class DeliveryListFragment extends Fragment {
 
 
 
-    DeliveryRecyclerViewAdapter mAdapter;
+    private DeliveryRecyclerViewAdapter mAdapter;
 
     public DeliveryListFragment() {
         // Required empty public constructor
