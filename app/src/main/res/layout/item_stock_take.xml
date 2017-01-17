@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="4dp"
     android:background="@android:color/white"
-    app:cardElevation="@dimen/cardview_default_elevation"
-    android:layout_marginBottom="@dimen/cardview_padding_bottom">
+    app:cardElevation="@dimen/cardview_default_elevation">
 
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,28 +14,25 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/img_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|top"
             android:contentDescription="@string/delete_item"
             android:tint="@android:color/darker_gray"
-            app:srcCompat="@android:drawable/ic_delete"/>
+            app:srcCompat="@android:drawable/ic_delete" />
 
 
         <LinearLayout
             android:id="@+id/root_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/cardview_padding_bottom"
-            android:layout_marginLeft="@dimen/cardview_detail_margin"
-            android:layout_marginRight="@dimen/cardview_detail_margin"
-            android:layout_marginTop="@dimen/cardview_padding_bottom"
             android:orientation="horizontal"
             android:weightSum="3">
 
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/img_item"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,35 +43,37 @@
 
 
             <TextView
-                android:id="@+id/spinner_name"
+                android:id="@+id/txt_name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/text_margin"
                 android:layout_marginLeft="@dimen/text_margin"
                 android:layout_marginRight="@dimen/text_margin"
                 android:layout_marginStart="@dimen/text_margin"
                 android:layout_weight="1"
-                android:hint="@string/item"
                 android:gravity="center"
-                android:paddingTop="@dimen/cardview_top_bottom_margin"
+                android:hint="@string/item"
                 android:textAppearance="?android:textAppearanceMedium" />
 
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/txt_qty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:hint="30"
-                    android:textAppearance="?android:textAppearanceLarge" />
+                    android:textColor="@android:color/holo_green_light"
+                    android:text="30"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/spinner_unit"
+                    android:id="@+id/txt_unit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_qty"
