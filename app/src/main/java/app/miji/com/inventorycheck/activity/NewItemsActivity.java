@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.adapter.DeliveryRecyclerViewAdapter;
 import app.miji.com.inventorycheck.utility.Utility;
 
 public class NewItemsActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class NewItemsActivity extends AppCompatActivity {
     private LinearLayout card_detail;
 
     private boolean mSwitch = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

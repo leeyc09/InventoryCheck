@@ -43,11 +43,6 @@ public class StockTakeFragment extends Fragment {
         //setup location spinner
         Utility.setupLocationSpinner(getActivity(), spinnerLocation);
 
-        //setup recyclerview
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        assert recyclerView != null;
-//        setupRecyclerView(recyclerView);
-
         int mColumnCount = getResources().getInteger(R.integer.list_stockTake_column_count);
         //set Layout Manager
         if (mColumnCount <= 1) {

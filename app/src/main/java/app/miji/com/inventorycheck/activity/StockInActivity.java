@@ -1,6 +1,7 @@
 package app.miji.com.inventorycheck.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -20,8 +21,9 @@ import android.widget.TextView;
 import com.github.fabtransitionactivity.SheetLayout;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.fragment.DeliveryListFragment;
 
-public class StockInActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener {
+public class StockInActivity extends AppCompatActivity implements SheetLayout.OnFabAnimationEndListener, DeliveryListFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -192,6 +194,11 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         }
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -241,7 +248,19 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+
+            Fragment fragment = null;
+            switch (position){
+
+                case 0:
+                    fragment = DeliveryListFragment.newInstance(null,null);
+                    break;
+                case 1:
+                    fragment = PlaceholderFragment.newInstance(position + 1);
+                    break;
+            }
+
+            return fragment;
         }
 
         @Override
