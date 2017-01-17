@@ -4,18 +4,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.InputStream;
 
@@ -35,7 +33,7 @@ public class NewProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_new_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_new_product, container, false);
 
         final PlaceholderImageView imageProduct = (PlaceholderImageView) view.findViewById(R.id.img_receipt);
         EditText txtProdCode = (EditText) view.findViewById(R.id.txt_prod_code);
@@ -57,12 +55,12 @@ public class NewProductFragment extends Fragment {
             public void onClick(View view) {
                 //txtName is required
                 int name = txtName.getText().toString().length();
-                if(name!=0){
+                if (name != 0) {
                     txtInName.setErrorEnabled(false);
                     //TODO insert fields to database
                     Intent intent = new Intent(getActivity(), ProductActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     txtInName.setErrorEnabled(true);
                     txtInName.setError(getString(R.string.required_field));
                 }

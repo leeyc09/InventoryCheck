@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -121,7 +120,7 @@ public class DeliveryFragment extends Fragment {
         });
 
         //location spinner
-        setupSpinner(materialSpinner);
+        Utility.setupLocationSpinner(getActivity(), materialSpinner);
 
 
         //when txt_add_location is clicked, show add new location dialog box
@@ -264,14 +263,6 @@ public class DeliveryFragment extends Fragment {
 
         return view;
     }
-
-
-    private void setupSpinner(MaterialBetterSpinner materialSpinner) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        materialSpinner.setAdapter(adapter);
-    }
-
 
 }
 

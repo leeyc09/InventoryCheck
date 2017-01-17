@@ -16,12 +16,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,6 +35,10 @@ import app.miji.com.inventorycheck.R;
 public class Utility {
     private static final String NO_LOCATION_MESSAGE = "LocationMesageStatus";
     private static final String LOG_TAG = Utility.class.getSimpleName();
+
+    private static final String[] COUNTRIES = new String[]{
+            "Belgium", "France", "Italy", "Germany", "Spain"
+    };
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -258,6 +264,11 @@ public class Utility {
     }
 
 
+    public static void setupLocationSpinner(Context context, MaterialBetterSpinner materialSpinner) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        materialSpinner.setAdapter(adapter);
+    }
 }
 
 
