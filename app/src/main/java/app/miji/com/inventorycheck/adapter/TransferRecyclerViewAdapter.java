@@ -11,11 +11,11 @@ import android.widget.TextView;
 import app.miji.com.inventorycheck.R;
 
 /**
- * Created by isse on 18/01/2017.
+ * For Transfer list item
  */
 
 public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRecyclerViewAdapter.ViewHolder> {
-    Context mContext;
+    private Context mContext;
 
     public TransferRecyclerViewAdapter(Context context) {
         this.mContext = context;
