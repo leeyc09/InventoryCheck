@@ -16,9 +16,11 @@ import app.miji.com.inventorycheck.R;
 
 public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRecyclerViewAdapter.ViewHolder> {
     private Context mContext;
+    private int flagActivity;
 
-    public TransferRecyclerViewAdapter(Context context) {
+    public TransferRecyclerViewAdapter(Context context, int flag) {
         this.mContext = context;
+        this.flagActivity = flag;
     }
 
     @Override
@@ -37,10 +39,25 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
         String mTransferId = "0000012";
 
         holder.mTxtDate.setText(mContext.getString(R.string.mdtp_date) + ": " + mDate);
-        holder.mItem1.setText(mContext.getString(R.string.from) + ": " + mFrom);
-        holder.mItem2.setText(mContext.getString(R.string.to) + ": " + mTo);
         holder.mNumber.setText(mContext.getString(R.string.trans_id) + ": " + mTransferId);
         holder.mItemImageView.setVisibility(View.GONE);
+
+        //determine if request is from stock in or stock out activity
+        String to = mContext.getString(R.string.to) + ": " + mTo;
+        String from = mContext.getString(R.string.from) + ": " + mFrom;
+        switch (flagActivity) {
+            case 0:
+                //from StockInActivity
+                holder.mItem1.setText(from);
+                holder.mItem2.setText(to);
+                break;
+            case 1:
+                //from StockOutActivity
+                holder.mItem1.setText(to);
+                holder.mItem2.setText(from);
+                break;
+        }
+
 
     }
 

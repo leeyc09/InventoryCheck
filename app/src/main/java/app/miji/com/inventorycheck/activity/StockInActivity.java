@@ -219,7 +219,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
                     fragment = DeliveryListFragment.newInstance(null, null);
                     break;
                 case 1:
-                    fragment = new TransferListFragment();
+                    fragment = TransferListFragment.newInstance(0);
                     break;
             }
 

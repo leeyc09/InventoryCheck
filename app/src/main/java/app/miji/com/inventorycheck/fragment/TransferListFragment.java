@@ -2,6 +2,7 @@ package app.miji.com.inventorycheck.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,12 +22,31 @@ import app.miji.com.inventorycheck.utility.Utility;
 public class TransferListFragment extends Fragment {
 
     private TransferRecyclerViewAdapter mAdapter;
-
+    //for determining floating label for  location label
+    //FLAG 0: from StockInActivity
+    //FLAG 1: from StockOutActivity
+    public static final String FLAG = "location_label";
+    private int flag;
 
     public TransferListFragment() {
         // Required empty public constructor
     }
 
+    public static TransferListFragment newInstance(int activityFlag) {
+        TransferListFragment fragment = new TransferListFragment();
+        Bundle args = new Bundle();
+        args.putInt(FLAG, activityFlag);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            flag = getArguments().getInt(FLAG);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +76,7 @@ public class TransferListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new TransferRecyclerViewAdapter(getActivity());
+        mAdapter = new TransferRecyclerViewAdapter(getActivity(), flag);
         recyclerView.setAdapter(mAdapter);
     }
 

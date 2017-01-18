@@ -209,7 +209,7 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
                     fragment = new SalesListFragment();
                     break;
                 case 1:
-                    fragment = new TransferListFragment();
+                    fragment = TransferListFragment.newInstance(1);
                     break;
             }
 
