@@ -23,7 +23,7 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_stock_in, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_delivery, parent, false);
         return new DeliveryRecyclerViewAdapter.ViewHolder(view);
     }
 

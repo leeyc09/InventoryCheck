@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
@@ -25,7 +24,7 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_stock_in, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transfer, parent, false);
         return new TransferRecyclerViewAdapter.ViewHolder(view);
     }
 
@@ -40,7 +39,6 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
 
         holder.mTxtDate.setText(mContext.getString(R.string.mdtp_date) + ": " + mDate);
         holder.mNumber.setText(mContext.getString(R.string.trans_id) + ": " + mTransferId);
-        holder.mItemImageView.setVisibility(View.GONE);
 
         //determine if request is from stock in or stock out activity
         String to = mContext.getString(R.string.to) + ": " + mTo;
@@ -69,7 +67,6 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        final ImageView mItemImageView;
         final TextView mTxtDate;
         final TextView mItem1;
         final TextView mItem2;
@@ -80,7 +77,6 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            mItemImageView = (ImageView) itemView.findViewById(R.id.img_item);
             mTxtDate = (TextView) itemView.findViewById(R.id.txt_date);
             mItem1 = (TextView) itemView.findViewById(R.id.txt_text_one);
             mItem2 = (TextView) itemView.findViewById(R.id.txt_text_two);
