@@ -18,11 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.adapter.DeliveryRecyclerViewAdapter;
 import app.miji.com.inventorycheck.utility.Utility;
 
 public class NewItemsActivity extends AppCompatActivity {
 
+
+    private static final String LOG_TAG = NewItemsActivity.class.getSimpleName();
     public static final String DETAIL = "detail";
     public static final String BASE64_IMAGE = "image";
 
@@ -31,6 +32,9 @@ public class NewItemsActivity extends AppCompatActivity {
     * 1 -> edit items
     * */
     public static final String FLAG = "flag";
+    public static final String DELIVERY = "delivery";
+    public static final String ACTIVITY = "activity";
+
 
     private LinearLayout card_detail;
 
@@ -60,7 +64,7 @@ public class NewItemsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //determine title
-        switch (flag){
+        switch (flag) {
             case 0:
                 toolbarTitle = getString(R.string.add_item);
                 break;
@@ -183,4 +187,5 @@ public class NewItemsActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

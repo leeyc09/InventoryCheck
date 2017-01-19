@@ -1,16 +1,22 @@
 package app.miji.com.inventorycheck.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.adapter.NewItemRecyclerViewAdapter;
+import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Item;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
@@ -39,13 +47,29 @@ public class NewItemsFragment extends Fragment {
     private NewItemRecyclerViewAdapter mAdapter;
     private Context mContext;
 
-
+    //text input
     private TextInputLayout mTxtInQty;
     private TextInputLayout mTxtInItem;
     private TextInputLayout mTxtInUnit;
 
+    //common stock details
+    private String mDate;
+    private String mTime;
+    private String mLocation;
     private List<Item> itemList;
     private String base64Image = null;
+
+    //Delivery details
+    private Delivery delivery;
+    private String mDeliveryMan;
+    private String mReferenceNo;
+
+    //activity flags
+    private String fromActivity = null;
+    public static final String DELIVERY = "delivery";
+    public static final String SALES = "sales";
+    public static final String TRANSFER = "transfer";
+
 
     public NewItemsFragment() {
     }
@@ -54,8 +78,18 @@ public class NewItemsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.list_new_items, container, false);
-
         mContext = getContext();
+
+
+        Intent intent = getActivity().getIntent();
+
+        //check if intent is from delivery
+        if (intent.hasExtra(NewItemsActivity.DELIVERY)) {
+            Log.v(LOG_TAG, "------------intent from delivery--------");
+            delivery = intent.getParcelableExtra(NewItemsActivity.DELIVERY);
+            fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
+            setDeliveryDetails(delivery);
+        }
 
         //create new list
         itemList = new ArrayList<>();
@@ -129,6 +163,7 @@ public class NewItemsFragment extends Fragment {
         return view;
     }
 
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         mAdapter = new NewItemRecyclerViewAdapter(getActivity(), itemList, R.drawable.image_placeholder, getActivity().getLayoutInflater(), getFragmentManager());
         recyclerView.setAdapter(mAdapter);
@@ -191,5 +226,60 @@ public class NewItemsFragment extends Fragment {
 
     }
 
+    private void setDeliveryDetails(Delivery delivery) {
+        mDate = delivery.getDate();
+        mTime = delivery.getTime();
+        mDeliveryMan = delivery.getDeliveryMan();
+        mReferenceNo = delivery.getReferenceNo();
+        mLocation = delivery.getLocation();
+        base64Image = delivery.getImage();
+    }
 
+    private void showDeliveryLogs() {
+        Log.e(LOG_TAG, "DATE--------> " + mDate);
+        Log.e(LOG_TAG, "TIME--------> " + mTime);
+        Log.e(LOG_TAG, "DELIVERYMAN--------> " + mDeliveryMan);
+        Log.e(LOG_TAG, "REFERENCE NO--------> " + mReferenceNo);
+        Log.e(LOG_TAG, "LOCATION--------> " + mLocation);
+        Log.e(LOG_TAG, "IMAGE--------> " + base64Image);
+    }
+
+
+    private void saveStockDetails() {
+        Log.e(LOG_TAG, "From Activity ---------------->" + fromActivity);
+        switch (fromActivity) {
+            case DELIVERY:
+                //create new delivery
+                delivery = new Delivery(mDate, mTime, mLocation, mDeliveryMan, mReferenceNo, base64Image, itemList);
+                //TODO: save delivery
+                break;
+        }
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_details:
+                //not implemented here
+                return false;
+            case R.id.action_save:
+                saveStockDetails();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 }

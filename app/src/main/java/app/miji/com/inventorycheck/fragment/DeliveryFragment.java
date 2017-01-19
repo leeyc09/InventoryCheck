@@ -26,6 +26,7 @@ import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
+import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -229,6 +230,11 @@ public class DeliveryFragment extends Fragment {
                 if (isValid) {
                     Intent intent = new Intent(getActivity(), NewItemsActivity.class);
 
+                    //create delivery item
+                    //no item list yet
+                    Delivery delivery = new Delivery(strDate, strTime, strLoc, strDeliveredBy, strRef, base64Image, null);
+
+
                     //create detail string
                     StringBuffer stringBuffer = new StringBuffer();
 
@@ -251,8 +257,12 @@ public class DeliveryFragment extends Fragment {
                     stringBuffer.append(getResources().getString(R.string.location) + ": " + strLoc);
                     stringBuffer.append("\n"); //new line
 
-                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
-                    intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);
+                    //put Extras
+                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());//detail String
+                    intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);//base64 string
+                    intent.putExtra(NewItemsActivity.DELIVERY, delivery);
+                    intent.putExtra(NewItemsActivity.ACTIVITY, NewItemsFragment.DELIVERY);
+
                     //add flag for adding items
                     intent.putExtra(NewItemsActivity.FLAG, 0);
 
