@@ -1,12 +1,14 @@
 package app.miji.com.inventorycheck.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import app.miji.com.inventorycheck.ItemListActivity;
 import app.miji.com.inventorycheck.R;
 
 /**
@@ -55,6 +57,15 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
                 holder.mItem2.setText(from);
                 break;
         }
+
+        //show all items when clicked
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ItemListActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
 
 
     }

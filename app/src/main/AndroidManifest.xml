@@ -106,6 +106,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="app.miji.com.inventorycheck.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".ItemListActivity"
+            android:label="@string/items"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

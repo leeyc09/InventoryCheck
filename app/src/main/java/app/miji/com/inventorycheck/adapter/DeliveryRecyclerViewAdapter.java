@@ -1,6 +1,7 @@
 package app.miji.com.inventorycheck.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import app.miji.com.inventorycheck.ItemListActivity;
 import app.miji.com.inventorycheck.R;
 
 /**
@@ -41,6 +43,14 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
         holder.mItem2.setText(mContext.getString(R.string.delivered_by) + ": " + mDeliveredBy);
         holder.mNumber.setText(mContext.getString(R.string.reference) + ": " + mRefNo);
         holder.mItemImageView.setImageResource(R.drawable.receipt);
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ItemListActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 
