@@ -26,6 +26,12 @@ public class NewItemsActivity extends AppCompatActivity {
     public static final String DETAIL = "detail";
     public static final String BASE64_IMAGE = "image";
 
+    /*
+    * 0 -> add items
+    * 1 -> edit items
+    * */
+    public static final String FLAG = "flag";
+
     private LinearLayout card_detail;
 
     private boolean mSwitch = false;
@@ -35,18 +41,35 @@ public class NewItemsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_items);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         String detail = null;
         String base64Image = null;
+        int flag = 0;
+        String toolbarTitle = null;
 
         if (intent != null) {
             detail = intent.getStringExtra(DETAIL);
             base64Image = intent.getStringExtra(BASE64_IMAGE);
+            flag = intent.getIntExtra(FLAG, 0);
         }
+
+        //setp toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //determine title
+        switch (flag){
+            case 0:
+                toolbarTitle = getString(R.string.add_item);
+                break;
+            case 1:
+                toolbarTitle = getString(R.string.edit_item);
+                break;
+        }
+        getSupportActionBar().setTitle(toolbarTitle);
+
 
         //details
         card_detail = (LinearLayout) findViewById(R.id.cardview_details);

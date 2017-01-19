@@ -217,6 +217,8 @@ public class TransferFragment extends Fragment {
 
                     intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
                     startActivity(intent);
+                    //add flag for adding items
+                    intent.putExtra(NewItemsActivity.FLAG, 0);
                 }
 
             }

@@ -252,6 +252,8 @@ public class SalesFragment extends Fragment {
 
                     intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
                     intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);
+                    //add flag for adding items
+                    intent.putExtra(NewItemsActivity.FLAG, 0);
 
                     startActivity(intent);
                 }
