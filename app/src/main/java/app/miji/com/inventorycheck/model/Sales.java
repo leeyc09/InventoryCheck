@@ -3,6 +3,8 @@ package app.miji.com.inventorycheck.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by isse on 19/01/2017.
  */
@@ -14,15 +16,8 @@ public class Sales implements Parcelable {
     String ReferenceNo;
     String location;
     String image;
+    List<Item> items;
 
-    public Sales(String date, String time, String customer, String referenceNo, String location, String image) {
-        this.date = date;
-        this.time = time;
-        this.customer = customer;
-        ReferenceNo = referenceNo;
-        this.location = location;
-        this.image = image;
-    }
 
     protected Sales(Parcel in) {
         date = in.readString();
@@ -31,6 +26,7 @@ public class Sales implements Parcelable {
         ReferenceNo = in.readString();
         location = in.readString();
         image = in.readString();
+        items = in.createTypedArrayList(Item.CREATOR);
     }
 
     public static final Creator<Sales> CREATOR = new Creator<Sales>() {
@@ -45,54 +41,6 @@ public class Sales implements Parcelable {
         }
     };
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public String getReferenceNo() {
-        return ReferenceNo;
-    }
-
-    public void setReferenceNo(String referenceNo) {
-        ReferenceNo = referenceNo;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -106,5 +54,6 @@ public class Sales implements Parcelable {
         parcel.writeString(ReferenceNo);
         parcel.writeString(location);
         parcel.writeString(image);
+        parcel.writeTypedList(items);
     }
 }

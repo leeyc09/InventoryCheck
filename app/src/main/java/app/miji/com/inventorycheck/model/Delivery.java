@@ -7,14 +7,16 @@ import java.util.List;
 
 public class Delivery implements Parcelable {
     String date;
+    String time;
     String location;
     String deliveryMan;
     String referenceNo;
     String image;
     List<Item> items;
 
-    public Delivery(String date, String location, String deliveryMan, String referenceNo, String image, List<Item> items) {
+    public Delivery(String date, String time, String location, String deliveryMan, String referenceNo, String image, List<Item> items) {
         this.date = date;
+        this.time = time;
         this.location = location;
         this.deliveryMan = deliveryMan;
         this.referenceNo = referenceNo;
@@ -24,6 +26,7 @@ public class Delivery implements Parcelable {
 
     protected Delivery(Parcel in) {
         date = in.readString();
+        time = in.readString();
         location = in.readString();
         deliveryMan = in.readString();
         referenceNo = in.readString();
@@ -31,12 +34,32 @@ public class Delivery implements Parcelable {
         items = in.createTypedArrayList(Item.CREATOR);
     }
 
+    public static final Creator<Delivery> CREATOR = new Creator<Delivery>() {
+        @Override
+        public Delivery createFromParcel(Parcel in) {
+            return new Delivery(in);
+        }
+
+        @Override
+        public Delivery[] newArray(int size) {
+            return new Delivery[size];
+        }
+    };
+
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getLocation() {
@@ -79,18 +102,6 @@ public class Delivery implements Parcelable {
         this.items = items;
     }
 
-    public static final Creator<Delivery> CREATOR = new Creator<Delivery>() {
-        @Override
-        public Delivery createFromParcel(Parcel in) {
-            return new Delivery(in);
-        }
-
-        @Override
-        public Delivery[] newArray(int size) {
-            return new Delivery[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -99,12 +110,11 @@ public class Delivery implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(date);
+        parcel.writeString(time);
         parcel.writeString(location);
         parcel.writeString(deliveryMan);
         parcel.writeString(referenceNo);
         parcel.writeString(image);
         parcel.writeTypedList(items);
     }
-
-
 }
