@@ -63,6 +63,7 @@ public class NewItemsFragment extends Fragment {
     private Delivery delivery;
     private String mDeliveryMan;
     private String mReferenceNo;
+    private String imageReceipt;
 
     //activity flags
     private String fromActivity = null;
@@ -232,7 +233,7 @@ public class NewItemsFragment extends Fragment {
         mDeliveryMan = delivery.getDeliveryMan();
         mReferenceNo = delivery.getReferenceNo();
         mLocation = delivery.getLocation();
-        base64Image = delivery.getImage();
+        imageReceipt = delivery.getImage();
     }
 
     private void showDeliveryLogs() {
@@ -242,6 +243,11 @@ public class NewItemsFragment extends Fragment {
         Log.e(LOG_TAG, "REFERENCE NO--------> " + mReferenceNo);
         Log.e(LOG_TAG, "LOCATION--------> " + mLocation);
         Log.e(LOG_TAG, "IMAGE--------> " + base64Image);
+        Log.e(LOG_TAG, "ITEMS--------> :");
+
+        for (Item item:itemList) {
+            Log.e(LOG_TAG, "--------> :" + item.getName().toString());
+        }
     }
 
 
@@ -250,8 +256,9 @@ public class NewItemsFragment extends Fragment {
         switch (fromActivity) {
             case DELIVERY:
                 //create new delivery
-                delivery = new Delivery(mDate, mTime, mLocation, mDeliveryMan, mReferenceNo, base64Image, itemList);
+                delivery = new Delivery(mDate, mTime, mLocation, mDeliveryMan, mReferenceNo, imageReceipt, itemList);
                 //TODO: save delivery
+                Utility.saveDelivery(mContext,delivery);
                 break;
         }
     }
@@ -277,6 +284,7 @@ public class NewItemsFragment extends Fragment {
                 return false;
             case R.id.action_save:
                 saveStockDetails();
+                showDeliveryLogs();
                 return true;
         }
         return super.onOptionsItemSelected(item);

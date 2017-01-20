@@ -24,18 +24,29 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.model.Delivery;
 
 
 public class Utility {
     private static final String NO_LOCATION_MESSAGE = "LocationMesageStatus";
     private static final String LOG_TAG = Utility.class.getSimpleName();
+    private static final String KEY_DELIVERY_ITEMS = "delivery";
 
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
@@ -289,6 +300,51 @@ public class Utility {
                 return false;
             }
         });
+    }
+
+
+    public static void saveDelivery(Context context, Delivery delivery) {
+
+        Gson gson = new Gson();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_DELIVERY_ITEMS, Context.MODE_PRIVATE);
+
+        String jsonSaved = sharedPref.getString(KEY_DELIVERY_ITEMS, "");
+        String jsonNewproductToAdd = gson.toJson(delivery);
+        Log.e(LOG_TAG, "DELIVERY JSON----------->" + jsonNewproductToAdd);
+
+        JSONArray jsonArrayProduct = new JSONArray();
+
+        try {
+            if (jsonSaved.length() != 0) {
+                jsonArrayProduct = new JSONArray(jsonSaved);
+            }
+            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //SAVE NEW ARRAY
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(KEY_DELIVERY_ITEMS, jsonArrayProduct.toString());
+        editor.commit();
+    }
+
+
+    public static List<Delivery> getDeliveryData(Context context) {
+        Gson gson = new Gson();
+        List<Delivery> productFromShared = new ArrayList<>();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_DELIVERY_ITEMS, Context.MODE_PRIVATE);
+        String jsonPreferences = sharedPref.getString(KEY_DELIVERY_ITEMS, "");
+
+        Type type = new TypeToken<List<Delivery>>() {
+        }.getType();
+        productFromShared = gson.fromJson(jsonPreferences, type);
+
+        for (Delivery delivery : productFromShared) {
+            Log.e(LOG_TAG, "DELIVERY LIST----------->" + delivery.getDeliveryMan().toString());
+        }
+
+        return productFromShared;
     }
 
 

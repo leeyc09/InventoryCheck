@@ -14,9 +14,12 @@ import android.widget.AutoCompleteTextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.DeliveryRecyclerViewAdapter;
-import app.miji.com.inventorycheck.adapter.StockTakeRecyclerViewAdapter;
+import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.utility.Utility;
 
 /**
@@ -40,8 +43,8 @@ public class DeliveryListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
 
-
     private DeliveryRecyclerViewAdapter mAdapter;
+    private List<Delivery> list;
 
     public DeliveryListFragment() {
         // Required empty public constructor
@@ -78,7 +81,7 @@ public class DeliveryListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_delivery_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_delivery_list, container, false);
 
         //inflate views
         MaterialBetterSpinner spinnerLocation = (MaterialBetterSpinner) view.findViewById(R.id.spinner_location);
@@ -102,7 +105,10 @@ public class DeliveryListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new DeliveryRecyclerViewAdapter(getActivity());
+        list = new ArrayList<>();
+        list = Utility.getDeliveryData(getContext());
+
+        mAdapter = new DeliveryRecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(mAdapter);
     }
 

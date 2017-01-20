@@ -47,5 +47,6 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.github.chathuralakmal:AndroidImagePopup:1.0.3'
     compile 'gun0912.ted:tedbottompicker:1.0.3'
+    compile 'com.google.code.gson:gson:2.8.0'
     testCompile 'junit:junit:4.12'
 }

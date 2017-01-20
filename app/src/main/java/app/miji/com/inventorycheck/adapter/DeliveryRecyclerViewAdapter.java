@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import app.miji.com.inventorycheck.ItemListActivity;
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.model.Delivery;
 
 /**
  * For Delivery List items
@@ -18,9 +21,11 @@ import app.miji.com.inventorycheck.R;
 
 public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRecyclerViewAdapter.ViewHolder> {
     Context mContext;
+    List<Delivery> list;
 
-    public DeliveryRecyclerViewAdapter(Context context) {
+    public DeliveryRecyclerViewAdapter(Context context, List<Delivery> list) {
         this.mContext = context;
+        this.list = list;
     }
 
     @Override
@@ -31,17 +36,23 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.mDelivery = list.get(position);
 
-        //TODO change dummy text
-        String mDate = "02/14/2017";
-        String mLocation = "Marina Bay";
-        String mDeliveredBy = "Usui Takumi";
-        String mRefNo = "0000012";
 
+        //get data
+        String mDate = list.get(position).getDate();
+        String mTime = list.get(position).getTime();
+        String mDeliveredBy = list.get(position).getDeliveryMan();
+        String mRefNo = list.get(position).getReferenceNo();
+        String mLocation = list.get(position).getLocation();
+        String mImage = list.get(position).getImage();
+
+        //set data
         holder.mTxtDate.setText(mContext.getString(R.string.mdtp_date) + ": " + mDate);
         holder.mItem1.setText(mContext.getString(R.string.location) + ": " + mLocation);
         holder.mItem2.setText(mContext.getString(R.string.delivered_by) + ": " + mDeliveredBy);
         holder.mNumber.setText(mContext.getString(R.string.reference) + ": " + mRefNo);
+        //TODO set image dynamically
         holder.mItemImageView.setImageResource(R.drawable.receipt);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +67,9 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
 
     @Override
     public int getItemCount() {
-        //TODO change item count
-        return 10;
+        if (list != null)
+            return list.size();
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,7 +80,8 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
         final TextView mItem2;
         final TextView mNumber;
 
-        //TODO make Delivery model class
+        Delivery mDelivery;
+
         public ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;

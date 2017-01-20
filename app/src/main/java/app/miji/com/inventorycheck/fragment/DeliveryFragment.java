@@ -164,7 +164,6 @@ public class DeliveryFragment extends Fragment {
                                     //Convert bitmap to base64 to so you
                                     base64Image = Utility.convertBitmapToBase64(image);
 
-
                                     Log.e(LOG_TAG, "BASE 64 ------------> " + base64Image);
                                 } catch (Exception e) {
                                     e.printStackTrace();
