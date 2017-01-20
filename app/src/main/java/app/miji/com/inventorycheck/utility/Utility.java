@@ -516,6 +516,25 @@ public class Utility {
         editor.putString(KEY_PRODUCT, jsonArrayProduct.toString());
         editor.commit();
     }
+
+    public static List<Product> getProductData(Context context) {
+        Gson gson = new Gson();
+        List<Product> productFromShared = new ArrayList<>();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_PRODUCT, Context.MODE_PRIVATE);
+        String jsonPreferences = sharedPref.getString(KEY_PRODUCT, "");
+
+        Type type = new TypeToken<List<Product>>() {
+        }.getType();
+        productFromShared = gson.fromJson(jsonPreferences, type);
+
+        if (productFromShared != null) {
+            for (Product product : productFromShared) {
+                Log.e(LOG_TAG, "SALES LIST----------->" + product.getName().toString());
+            }
+        }
+
+        return productFromShared;
+    }
 }
 
 
