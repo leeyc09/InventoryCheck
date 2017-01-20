@@ -41,12 +41,16 @@ import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Transfer;
 
 
 public class Utility {
     private static final String NO_LOCATION_MESSAGE = "LocationMesageStatus";
     private static final String LOG_TAG = Utility.class.getSimpleName();
+
+    //KEYS
     private static final String KEY_DELIVERY_ITEMS = "delivery";
+    private static final String KEY_TRANSFER_ITEMS = "transfer";
 
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
@@ -340,14 +344,59 @@ public class Utility {
         }.getType();
         productFromShared = gson.fromJson(jsonPreferences, type);
 
-        for (Delivery delivery : productFromShared) {
-            Log.e(LOG_TAG, "DELIVERY LIST----------->" + delivery.getDeliveryMan().toString());
+        if (productFromShared != null) {
+            for (Delivery delivery : productFromShared) {
+                Log.e(LOG_TAG, "DELIVERY LIST----------->" + delivery.getDeliveryMan().toString());
+            }
         }
 
         return productFromShared;
     }
 
 
+    public static void saveTransfer(Context context, Transfer transfer) {
+        Gson gson = new Gson();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_TRANSFER_ITEMS, Context.MODE_PRIVATE);
+
+        String jsonSaved = sharedPref.getString(KEY_TRANSFER_ITEMS, "");
+        String jsonNewproductToAdd = gson.toJson(transfer);
+        Log.e(LOG_TAG, "TRANSFER JSON----------->" + jsonNewproductToAdd);
+
+        JSONArray jsonArrayProduct = new JSONArray();
+
+        try {
+            if (jsonSaved.length() != 0) {
+                jsonArrayProduct = new JSONArray(jsonSaved);
+            }
+            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //SAVE NEW ARRAY
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(KEY_TRANSFER_ITEMS, jsonArrayProduct.toString());
+        editor.commit();
+    }
+
+    public static List<Transfer> getTransferData(Context context) {
+        Gson gson = new Gson();
+        List<Transfer> productFromShared = new ArrayList<>();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_TRANSFER_ITEMS, Context.MODE_PRIVATE);
+        String jsonPreferences = sharedPref.getString(KEY_TRANSFER_ITEMS, "");
+
+        Type type = new TypeToken<List<Transfer>>() {
+        }.getType();
+        productFromShared = gson.fromJson(jsonPreferences, type);
+
+        if (productFromShared != null) {
+            for (Transfer transfer : productFromShared) {
+                Log.e(LOG_TAG, "TRANSFER LIST----------->" + transfer.getFromLocation().toString());
+            }
+        }
+
+        return productFromShared;
+    }
 }
 
 

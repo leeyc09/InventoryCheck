@@ -14,8 +14,12 @@ import android.widget.AutoCompleteTextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.TransferRecyclerViewAdapter;
+import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 
 
@@ -27,6 +31,8 @@ public class TransferListFragment extends Fragment {
     //FLAG 1: from StockOutActivity
     public static final String FLAG = "location_label";
     private int flag;
+    private List<Transfer> list;
+
 
     public TransferListFragment() {
         // Required empty public constructor
@@ -76,7 +82,10 @@ public class TransferListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new TransferRecyclerViewAdapter(getActivity(), flag);
+        list = new ArrayList<>();
+        list = Utility.getTransferData(getContext());
+
+        mAdapter = new TransferRecyclerViewAdapter(getActivity(), flag, list);
         recyclerView.setAdapter(mAdapter);
     }
 

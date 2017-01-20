@@ -20,8 +20,8 @@ import app.miji.com.inventorycheck.model.Delivery;
  */
 
 public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRecyclerViewAdapter.ViewHolder> {
-    Context mContext;
-    List<Delivery> list;
+    private Context mContext;
+    private List<Delivery> list;
 
     public DeliveryRecyclerViewAdapter(Context context, List<Delivery> list) {
         this.mContext = context;

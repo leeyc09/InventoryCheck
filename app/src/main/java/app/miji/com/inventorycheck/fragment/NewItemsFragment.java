@@ -31,9 +31,11 @@ import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
+import app.miji.com.inventorycheck.activity.StockInActivity;
 import app.miji.com.inventorycheck.adapter.NewItemRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Item;
+import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -56,20 +58,26 @@ public class NewItemsFragment extends Fragment {
     private String mDate;
     private String mTime;
     private String mLocation;
-    private List<Item> itemList;
-    private String base64Image = null;
+    private List<Item> mItemList;
+    private String mBase64Image = null;
 
     //Delivery details
-    private Delivery delivery;
+    private Delivery mDelivery;
     private String mDeliveryMan;
     private String mReferenceNo;
     private String imageReceipt;
 
+    //Transfer details
+    private Transfer mTransfer;
+    private String mToLocation;
+    private String mFromLocation;
+    private String mTransferId;
+
     //activity flags
     private String fromActivity = null;
-    public static final String DELIVERY = "delivery";
+    public static final String DELIVERY = "mDelivery";
     public static final String SALES = "sales";
-    public static final String TRANSFER = "transfer";
+    public static final String TRANSFER = "mTransfer";
 
 
     public NewItemsFragment() {
@@ -84,16 +92,23 @@ public class NewItemsFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
 
-        //check if intent is from delivery
+        //check if intent is from mDelivery
         if (intent.hasExtra(NewItemsActivity.DELIVERY)) {
-            Log.v(LOG_TAG, "------------intent from delivery--------");
-            delivery = intent.getParcelableExtra(NewItemsActivity.DELIVERY);
+            Log.v(LOG_TAG, "------------intent from mDelivery--------");
+            mDelivery = intent.getParcelableExtra(NewItemsActivity.DELIVERY);
             fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
-            setDeliveryDetails(delivery);
+            setDeliveryDetails(mDelivery);
+        }
+
+        if (intent.hasExtra(NewItemsActivity.TRANSFER)) {
+            Log.v(LOG_TAG, "------------intent from mTransfer--------");
+            mTransfer = intent.getParcelableExtra(NewItemsActivity.TRANSFER);
+            fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
+            setTransferDetails(mTransfer);
         }
 
         //create new list
-        itemList = new ArrayList<>();
+        mItemList = new ArrayList<>();
 
         //setup recyclerview
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_new_items);
@@ -135,14 +150,14 @@ public class NewItemsFragment extends Fragment {
                     String item = spinnerName.getText().toString();
                     String qty = mTxtQty.getText().toString();
                     String unit = spinnerUnit.getText().toString();
-                    String image = base64Image;
+                    String image = mBase64Image;
 
                     //create new item
                     Item myItem = new Item(item, qty, unit, image);
                     //add item to list
-                    itemList.add(myItem);
+                    mItemList.add(myItem);
                     //set list
-                    mAdapter.setItemList(itemList);
+                    mAdapter.setItemList(mItemList);
                     //notify recycler view that there's a change
                     mAdapter.notifyDataSetChanged();
                     recyclerView.getAdapter().notifyDataSetChanged();
@@ -154,7 +169,7 @@ public class NewItemsFragment extends Fragment {
 
                     mItemImageView.setImageResource(R.drawable.image_placeholder);
                     //reset image to default
-                    base64Image = null;
+                    mBase64Image = null;
                 }
 
 
@@ -166,7 +181,7 @@ public class NewItemsFragment extends Fragment {
 
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new NewItemRecyclerViewAdapter(getActivity(), itemList, R.drawable.image_placeholder, getActivity().getLayoutInflater(), getFragmentManager());
+        mAdapter = new NewItemRecyclerViewAdapter(getActivity(), mItemList, R.drawable.image_placeholder, getActivity().getLayoutInflater(), getFragmentManager());
         recyclerView.setAdapter(mAdapter);
         //scroll to last item
         //recyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
@@ -212,7 +227,7 @@ public class NewItemsFragment extends Fragment {
                                     mItemImageView.setImageBitmap(image);
 
                                     //Convert bitmap to base64 to so you
-                                    base64Image = Utility.convertBitmapToBase64(image);
+                                    mBase64Image = Utility.convertBitmapToBase64(image);
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -236,16 +251,38 @@ public class NewItemsFragment extends Fragment {
         imageReceipt = delivery.getImage();
     }
 
+
+    private void setTransferDetails(Transfer transfer) {
+        mDate = transfer.getDate();
+        mTime = transfer.getTime();
+        mToLocation = transfer.getToLocation();
+        mFromLocation = transfer.getFromLocation();
+        mTransferId = transfer.getTransferID();
+    }
+
     private void showDeliveryLogs() {
         Log.e(LOG_TAG, "DATE--------> " + mDate);
         Log.e(LOG_TAG, "TIME--------> " + mTime);
         Log.e(LOG_TAG, "DELIVERYMAN--------> " + mDeliveryMan);
         Log.e(LOG_TAG, "REFERENCE NO--------> " + mReferenceNo);
         Log.e(LOG_TAG, "LOCATION--------> " + mLocation);
-        Log.e(LOG_TAG, "IMAGE--------> " + base64Image);
+        Log.e(LOG_TAG, "IMAGE--------> " + mBase64Image);
         Log.e(LOG_TAG, "ITEMS--------> :");
 
-        for (Item item:itemList) {
+        for (Item item : mItemList) {
+            Log.e(LOG_TAG, "--------> :" + item.getName().toString());
+        }
+    }
+
+    private void showTransferLogs() {
+        Log.e(LOG_TAG, "DATE--------> " + mDate);
+        Log.e(LOG_TAG, "TIME--------> " + mTime);
+        Log.e(LOG_TAG, "TO LOCATION--------> " + mToLocation);
+        Log.e(LOG_TAG, "FROM LOCATION--------> " + mFromLocation);
+        Log.e(LOG_TAG, "TRANSFER ID--------> " + mTransferId);
+        Log.e(LOG_TAG, "ITEMS--------> :");
+
+        for (Item item : mItemList) {
             Log.e(LOG_TAG, "--------> :" + item.getName().toString());
         }
     }
@@ -253,12 +290,29 @@ public class NewItemsFragment extends Fragment {
 
     private void saveStockDetails() {
         Log.e(LOG_TAG, "From Activity ---------------->" + fromActivity);
+        Intent intent;
         switch (fromActivity) {
+
             case DELIVERY:
-                //create new delivery
-                delivery = new Delivery(mDate, mTime, mLocation, mDeliveryMan, mReferenceNo, imageReceipt, itemList);
-                //TODO: save delivery
-                Utility.saveDelivery(mContext,delivery);
+                showDeliveryLogs();
+                //create new mDelivery
+                mDelivery = new Delivery(mDate, mTime, mLocation, mDeliveryMan, mReferenceNo, imageReceipt, mItemList);
+                //save mDelivery
+                Utility.saveDelivery(mContext, mDelivery);
+                //go to stock in activity
+                intent = new Intent(getActivity(), StockInActivity.class);
+                startActivity(intent);
+                break;
+
+            case TRANSFER:
+                showTransferLogs();
+                //create new mDelivery
+                mTransfer = new Transfer(mDate, mTime, mTransferId, mFromLocation, mToLocation, mItemList);
+                //save mDelivery
+                Utility.saveTransfer(mContext, mTransfer);
+                //go to stock in activity
+                intent = new Intent(getActivity(), StockInActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -284,7 +338,6 @@ public class NewItemsFragment extends Fragment {
                 return false;
             case R.id.action_save:
                 saveStockDetails();
-                showDeliveryLogs();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import app.miji.com.inventorycheck.ItemListActivity;
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.model.Transfer;
 
 /**
  * For Transfer list item
@@ -18,10 +21,12 @@ import app.miji.com.inventorycheck.R;
 public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRecyclerViewAdapter.ViewHolder> {
     private Context mContext;
     private int flagActivity;
+    private List<Transfer> list;
 
-    public TransferRecyclerViewAdapter(Context context, int flag) {
+    public TransferRecyclerViewAdapter(Context context, int flag, List<Transfer> list) {
         this.mContext = context;
         this.flagActivity = flag;
+        this.list = list;
     }
 
     @Override
@@ -33,12 +38,17 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        //TODO change dummy text
-        String mDate = "02/14/2017";
-        String mFrom = "Orchard";
-        String mTo = "Raffles City";
-        String mTransferId = "0000012";
+        holder.mTransfer = list.get(position);
 
+        //get data
+        String mDate = list.get(position).getDate();
+        String mTime = list.get(position).getTime();
+        String mFrom = list.get(position).getFromLocation();
+        String mTo = list.get(position).getToLocation();
+        String mTransferId = list.get(position).getTransferID();
+
+
+        //set text
         holder.mTxtDate.setText(mContext.getString(R.string.mdtp_date) + ": " + mDate);
         holder.mNumber.setText(mContext.getString(R.string.trans_id) + ": " + mTransferId);
 
@@ -72,8 +82,9 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
 
     @Override
     public int getItemCount() {
-        //TODO change item count
-        return 10;
+        if (list != null)
+            return list.size();
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -83,7 +94,7 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
         final TextView mItem2;
         final TextView mNumber;
 
-        //TODO make Transfer model class
+        Transfer mTransfer;
 
         public ViewHolder(View itemView) {
             super(itemView);

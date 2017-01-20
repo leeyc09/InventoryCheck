@@ -22,6 +22,8 @@ import java.util.Calendar;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.activity.TransferActivity;
+import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 
 /**
@@ -183,7 +185,6 @@ public class TransferFragment extends Fragment {
 
                 //if valid proceed to the next activity
                 if (isValid) {
-                    Intent intent = new Intent(getActivity(), NewItemsActivity.class);
 
                     String strTime = txtTime.getText().toString();
                     String strDate = txtDate.getText().toString();
@@ -191,6 +192,14 @@ public class TransferFragment extends Fragment {
                     String strToLocation = spinnerToLocation.getText().toString();
                     //TODO generate unique transfer id, include in transfer details
                     String strTransferId = "0000011251";
+
+
+                    //create delivery item
+                    //no item list yet
+                    Transfer transfer = new Transfer(strDate, strTime, strTransferId, strFromLocation, strToLocation, null);
+
+                    Intent intent = new Intent(getActivity(), NewItemsActivity.class);
+
 
 
                     //create detail string
@@ -215,10 +224,15 @@ public class TransferFragment extends Fragment {
                     stringBuffer.append(getResources().getString(R.string.to) + ": " + strToLocation);
                     stringBuffer.append("\n"); //new line
 
+                    //put Extras
                     intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
-                    startActivity(intent);
+                    intent.putExtra(NewItemsActivity.TRANSFER, transfer);
+                    intent.putExtra(NewItemsActivity.ACTIVITY, NewItemsFragment.TRANSFER);
                     //add flag for adding items
                     intent.putExtra(NewItemsActivity.FLAG, 0);
+
+
+                    startActivity(intent);
                 }
 
             }

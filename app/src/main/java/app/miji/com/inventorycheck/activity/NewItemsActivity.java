@@ -33,6 +33,7 @@ public class NewItemsActivity extends AppCompatActivity {
     * */
     public static final String FLAG = "flag";
     public static final String DELIVERY = "delivery";
+    public static final String TRANSFER = "transfer";
     public static final String ACTIVITY = "activity";
 
 
