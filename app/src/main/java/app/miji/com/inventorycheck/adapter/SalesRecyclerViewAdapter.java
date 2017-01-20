@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import app.miji.com.inventorycheck.ItemListActivity;
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.model.Sales;
 
 /**
  * For Sales list item
@@ -17,9 +20,11 @@ import app.miji.com.inventorycheck.R;
 
 public class SalesRecyclerViewAdapter extends RecyclerView.Adapter<SalesRecyclerViewAdapter.ViewHolder> {
     private Context mContext;
+    private List<Sales> list;
 
-    public SalesRecyclerViewAdapter(Context mContext) {
+    public SalesRecyclerViewAdapter(Context mContext, List<Sales> list) {
         this.mContext = mContext;
+        this.list = list;
     }
 
     @Override
@@ -31,18 +36,22 @@ public class SalesRecyclerViewAdapter extends RecyclerView.Adapter<SalesRecycler
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        //TODO change dummy text
-        String mDate = "02/14/2017";
-        String mLocation = "Orchard";
-        String mCustomer = "Masahiro Miji";
-        String mRefNo = "0000012";
-        String mItems = "Items: strawberry, Apple, cheese, yogurt, pie, brush, tissue, ballpen";
+        holder.mSales = list.get(position);
 
-        holder.txtDate.setText(mDate);
-        holder.txtLocation.setText(mLocation);
-        holder.txtRefNo.setText(mRefNo);
-        holder.txtCustomer.setText(mCustomer);
-        holder.txtItems.setText(mItems);
+        //get data
+        String mDate = list.get(position).getDate();
+        String mTime = list.get(position).getTime();
+        String mLocation = list.get(position).getLocation();
+        String mCustomer = list.get(position).getCustomer();
+        String mRefNo = list.get(position).getReferenceNo();
+        String mImage = list.get(position).getImage();
+        //String mItems = list.get(position).getItems();
+
+        //set data
+        holder.mTxtDate.setText(mContext.getString(R.string.mdtp_date) + ": " + mDate);
+        holder.mTxtLocation.setText(mContext.getString(R.string.location) + ": " + mLocation);
+        holder.mTxtRefNo.setText(mContext.getString(R.string.reference) + ": " + mRefNo);
+        holder.mTxtCustomer.setText(mContext.getString(R.string.customer) + ": " + mCustomer);
 
         //show all items when clicked
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -57,28 +66,27 @@ public class SalesRecyclerViewAdapter extends RecyclerView.Adapter<SalesRecycler
 
     @Override
     public int getItemCount() {
-        //TODO change item count
-        return 10;
+        if (list != null)
+            return list.size();
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        final TextView txtDate;
-        final TextView txtLocation;
-        final TextView txtRefNo;
-        final TextView txtCustomer;
-        final TextView txtItems;
+        final TextView mTxtDate;
+        final TextView mTxtLocation;
+        final TextView mTxtRefNo;
+        final TextView mTxtCustomer;
 
-        //TODO make Sales model class
+        Sales mSales;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.mView = itemView;
-            this.txtDate = (TextView) itemView.findViewById(R.id.txt_date);
-            this.txtLocation = (TextView) itemView.findViewById(R.id.txt_location);
-            this.txtRefNo = (TextView) itemView.findViewById(R.id.txt_ref_no);
-            this.txtCustomer = (TextView) itemView.findViewById(R.id.txt_customer);
-            this.txtItems = (TextView) itemView.findViewById(R.id.txt_items);
+            this.mTxtDate = (TextView) itemView.findViewById(R.id.txt_date);
+            this.mTxtLocation = (TextView) itemView.findViewById(R.id.txt_location);
+            this.mTxtRefNo = (TextView) itemView.findViewById(R.id.txt_ref_no);
+            this.mTxtCustomer = (TextView) itemView.findViewById(R.id.txt_customer);
         }
     }
 }

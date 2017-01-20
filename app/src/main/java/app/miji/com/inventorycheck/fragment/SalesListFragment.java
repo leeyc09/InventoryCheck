@@ -13,8 +13,12 @@ import android.widget.AutoCompleteTextView;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.SalesRecyclerViewAdapter;
+import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.utility.Utility;
 
 /**
@@ -23,6 +27,7 @@ import app.miji.com.inventorycheck.utility.Utility;
 public class SalesListFragment extends Fragment {
 
     private SalesRecyclerViewAdapter mAdapter;
+    private List<Sales> list;
 
     public SalesListFragment() {
         // Required empty public constructor
@@ -57,7 +62,10 @@ public class SalesListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mAdapter = new SalesRecyclerViewAdapter(getActivity());
+        list = new ArrayList<>();
+        list = Utility.getSalesData(getContext());
+
+        mAdapter = new SalesRecyclerViewAdapter(getActivity(),list);
         recyclerView.setAdapter(mAdapter);
     }
 

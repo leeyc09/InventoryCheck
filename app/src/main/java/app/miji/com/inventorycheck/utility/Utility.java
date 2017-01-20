@@ -41,6 +41,7 @@ import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.model.Transfer;
 
 
@@ -52,6 +53,7 @@ public class Utility {
     private static final String KEY_DELIVERY_ITEMS = "delivery";
     private static final String KEY_STOCK_IN_TRANSFER_ITEMS = "transfer_stockIn";
     private static final String KEY_STOCK_OUT_TRANSFER_ITEMS = "transfer_stockOut";
+    private static final String KEY_SALES_ITEMS = "sales";
 
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
@@ -438,6 +440,50 @@ public class Utility {
         if (productFromShared != null) {
             for (Transfer transfer : productFromShared) {
                 Log.e(LOG_TAG, "TRANSFER LIST STOCK OUT----------->" + transfer.getFromLocation().toString());
+            }
+        }
+
+        return productFromShared;
+    }
+
+    public static void saveSales(Context context, Sales sales) {
+        Gson gson = new Gson();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_SALES_ITEMS, Context.MODE_PRIVATE);
+
+        String jsonSaved = sharedPref.getString(KEY_SALES_ITEMS, "");
+        String jsonNewproductToAdd = gson.toJson(sales);
+        Log.e(LOG_TAG, "SALES JSON----------->" + jsonNewproductToAdd);
+
+        JSONArray jsonArrayProduct = new JSONArray();
+
+        try {
+            if (jsonSaved.length() != 0) {
+                jsonArrayProduct = new JSONArray(jsonSaved);
+            }
+            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //SAVE NEW ARRAY
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(KEY_SALES_ITEMS, jsonArrayProduct.toString());
+        editor.commit();
+    }
+
+    public static List<Sales> getSalesData(Context context) {
+        Gson gson = new Gson();
+        List<Sales> productFromShared = new ArrayList<>();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_SALES_ITEMS, Context.MODE_PRIVATE);
+        String jsonPreferences = sharedPref.getString(KEY_SALES_ITEMS, "");
+
+        Type type = new TypeToken<List<Sales>>() {
+        }.getType();
+        productFromShared = gson.fromJson(jsonPreferences, type);
+
+        if (productFromShared != null) {
+            for (Sales sales : productFromShared) {
+                Log.e(LOG_TAG, "SALES LIST----------->" + sales.getCustomer().toString());
             }
         }
 

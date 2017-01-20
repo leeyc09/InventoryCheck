@@ -41,11 +41,12 @@
                         android:hint="@string/mdtp_date"
                         android:textAppearance="?android:textAppearanceMedium" />
 
+
                     <TextView
-                        android:id="@+id/txt_location"
+                        android:id="@+id/txt_ref_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="location"
+                        android:hint="Reference no"
                         android:textAppearance="?android:textAppearanceMedium" />
 
 
@@ -58,11 +59,12 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+
                     <TextView
-                        android:id="@+id/txt_ref_no"
+                        android:id="@+id/txt_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Reference no"
+                        android:hint="location"
                         android:textAppearance="?android:textAppearanceMedium" />
 
                     <TextView
@@ -78,24 +80,6 @@
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/SplitLine_hor1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:layout_marginLeft="@dimen/text_margin"
-                android:layout_marginRight="@dimen/text_margin"
-                android:layout_marginStart="@dimen/text_margin"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/txt_items"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:hint="Items: strawberry, Apple, cheese, yogurt, pie, brush, tissue, ballpen"
-                android:maxLines="2"
-                android:textAppearance="?android:textAppearanceMedium" />
         </LinearLayout>
 
 

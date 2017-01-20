@@ -35,6 +35,7 @@ public class NewItemsActivity extends AppCompatActivity {
     public static final String DELIVERY = "delivery";
     public static final String TRANSFER = "transfer";
     public static final String ACTIVITY = "activity";
+    public static final String SALES = "sales";
 
     private LinearLayout card_detail;
 

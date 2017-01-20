@@ -26,8 +26,12 @@ import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
+import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
+
+import static app.miji.com.inventorycheck.R.string.delivery;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -228,6 +232,11 @@ public class SalesFragment extends Fragment {
                     // go to NewItemsActivity
                     Intent intent = new Intent(getActivity(), NewItemsActivity.class);
 
+                    //create delivery item
+                    //no item list yet
+                    Sales sales = new Sales( strDate,  strTime,  strCustomer,  strRefNo,  strLocation,  base64Image,  null);
+
+
                     //create detail string
                     StringBuffer stringBuffer = new StringBuffer();
 
@@ -254,6 +263,13 @@ public class SalesFragment extends Fragment {
                     intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);
                     //add flag for adding items
                     intent.putExtra(NewItemsActivity.FLAG, 0);
+
+                    intent.putExtra(NewItemsActivity.SALES, sales);
+                    intent.putExtra(NewItemsActivity.ACTIVITY, NewItemsFragment.SALES);
+
+                    //add flag for adding items
+                    intent.putExtra(NewItemsActivity.FLAG, 0);
+
 
                     startActivity(intent);
                 }

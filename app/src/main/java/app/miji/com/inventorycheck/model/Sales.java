@@ -65,4 +65,64 @@ public class Sales implements Parcelable {
         parcel.writeString(image);
         parcel.writeTypedList(items);
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getReferenceNo() {
+        return ReferenceNo;
+    }
+
+    public void setReferenceNo(String referenceNo) {
+        ReferenceNo = referenceNo;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public static Creator<Sales> getCREATOR() {
+        return CREATOR;
+    }
 }

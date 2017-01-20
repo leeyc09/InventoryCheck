@@ -36,6 +36,7 @@ import app.miji.com.inventorycheck.activity.StockOutActivity;
 import app.miji.com.inventorycheck.adapter.NewItemRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Item;
+import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
@@ -64,13 +65,13 @@ public class NewItemsFragment extends Fragment {
     private String mDate;
     private String mTime;
     private String mLocation;
+    private String mReferenceNo;
     private List<Item> mItemList;
     private String mBase64Image = null;
 
     //Delivery details
     private Delivery mDelivery;
     private String mDeliveryMan;
-    private String mReferenceNo;
     private String imageReceipt;
 
     //Transfer details
@@ -78,6 +79,10 @@ public class NewItemsFragment extends Fragment {
     private String mToLocation;
     private String mFromLocation;
     private String mTransferId;
+
+    //sales details
+    private Sales mSales;
+    private String mCustomer;
 
     //activity flags
     private String fromActivity = null;
@@ -101,22 +106,31 @@ public class NewItemsFragment extends Fragment {
 
         //check if intent is from mDelivery
         if (intent.hasExtra(NewItemsActivity.DELIVERY)) {
-            Log.v(LOG_TAG, "------------intent from mDelivery--------");
+            Log.v(LOG_TAG, "------------intent from Delivery--------");
             mDelivery = intent.getParcelableExtra(NewItemsActivity.DELIVERY);
             fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
             setDeliveryDetails(mDelivery);
         }
 
         if (intent.hasExtra(NewItemsActivity.TRANSFER)) {
-            Log.v(LOG_TAG, "------------intent from mTransfer--------");
+            Log.v(LOG_TAG, "------------intent from Transfer--------");
             mTransfer = intent.getParcelableExtra(NewItemsActivity.TRANSFER);
             fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
             setTransferDetails(mTransfer);
         }
 
         if (intent.hasExtra(STOCK)) {
+            //used for determining which stock activity does transfer fragment fragment originate
             flag_stock = intent.getIntExtra(STOCK, 0);
         }
+
+        if(intent.hasExtra(NewItemsActivity.SALES)){
+            Log.v(LOG_TAG, "------------intent from Sales--------");
+            mSales = intent.getParcelableExtra(NewItemsActivity.SALES);
+            fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
+            setSalesDetails(mSales);
+        }
+
 
 
         //create new list
@@ -263,6 +277,14 @@ public class NewItemsFragment extends Fragment {
         imageReceipt = delivery.getImage();
     }
 
+    private void setSalesDetails(Sales sales) {
+        mDate = sales.getDate();
+        mTime = sales.getTime();
+        mCustomer = sales.getCustomer();
+        mReferenceNo = sales.getReferenceNo();
+        mLocation = sales.getLocation();
+        imageReceipt = sales.getImage();
+    }
 
     private void setTransferDetails(Transfer transfer) {
         mDate = transfer.getDate();
@@ -279,6 +301,19 @@ public class NewItemsFragment extends Fragment {
         Log.e(LOG_TAG, "REFERENCE NO--------> " + mReferenceNo);
         Log.e(LOG_TAG, "LOCATION--------> " + mLocation);
         Log.e(LOG_TAG, "IMAGE--------> " + mBase64Image);
+        Log.e(LOG_TAG, "ITEMS--------> :");
+
+        for (Item item : mItemList) {
+            Log.e(LOG_TAG, "--------> :" + item.getName().toString());
+        }
+    }
+
+    private void showSalesLogs() {
+        Log.e(LOG_TAG, "DATE--------> " + mDate);
+        Log.e(LOG_TAG, "TIME--------> " + mTime);
+        Log.e(LOG_TAG, "CUSTOMER--------> " + mCustomer);
+        Log.e(LOG_TAG, "LOCATION--------> " + mLocation);
+        Log.e(LOG_TAG, "REFERENCE NO--------> " + mReferenceNo);
         Log.e(LOG_TAG, "ITEMS--------> :");
 
         for (Item item : mItemList) {
@@ -309,7 +344,7 @@ public class NewItemsFragment extends Fragment {
                 showDeliveryLogs();
                 //create new mDelivery
                 mDelivery = new Delivery(mDate, mTime, mLocation, mDeliveryMan, mReferenceNo, imageReceipt, mItemList);
-                //save mDelivery
+                //save Delivery
                 Utility.saveDelivery(mContext, mDelivery);
                 //go to stock in activity
                 intent = new Intent(getActivity(), StockInActivity.class);
@@ -318,7 +353,7 @@ public class NewItemsFragment extends Fragment {
 
             case TRANSFER:
                 showTransferLogs();
-                //create new mDelivery
+                //create new delivery
                 mTransfer = new Transfer(mDate, mTime, mTransferId, mFromLocation, mToLocation, mItemList);
                 Log.e(LOG_TAG, "FROM ACTIVITY===============>" + flag_stock);
                 //save transfer depending from Stock in/stock out activity
@@ -335,6 +370,18 @@ public class NewItemsFragment extends Fragment {
                 intent.putExtra(StockInActivity.TAB, 1); //Transfer fragment is in second tab
                 startActivity(intent);
                 break;
+
+            case SALES:
+                showSalesLogs();
+                //create new sales
+                mSales = new Sales(mDate,mTime,mCustomer,mReferenceNo,mLocation,imageReceipt, mItemList);
+                //save Delivery
+                Utility.saveSales(mContext, mSales);
+                //go to stock in activity
+                intent = new Intent(getActivity(), StockOutActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 
