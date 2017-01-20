@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -40,13 +39,11 @@ public class NewProductFragment extends Fragment {
         EditText txtBarcode = (EditText) view.findViewById(R.id.txt_barcode);
         final EditText txtName = (EditText) view.findViewById(R.id.txt_name);
         EditText txtDescription = (EditText) view.findViewById(R.id.txt_description);
-        EditText txtQuantity = (EditText) view.findViewById(R.id.txt_qty);
         EditText txtPrice = (EditText) view.findViewById(R.id.txt_price);
         EditText txtLowStock = (EditText) view.findViewById(R.id.txt_low_stock);
         EditText txtNotes = (EditText) view.findViewById(R.id.txt_notes);
         final TextInputLayout txtInName = (TextInputLayout) view.findViewById(R.id.input_name);
         ImageView imgScan = (ImageView) view.findViewById(R.id.img_scan);
-        AutoCompleteTextView spinnerUnit = (AutoCompleteTextView) view.findViewById(R.id.spinner_unit);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         //setup fab
