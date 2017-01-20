@@ -32,6 +32,7 @@ import java.util.List;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.activity.StockInActivity;
+import app.miji.com.inventorycheck.activity.StockOutActivity;
 import app.miji.com.inventorycheck.adapter.NewItemRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Item;
@@ -46,8 +47,13 @@ public class NewItemsFragment extends Fragment {
 
 
     private static final String LOG_TAG = NewItemsFragment.class.getSimpleName();
+
     private NewItemRecyclerViewAdapter mAdapter;
     private Context mContext;
+
+    //if transfer is from stock in or stock out activity
+    public static final String STOCK = "stock_activity";
+    public int flag_stock;
 
     //text input
     private TextInputLayout mTxtInQty;
@@ -75,9 +81,10 @@ public class NewItemsFragment extends Fragment {
 
     //activity flags
     private String fromActivity = null;
-    public static final String DELIVERY = "mDelivery";
+    public static final String ACTVITY_FLAG = "activity_flag";
+    public static final String DELIVERY = "delivery";
     public static final String SALES = "sales";
-    public static final String TRANSFER = "mTransfer";
+    public static final String TRANSFER = "transfer";
 
 
     public NewItemsFragment() {
@@ -106,6 +113,11 @@ public class NewItemsFragment extends Fragment {
             fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
             setTransferDetails(mTransfer);
         }
+
+        if (intent.hasExtra(STOCK)) {
+            flag_stock = intent.getIntExtra(STOCK, 0);
+        }
+
 
         //create new list
         mItemList = new ArrayList<>();
@@ -308,10 +320,19 @@ public class NewItemsFragment extends Fragment {
                 showTransferLogs();
                 //create new mDelivery
                 mTransfer = new Transfer(mDate, mTime, mTransferId, mFromLocation, mToLocation, mItemList);
-                //save mDelivery
-                Utility.saveTransfer(mContext, mTransfer);
-                //go to stock in activity
-                intent = new Intent(getActivity(), StockInActivity.class);
+                Log.e(LOG_TAG, "FROM ACTIVITY===============>" + flag_stock);
+                //save transfer depending from Stock in/stock out activity
+                if (flag_stock == 0) {
+                    Utility.saveTransfer_StockIn(mContext, mTransfer);//from stock in
+                    //go to stock in activity
+                    intent = new Intent(getActivity(), StockInActivity.class);
+                } else {
+                    Utility.saveTransfer_StockOut(mContext, mTransfer);//from stock out
+                    //go to stock in activity
+                    intent = new Intent(getActivity(), StockOutActivity.class);
+                }
+
+                intent.putExtra(StockInActivity.TAB, 1); //Transfer fragment is in second tab
                 startActivity(intent);
                 break;
         }
@@ -333,9 +354,6 @@ public class NewItemsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.action_details:
-                //not implemented here
-                return false;
             case R.id.action_save:
                 saveStockDetails();
                 return true;

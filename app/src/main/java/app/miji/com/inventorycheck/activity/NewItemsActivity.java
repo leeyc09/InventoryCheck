@@ -36,7 +36,6 @@ public class NewItemsActivity extends AppCompatActivity {
     public static final String TRANSFER = "transfer";
     public static final String ACTIVITY = "activity";
 
-
     private LinearLayout card_detail;
 
     private boolean mSwitch = false;

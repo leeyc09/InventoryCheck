@@ -11,7 +11,7 @@ public class TransferActivity extends AppCompatActivity {
     //for determining floating label for spinner location
     //FLAG 0: from StockInActivity
     //FLAG 1: from StockOutActivity
-    public static final String FLAG = "spinner_label";
+    public static final String FLAG = "activity_flag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

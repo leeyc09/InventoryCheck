@@ -50,7 +50,8 @@ public class Utility {
 
     //KEYS
     private static final String KEY_DELIVERY_ITEMS = "delivery";
-    private static final String KEY_TRANSFER_ITEMS = "transfer";
+    private static final String KEY_STOCK_IN_TRANSFER_ITEMS = "transfer_stockIn";
+    private static final String KEY_STOCK_OUT_TRANSFER_ITEMS = "transfer_stockOut";
 
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
@@ -354,13 +355,13 @@ public class Utility {
     }
 
 
-    public static void saveTransfer(Context context, Transfer transfer) {
+    public static void saveTransfer_StockIn(Context context, Transfer transfer) {
         Gson gson = new Gson();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_TRANSFER_ITEMS, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_IN_TRANSFER_ITEMS, Context.MODE_PRIVATE);
 
-        String jsonSaved = sharedPref.getString(KEY_TRANSFER_ITEMS, "");
+        String jsonSaved = sharedPref.getString(KEY_STOCK_IN_TRANSFER_ITEMS, "");
         String jsonNewproductToAdd = gson.toJson(transfer);
-        Log.e(LOG_TAG, "TRANSFER JSON----------->" + jsonNewproductToAdd);
+        Log.e(LOG_TAG, "TRANSFER JSON STOCK IN----------->" + jsonNewproductToAdd);
 
         JSONArray jsonArrayProduct = new JSONArray();
 
@@ -375,15 +376,15 @@ public class Utility {
 
         //SAVE NEW ARRAY
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(KEY_TRANSFER_ITEMS, jsonArrayProduct.toString());
+        editor.putString(KEY_STOCK_IN_TRANSFER_ITEMS, jsonArrayProduct.toString());
         editor.commit();
     }
 
-    public static List<Transfer> getTransferData(Context context) {
+    public static List<Transfer> getTransferData_StockIn(Context context) {
         Gson gson = new Gson();
         List<Transfer> productFromShared = new ArrayList<>();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_TRANSFER_ITEMS, Context.MODE_PRIVATE);
-        String jsonPreferences = sharedPref.getString(KEY_TRANSFER_ITEMS, "");
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_IN_TRANSFER_ITEMS, Context.MODE_PRIVATE);
+        String jsonPreferences = sharedPref.getString(KEY_STOCK_IN_TRANSFER_ITEMS, "");
 
         Type type = new TypeToken<List<Transfer>>() {
         }.getType();
@@ -391,7 +392,52 @@ public class Utility {
 
         if (productFromShared != null) {
             for (Transfer transfer : productFromShared) {
-                Log.e(LOG_TAG, "TRANSFER LIST----------->" + transfer.getFromLocation().toString());
+                Log.e(LOG_TAG, "TRANSFER LIST STOCK IN----------->" + transfer.getFromLocation().toString());
+            }
+        }
+
+        return productFromShared;
+    }
+
+    public static void saveTransfer_StockOut(Context context, Transfer transfer) {
+        Gson gson = new Gson();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_OUT_TRANSFER_ITEMS, Context.MODE_PRIVATE);
+
+        String jsonSaved = sharedPref.getString(KEY_STOCK_OUT_TRANSFER_ITEMS, "");
+        String jsonNewproductToAdd = gson.toJson(transfer);
+        Log.e(LOG_TAG, "TRANSFER JSON STOCK OUT----------->" + jsonNewproductToAdd);
+
+        JSONArray jsonArrayProduct = new JSONArray();
+
+        try {
+            if (jsonSaved.length() != 0) {
+                jsonArrayProduct = new JSONArray(jsonSaved);
+            }
+            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //SAVE NEW ARRAY
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(KEY_STOCK_OUT_TRANSFER_ITEMS, jsonArrayProduct.toString());
+        editor.commit();
+    }
+
+
+    public static List<Transfer> getTransferData_StockOut(Context context) {
+        Gson gson = new Gson();
+        List<Transfer> productFromShared = new ArrayList<>();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_OUT_TRANSFER_ITEMS, Context.MODE_PRIVATE);
+        String jsonPreferences = sharedPref.getString(KEY_STOCK_OUT_TRANSFER_ITEMS, "");
+
+        Type type = new TypeToken<List<Transfer>>() {
+        }.getType();
+        productFromShared = gson.fromJson(jsonPreferences, type);
+
+        if (productFromShared != null) {
+            for (Transfer transfer : productFromShared) {
+                Log.e(LOG_TAG, "TRANSFER LIST STOCK OUT----------->" + transfer.getFromLocation().toString());
             }
         }
 

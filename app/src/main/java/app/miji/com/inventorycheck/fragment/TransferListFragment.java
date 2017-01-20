@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import app.miji.com.inventorycheck.utility.Utility;
 
 public class TransferListFragment extends Fragment {
 
+    private static final String LOG_TAG = TransferListFragment.class.getSimpleName();
     private TransferRecyclerViewAdapter mAdapter;
     //for determining floating label for  location label
     //FLAG 0: from StockInActivity
@@ -83,7 +85,11 @@ public class TransferListFragment extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         list = new ArrayList<>();
-        list = Utility.getTransferData(getContext());
+
+        Log.e(LOG_TAG, "FROM ACTIVITY===============>" + flag);
+
+        //get transfer data depending on stock activity
+        list = (flag==0) ? Utility.getTransferData_StockIn(getContext()) : Utility.getTransferData_StockOut(getContext());
 
         mAdapter = new TransferRecyclerViewAdapter(getActivity(), flag, list);
         recyclerView.setAdapter(mAdapter);

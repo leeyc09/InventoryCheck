@@ -40,6 +40,7 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
 
 
     private static final int REQUEST_CODE = 1;
+    public static final String TAB = "tab";
     private int selectedTab;
 
     /**
@@ -56,6 +57,14 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //sometimes this activity can start on the transfer fragment
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra(TAB)) {
+                selectedTab = intent.getIntExtra(TAB, 0);
+            }
+        }
+
         //setup floating action buttons
         fabDelivery = (FloatingActionButton) findViewById(R.id.fab_delivery);
         fabTransfer = (FloatingActionButton) findViewById(R.id.fab_transfer);
@@ -70,6 +79,10 @@ public class StockInActivity extends AppCompatActivity implements SheetLayout.On
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.setCurrentItem(selectedTab);
+        showProperFab(selectedTab);
+
 
         //when tab changes, fab should also change
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

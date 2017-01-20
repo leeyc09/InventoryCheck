@@ -33,6 +33,7 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -44,6 +45,7 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
     private SheetLayout mSheetLayout;
 
     private static final int REQUEST_CODE = 1;
+    public static final String TAB = "tab";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,14 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //sometimes this activity can start on the transfer fragment
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra(TAB)) {
+                selectedTab = intent.getIntExtra(TAB, 0);
+            }
+        }
 
         //setup floating action buttons
         fabSales = (FloatingActionButton) findViewById(R.id.fab_sales);
@@ -68,6 +78,9 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.setCurrentItem(selectedTab);
+        showProperFab(selectedTab);
 
         //when tab changes, fab should also change
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

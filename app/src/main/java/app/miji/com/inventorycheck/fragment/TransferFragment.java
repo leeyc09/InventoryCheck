@@ -37,6 +37,7 @@ public class TransferFragment extends Fragment {
     };
 
 
+    private int flag_activity = 0;
     private final String LOG_TAG = TransferFragment.class.getSimpleName();
 
     public TransferFragment() {
@@ -60,11 +61,10 @@ public class TransferFragment extends Fragment {
 
         //get flag for spinner hint label
         Intent intent = getActivity().getIntent();
-        int flag = 0;
         if (intent != null) {
-            flag = intent.getIntExtra(TransferActivity.FLAG, 0);
+            flag_activity = intent.getIntExtra(TransferActivity.FLAG, 0);
         }
-        switch (flag) {
+        switch (flag_activity) {
             case 0:
                 //from stock in
                 spinnerFromLocation.setHint(getString(R.string.from_location));
@@ -163,7 +163,6 @@ public class TransferFragment extends Fragment {
                 int fromLocation = spinnerFromLocation.getText().toString().length();
                 boolean isValid = toLocation != 0 && fromLocation != 0; //if formed is properly filled out
 
-
                 Log.v(LOG_TAG, "To Location: " + toLocation);
                 Log.v(LOG_TAG, "From Location: " + fromLocation);
 
@@ -201,7 +200,6 @@ public class TransferFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), NewItemsActivity.class);
 
 
-
                     //create detail string
                     StringBuffer stringBuffer = new StringBuffer();
 
@@ -230,6 +228,10 @@ public class TransferFragment extends Fragment {
                     intent.putExtra(NewItemsActivity.ACTIVITY, NewItemsFragment.TRANSFER);
                     //add flag for adding items
                     intent.putExtra(NewItemsActivity.FLAG, 0);
+                    //if transfer is from stock in or stock out activity
+                    intent.putExtra(NewItemsFragment.STOCK, flag_activity);
+
+
 
 
                     startActivity(intent);
