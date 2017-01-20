@@ -41,6 +41,7 @@ import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Product;
 import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.model.Transfer;
 
@@ -54,6 +55,7 @@ public class Utility {
     private static final String KEY_STOCK_IN_TRANSFER_ITEMS = "transfer_stockIn";
     private static final String KEY_STOCK_OUT_TRANSFER_ITEMS = "transfer_stockOut";
     private static final String KEY_SALES_ITEMS = "sales";
+    private static final String KEY_PRODUCT = "product";
 
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
@@ -488,6 +490,31 @@ public class Utility {
         }
 
         return productFromShared;
+    }
+
+    public static void saveProduct(Context context, Product product) {
+        Gson gson = new Gson();
+        SharedPreferences sharedPref = context.getSharedPreferences(KEY_PRODUCT, Context.MODE_PRIVATE);
+
+        String jsonSaved = sharedPref.getString(KEY_PRODUCT, "");
+        String jsonNewproductToAdd = gson.toJson(product);
+        Log.e(LOG_TAG, "PRODUCT JSON----------->" + jsonNewproductToAdd);
+
+        JSONArray jsonArrayProduct = new JSONArray();
+
+        try {
+            if (jsonSaved.length() != 0) {
+                jsonArrayProduct = new JSONArray(jsonSaved);
+            }
+            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //SAVE NEW ARRAY
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(KEY_PRODUCT, jsonArrayProduct.toString());
+        editor.commit();
     }
 }
 

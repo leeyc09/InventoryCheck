@@ -15,9 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.ProductActivity;
+import app.miji.com.inventorycheck.model.Product;
+import app.miji.com.inventorycheck.utility.Utility;
 import app.miji.com.inventorycheck.widget.PlaceholderImageView;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -25,6 +28,8 @@ import gun0912.tedbottompicker.TedBottomPicker;
  * A placeholder fragment containing a simple view.
  */
 public class NewProductFragment extends Fragment {
+
+    private List<Product> list;
 
     public NewProductFragment() {
     }
@@ -35,13 +40,13 @@ public class NewProductFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_product, container, false);
 
         final PlaceholderImageView imageProduct = (PlaceholderImageView) view.findViewById(R.id.img_receipt);
-        EditText txtProdCode = (EditText) view.findViewById(R.id.txt_prod_code);
-        EditText txtBarcode = (EditText) view.findViewById(R.id.txt_barcode);
+        final EditText txtProdCode = (EditText) view.findViewById(R.id.txt_prod_code);
+        final EditText txtBarcode = (EditText) view.findViewById(R.id.txt_barcode);
         final EditText txtName = (EditText) view.findViewById(R.id.txt_name);
-        EditText txtDescription = (EditText) view.findViewById(R.id.txt_description);
-        EditText txtPrice = (EditText) view.findViewById(R.id.txt_price);
-        EditText txtLowStock = (EditText) view.findViewById(R.id.txt_low_stock);
-        EditText txtNotes = (EditText) view.findViewById(R.id.txt_notes);
+        final EditText txtDescription = (EditText) view.findViewById(R.id.txt_description);
+        final EditText txtPrice = (EditText) view.findViewById(R.id.txt_price);
+        final EditText txtLowStock = (EditText) view.findViewById(R.id.txt_low_stock);
+        final EditText txtNotes = (EditText) view.findViewById(R.id.txt_notes);
         final TextInputLayout txtInName = (TextInputLayout) view.findViewById(R.id.input_name);
         ImageView imgScan = (ImageView) view.findViewById(R.id.img_scan);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -50,11 +55,31 @@ public class NewProductFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //txtName is required
+
+                String productCode = txtProdCode.getText().toString();
+                String barcode = txtBarcode.getText().toString();
+                String productName = txtName.getText().toString();
+                String description = txtDescription.getText().toString();
+                String price = txtPrice.getText().toString();
+                String lowStock = txtLowStock.getText().toString();
+                String notes = txtNotes.getText().toString();
+                //TODO add image
+                String image = null;
+
+
+                //Name is required
                 int name = txtName.getText().toString().length();
                 if (name != 0) {
                     txtInName.setErrorEnabled(false);
                     //TODO insert fields to database
+
+                    //create new product
+                    Product product = new Product(productCode,barcode,productName,description,price,lowStock,notes,image);
+
+                    //save product to shared pref
+                    Utility.saveProduct(getContext(), product);
+
+
                     Intent intent = new Intent(getActivity(), ProductActivity.class);
                     startActivity(intent);
                 } else {

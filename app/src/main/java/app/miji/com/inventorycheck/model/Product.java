@@ -10,11 +10,11 @@ public class Product implements Parcelable {
     private String name;
     private String description;
     private String price;
-    private int lowStock;
+    private String lowStock;
     private String notes;
     private String image;
 
-    public Product(String productCode, String barcode, String name, String description, String price, int lowStock, String notes, String image) {
+    public Product(String productCode, String barcode, String name, String description, String price, String lowStock, String notes, String image) {
         this.productCode = productCode;
         this.barcode = barcode;
         this.name = name;
@@ -31,7 +31,7 @@ public class Product implements Parcelable {
         name = in.readString();
         description = in.readString();
         price = in.readString();
-        lowStock = in.readInt();
+        lowStock = in.readString();
         notes = in.readString();
         image = in.readString();
     }
@@ -88,11 +88,11 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public int getLowStock() {
+    public String getLowStock() {
         return lowStock;
     }
 
-    public void setLowStock(int lowStock) {
+    public void setLowStock(String lowStock) {
         this.lowStock = lowStock;
     }
 
@@ -124,7 +124,7 @@ public class Product implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(description);
         parcel.writeString(price);
-        parcel.writeInt(lowStock);
+        parcel.writeString(lowStock);
         parcel.writeString(notes);
         parcel.writeString(image);
     }
