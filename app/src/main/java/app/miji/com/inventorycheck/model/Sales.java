@@ -18,6 +18,15 @@ public class Sales implements Parcelable {
     String image;
     List<Item> items;
 
+    public Sales(String date, String time, String customer, String referenceNo, String location, String image, List<Item> items) {
+        this.date = date;
+        this.time = time;
+        this.customer = customer;
+        ReferenceNo = referenceNo;
+        this.location = location;
+        this.image = image;
+        this.items = items;
+    }
 
     protected Sales(Parcel in) {
         date = in.readString();
