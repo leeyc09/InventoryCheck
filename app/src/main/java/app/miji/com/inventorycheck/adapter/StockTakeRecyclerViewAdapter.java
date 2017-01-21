@@ -42,7 +42,6 @@ public class StockTakeRecyclerViewAdapter extends RecyclerView.Adapter<StockTake
 
     class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
-        final ImageView imgCancel;
         final ImageView imgItem;
         final TextView txtItem;
         final TextView txtQty;
@@ -53,7 +52,6 @@ public class StockTakeRecyclerViewAdapter extends RecyclerView.Adapter<StockTake
         ViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            imgCancel = (ImageView) mView.findViewById(R.id.img_delete);
             imgItem = (ImageView) mView.findViewById(R.id.img_item);
             txtItem = (TextView) mView.findViewById(R.id.txt_name);
             txtQty = (TextView) mView.findViewById(R.id.txt_qty);

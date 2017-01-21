@@ -8,83 +8,93 @@
     android:background="@android:color/white"
     app:cardElevation="@dimen/cardview_default_elevation">
 
-
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/img_delete"
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/root_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+
+                <ImageView
+                    android:id="@+id/img_item"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/item_image"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/image_placeholder" />
+
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/text_margin"
+                    android:layout_marginLeft="@dimen/text_margin"
+                    android:layout_marginRight="@dimen/text_margin"
+                    android:layout_marginStart="@dimen/text_margin"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="@string/item"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txt_qty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="30"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_unit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_qty"
+                        android:gravity="center_horizontal"
+                        android:text="pcs"
+                        android:textAppearance="?android:textAppearanceMedium" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+
+        <Button
+            android:id="@+id/undo_button"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|top"
-            android:contentDescription="@string/delete_item"
-            android:tint="@android:color/darker_gray"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:layout_gravity="end|center_vertical"
+            android:text="undo"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:padding="@dimen/text_margin"/>
 
 
-        <LinearLayout
-            android:id="@+id/root_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-
-            <ImageView
-                android:id="@+id/img_item"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/item_image"
-                android:scaleType="fitXY"
-                android:src="@drawable/image_placeholder" />
-
-
-            <TextView
-                android:id="@+id/txt_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/text_margin"
-                android:layout_marginLeft="@dimen/text_margin"
-                android:layout_marginRight="@dimen/text_margin"
-                android:layout_marginStart="@dimen/text_margin"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="@string/item"
-                android:textAppearance="?android:textAppearanceMedium" />
-
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/txt_qty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textColor="@android:color/holo_green_light"
-                    android:text="30"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/txt_unit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_qty"
-                    android:gravity="center_horizontal"
-                    android:text="pcs"
-                    android:textAppearance="?android:textAppearanceMedium" />
-            </RelativeLayout>
-
-
-        </LinearLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>

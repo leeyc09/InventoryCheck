@@ -23,4 +23,5 @@
     <dimen name="cardview_detail_margin">16dp</dimen>
     <dimen name="dialog_item_image_height">250dp</dimen>
     <dimen name="list_image_padding">16dp</dimen>
+    <dimen name="ic_clear_margin">16dp</dimen>
 </resources>
