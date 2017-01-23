@@ -42,7 +42,7 @@
 
             <include layout="@layout/item_detail" />
 
-            <include layout="@layout/content_item_list" />
+            <include layout="@layout/content_item_detail_list" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

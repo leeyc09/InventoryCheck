@@ -32,6 +32,8 @@ public class NewItemsActivity extends AppCompatActivity {
     * 1 -> edit items
     * */
     public static final String FLAG = "flag";
+    int flag = 0;
+
     public static final String DELIVERY = "delivery";
     public static final String TRANSFER = "transfer";
     public static final String ACTIVITY = "activity";
@@ -50,7 +52,6 @@ public class NewItemsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String detail = null;
         String base64Image = null;
-        int flag = 0;
         String toolbarTitle = null;
 
         if (intent != null) {
