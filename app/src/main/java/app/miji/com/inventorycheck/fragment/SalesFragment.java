@@ -26,12 +26,9 @@ import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
-import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
-
-import static app.miji.com.inventorycheck.R.string.delivery;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -234,32 +231,11 @@ public class SalesFragment extends Fragment {
 
                     //create delivery item
                     //no item list yet
-                    Sales sales = new Sales( strDate,  strTime,  strCustomer,  strRefNo,  strLocation,  base64Image,  null);
+                    Sales sales = new Sales(strDate, strTime, strCustomer, strRefNo, strLocation, base64Image, null);
 
+                    String details = Utility.getSalesDetails(getContext(), strDate, strTime, strCustomer, strRefNo, strLocation);
 
-                    //create detail string
-                    StringBuffer stringBuffer = new StringBuffer();
-
-                    //Delivery details
-                    String title = getResources().getString(R.string.sales_details).toUpperCase();
-                    stringBuffer.append(title);
-                    stringBuffer.append("\n"); //new line
-                    stringBuffer.append("\n"); //new line
-                    //"Date: and Time "
-                    stringBuffer.append(getResources().getString(R.string.mdtp_date) + ": " + strDate);
-                    stringBuffer.append(" " + strTime);
-                    stringBuffer.append("\n"); //new line
-                    //"Delivered by: "
-                    stringBuffer.append(getResources().getString(R.string.customer) + ": " + strCustomer);
-                    stringBuffer.append("\n"); //new line
-                    //"Reference No: "
-                    stringBuffer.append(getResources().getString(R.string.reference) + ": " + strRefNo);
-                    stringBuffer.append("\n"); //new line
-                    //"Location: "
-                    stringBuffer.append(getResources().getString(R.string.location) + ": " + strLocation);
-                    stringBuffer.append("\n"); //new line
-
-                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
+                    intent.putExtra(NewItemsActivity.DETAIL, details);
                     intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);
                     //add flag for adding items
                     intent.putExtra(NewItemsActivity.FLAG, 0);

@@ -561,7 +561,7 @@ public class Utility {
         return details;
     }
 
-    public static String getTransferDetails(Context context, String strDate, String strTime,String strTransferId, String strFromLocation, String strToLocation) {
+    public static String getTransferDetails(Context context, String strDate, String strTime, String strTransferId, String strFromLocation, String strToLocation) {
         //create detail string
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -588,6 +588,33 @@ public class Utility {
         return details;
     }
 
+    public static String getSalesDetails(Context context, String strDate, String strTime, String strCustomer, String strRefNo, String strLocation) {
+
+        //create detail string
+        StringBuffer stringBuffer = new StringBuffer();
+
+        //Delivery details
+        String title = context.getResources().getString(R.string.sales_details).toUpperCase();
+        stringBuffer.append(title);
+        stringBuffer.append("\n"); //new line
+        stringBuffer.append("\n"); //new line
+        //"Date: and Time "
+        stringBuffer.append(context.getResources().getString(R.string.mdtp_date) + ": " + strDate);
+        stringBuffer.append(" " + strTime);
+        stringBuffer.append("\n"); //new line
+        //"Delivered by: "
+        stringBuffer.append(context.getResources().getString(R.string.customer) + ": " + strCustomer);
+        stringBuffer.append("\n"); //new line
+        //"Reference No: "
+        stringBuffer.append(context.getResources().getString(R.string.reference) + ": " + strRefNo);
+        stringBuffer.append("\n"); //new line
+        //"Location: "
+        stringBuffer.append(context.getResources().getString(R.string.location) + ": " + strLocation);
+        stringBuffer.append("\n"); //new line
+
+        String details = stringBuffer.toString();
+        return details;
+    }
 }
 
 
