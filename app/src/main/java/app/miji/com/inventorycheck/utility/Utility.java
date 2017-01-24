@@ -560,6 +560,34 @@ public class Utility {
         String details = stringBuffer.toString();
         return details;
     }
+
+    public static String getTransferDetails(Context context, String strDate, String strTime,String strTransferId, String strFromLocation, String strToLocation) {
+        //create detail string
+        StringBuffer stringBuffer = new StringBuffer();
+
+        //Delivery details
+        String title = context.getResources().getString(R.string.transfer_details).toUpperCase();
+        stringBuffer.append(title);
+        stringBuffer.append("\n"); //new line
+        stringBuffer.append("\n"); //new line
+        //"Date: and Time "
+        stringBuffer.append(context.getResources().getString(R.string.mdtp_date) + ": " + strDate);
+        stringBuffer.append(" " + strTime);
+        stringBuffer.append("\n"); //new line
+        //"Transfer ID: "
+        stringBuffer.append(context.getResources().getString(R.string.trans_id) + ": " + strTransferId);
+        stringBuffer.append("\n"); //new line
+        //"From Location: "
+        stringBuffer.append(context.getResources().getString(R.string.from) + ": " + strFromLocation);
+        stringBuffer.append("\n"); //new line
+        //"To Location: "
+        stringBuffer.append(context.getResources().getString(R.string.to) + ": " + strToLocation);
+        stringBuffer.append("\n"); //new line
+
+        String details = stringBuffer.toString();
+        return details;
+    }
+
 }
 
 

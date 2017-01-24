@@ -22,7 +22,6 @@ import java.util.Calendar;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.activity.TransferActivity;
-import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 
@@ -199,41 +198,17 @@ public class TransferFragment extends Fragment {
 
                     Intent intent = new Intent(getActivity(), NewItemsActivity.class);
 
-
-                    //create detail string
-                    StringBuffer stringBuffer = new StringBuffer();
-
-                    //Delivery details
-                    String title = getResources().getString(R.string.transfer_details).toUpperCase();
-                    stringBuffer.append(title);
-                    stringBuffer.append("\n"); //new line
-                    stringBuffer.append("\n"); //new line
-                    //"Date: and Time "
-                    stringBuffer.append(getResources().getString(R.string.mdtp_date) + ": " + strDate);
-                    stringBuffer.append(" " + strTime);
-                    stringBuffer.append("\n"); //new line
-                    //"Transfer ID: "
-                    stringBuffer.append(getResources().getString(R.string.trans_id) + ": " + strTransferId);
-                    stringBuffer.append("\n"); //new line
-                    //"From Location: "
-                    stringBuffer.append(getResources().getString(R.string.from) + ": " + strFromLocation);
-                    stringBuffer.append("\n"); //new line
-                    //"To Location: "
-                    stringBuffer.append(getResources().getString(R.string.to) + ": " + strToLocation);
-                    stringBuffer.append("\n"); //new line
+                    //get details from utility
+                    String details = Utility.getTransferDetails(getContext(), strDate, strTime, strTransferId, strFromLocation, strToLocation);
 
                     //put Extras
-                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());
+                    intent.putExtra(NewItemsActivity.DETAIL, details);
                     intent.putExtra(NewItemsActivity.TRANSFER, transfer);
                     intent.putExtra(NewItemsActivity.ACTIVITY, NewItemsFragment.TRANSFER);
                     //add flag for adding items
                     intent.putExtra(NewItemsActivity.FLAG, 0);
                     //if transfer is from stock in or stock out activity
                     intent.putExtra(NewItemsFragment.STOCK, flag_activity);
-
-
-
-
                     startActivity(intent);
                 }
 
