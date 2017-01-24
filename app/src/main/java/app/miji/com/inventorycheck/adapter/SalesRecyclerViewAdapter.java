@@ -11,8 +11,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.ItemListActivity;
+import app.miji.com.inventorycheck.ItemListFragment;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Sales;
+import app.miji.com.inventorycheck.utility.Utility;
 
 /**
  * For Sales list item
@@ -34,7 +36,7 @@ public class SalesRecyclerViewAdapter extends RecyclerView.Adapter<SalesRecycler
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.mSales = list.get(position);
 
@@ -47,6 +49,8 @@ public class SalesRecyclerViewAdapter extends RecyclerView.Adapter<SalesRecycler
         String mImage = list.get(position).getImage();
         //String mItems = list.get(position).getItems();
 
+        final String details = Utility.getSalesDetails(mContext, mDate, mTime, mCustomer, mRefNo, mLocation);
+
         //set data
         holder.mTxtDate.setText(mContext.getString(R.string.mdtp_date) + ": " + mDate);
         holder.mTxtLocation.setText(mContext.getString(R.string.location) + ": " + mLocation);
@@ -58,6 +62,10 @@ public class SalesRecyclerViewAdapter extends RecyclerView.Adapter<SalesRecycler
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ItemListActivity.class);
+                //put extras
+                intent.putExtra(ItemListActivity.DETAILS, details);//whole sales details
+                intent.putExtra(ItemListFragment.SALES, holder.mSales);//sales object
+                intent.putExtra(ItemListActivity.BASE64IMAGE, ""); //todo replace null string for image
                 mContext.startActivity(intent);
             }
         });

@@ -16,6 +16,7 @@ import java.util.List;
 import app.miji.com.inventorycheck.adapter.ItemRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Item;
+import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.model.Transfer;
 
 /*
@@ -29,9 +30,11 @@ public class ItemListFragment extends Fragment {
 
     private Delivery mDelivery;
     private Transfer mTransfer;
+    private Sales mSales;
 
     public static final String DELIVERY = "delivery";
     public static final String TRANSFER = "transfer";
+    public static String SALES = "sales";
 
 
     public ItemListFragment() {
@@ -74,6 +77,12 @@ public class ItemListFragment extends Fragment {
             if (intent.hasExtra(TRANSFER)) {
                 mTransfer = intent.getParcelableExtra(TRANSFER);
                 list = mTransfer.getItems();
+            }
+
+            //if from sales
+            if (intent.hasExtra(SALES)) {
+                mSales = intent.getParcelableExtra(SALES);
+                list = mSales.getItems();
             }
 
 
