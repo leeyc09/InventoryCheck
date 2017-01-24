@@ -41,15 +41,16 @@
             android:id="@+id/txt_qty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/text_margin"
             android:layout_marginEnd="@dimen/text_margin"
             android:layout_marginLeft="@dimen/text_margin"
             android:layout_marginRight="@dimen/text_margin"
             android:layout_marginStart="@dimen/text_margin"
-            android:layout_marginBottom="@dimen/text_margin"
             android:hint="@string/qty"
-            android:textAppearance="?android:textAppearanceMedium" />
-
-
+            android:text="30 pcs"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@android:color/holo_green_light"
+            android:textStyle="bold" />
 
 
     </LinearLayout>

@@ -5,7 +5,7 @@
     android:id="@+id/content_new_items"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.miji.com.inventorycheck.ItemListActivityFragment"
+    tools:context="app.miji.com.inventorycheck.ItemListFragment"
     tools:showIn="@layout/activity_item_list">
 
 
@@ -16,7 +16,7 @@
 
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_items"
+            android:id="@+id/recyclerview_item_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/activity_vertical_margin"
