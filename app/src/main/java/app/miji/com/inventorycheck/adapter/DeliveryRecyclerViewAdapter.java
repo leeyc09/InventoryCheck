@@ -12,8 +12,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.ItemListActivity;
+import app.miji.com.inventorycheck.ItemListFragment;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.utility.Utility;
 
 /**
  * For Delivery List items
@@ -35,9 +37,8 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mDelivery = list.get(position);
-
 
         //get data
         String mDate = list.get(position).getDate();
@@ -55,10 +56,16 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
         //TODO set image dynamically
         holder.mItemImageView.setImageResource(R.drawable.receipt);
 
+        final String details = Utility.getDeliveryDetails(mContext,mDate,mTime,mDeliveredBy,mRefNo,mLocation);
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ItemListActivity.class);
+                //put extras
+                intent.putExtra(ItemListActivity.DETAILS, details);//whole delivery details
+                intent.putExtra(ItemListFragment.DELIVERY, holder.mDelivery);//delivery object
+                intent.putExtra(ItemListActivity.BASE64IMAGE, ""); //todo replace null string for image
                 mContext.startActivity(intent);
             }
         });
