@@ -11,8 +11,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.ItemListActivity;
+import app.miji.com.inventorycheck.ItemListFragment;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Transfer;
+import app.miji.com.inventorycheck.utility.Utility;
 
 /**
  * For Transfer list item
@@ -36,25 +38,28 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.mTransfer = list.get(position);
 
         //get data
-        String mDate = list.get(position).getDate();
-        String mTime = list.get(position).getTime();
-        String mFrom = list.get(position).getFromLocation();
-        String mTo = list.get(position).getToLocation();
-        String mTransferId = list.get(position).getTransferID();
+        final String mDate = list.get(position).getDate();
+        final String mTime = list.get(position).getTime();
+        final String mFrom = list.get(position).getFromLocation();
+        final String mTo = list.get(position).getToLocation();
+        final String mTransferId = list.get(position).getTransferID();
+
+        final String details = Utility.getTransferDetails(mContext, mDate, mTime, mTransferId, mFrom, mTo);
 
 
         //set text
         holder.mTxtDate.setText(mContext.getString(R.string.mdtp_date) + ": " + mDate);
         holder.mNumber.setText(mContext.getString(R.string.trans_id) + ": " + mTransferId);
 
+
         //determine if request is from stock in or stock out activity
-        String to = mContext.getString(R.string.to) + ": " + mTo;
-        String from = mContext.getString(R.string.from) + ": " + mFrom;
+        final String to = mContext.getString(R.string.to) + ": " + mTo;
+        final String from = mContext.getString(R.string.from) + ": " + mFrom;
         switch (flagActivity) {
             case 0:
                 //from StockInActivity
@@ -72,7 +77,12 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(mContext, ItemListActivity.class);
+                //put extras
+                intent.putExtra(ItemListActivity.DETAILS, details);//whole delivery details
+                intent.putExtra(ItemListFragment.TRANSFER, holder.mTransfer);//transfer object
+                intent.putExtra(ItemListActivity.BASE64IMAGE, ""); //todo replace null string for image
                 mContext.startActivity(intent);
             }
         });

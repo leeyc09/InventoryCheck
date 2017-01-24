@@ -16,18 +16,22 @@ import java.util.List;
 import app.miji.com.inventorycheck.adapter.ItemRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Item;
+import app.miji.com.inventorycheck.model.Transfer;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+/*
+* List items depending on Stock Activity
+* */
+
 public class ItemListFragment extends Fragment {
 
-
-    private List<Item> list;
-    private Delivery mDelivery;
-
     private ItemRecyclerViewAdapter mAdapter;
+    private List<Item> list;
+
+    private Delivery mDelivery;
+    private Transfer mTransfer;
+
     public static final String DELIVERY = "delivery";
+    public static final String TRANSFER = "transfer";
 
 
     public ItemListFragment() {
@@ -60,8 +64,19 @@ public class ItemListFragment extends Fragment {
         //get list of items from previous fragment
         Intent intent = getActivity().getIntent();
         if (intent != null) {
-            mDelivery = intent.getParcelableExtra(DELIVERY);
-            list = mDelivery.getItems();
+            //if from delivery
+            if (intent.hasExtra(DELIVERY)) {
+                mDelivery = intent.getParcelableExtra(DELIVERY);
+                list = mDelivery.getItems();
+            }
+
+            //if from transfer
+            if (intent.hasExtra(TRANSFER)) {
+                mTransfer = intent.getParcelableExtra(TRANSFER);
+                list = mTransfer.getItems();
+            }
+
+
         }
 
         mAdapter = new ItemRecyclerViewAdapter(getActivity(), list);
