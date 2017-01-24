@@ -234,30 +234,11 @@ public class DeliveryFragment extends Fragment {
                     Delivery delivery = new Delivery(strDate, strTime, strLoc, strDeliveredBy, strRef, base64Image, null);
 
 
-                    //create detail string
-                    StringBuffer stringBuffer = new StringBuffer();
-
                     //Delivery details
-                    String title = getResources().getString(R.string.delivery_details).toUpperCase();
-                    stringBuffer.append(title);
-                    stringBuffer.append("\n"); //new line
-                    stringBuffer.append("\n"); //new line
-                    //"Date: and Time "
-                    stringBuffer.append(getResources().getString(R.string.mdtp_date) + ": " + strDate);
-                    stringBuffer.append(" " + strTime);
-                    stringBuffer.append("\n"); //new line
-                    //"Delivered by: "
-                    stringBuffer.append(getResources().getString(R.string.delivered_by) + ": " + strDeliveredBy);
-                    stringBuffer.append("\n"); //new line
-                    //"Reference No: "
-                    stringBuffer.append(getResources().getString(R.string.reference) + ": " + strRef);
-                    stringBuffer.append("\n"); //new line
-                    //"Location: "
-                    stringBuffer.append(getResources().getString(R.string.location) + ": " + strLoc);
-                    stringBuffer.append("\n"); //new line
+                    String details = Utility.getDeliveryDetails(getContext(), strDate, strTime, strDeliveredBy, strRef, strLoc);
 
                     //put Extras
-                    intent.putExtra(NewItemsActivity.DETAIL, stringBuffer.toString());//detail String
+                    intent.putExtra(NewItemsActivity.DETAIL, details);//detail String
                     intent.putExtra(NewItemsActivity.BASE64_IMAGE, base64Image);//base64 string
                     intent.putExtra(NewItemsActivity.DELIVERY, delivery);
                     intent.putExtra(NewItemsActivity.ACTIVITY, NewItemsFragment.DELIVERY);

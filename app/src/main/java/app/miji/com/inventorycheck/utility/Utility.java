@@ -536,6 +536,30 @@ public class Utility {
         return productFromShared;
     }
 
+    public static String getDeliveryDetails(Context context, String strDate, String strTime, String strDeliveredBy, String strRef, String strLoc) {
+        //create detail string
+        StringBuffer stringBuffer = new StringBuffer();
+
+        String title = context.getResources().getString(R.string.delivery_details).toUpperCase();
+        stringBuffer.append(title);
+        stringBuffer.append("\n"); //new line
+        stringBuffer.append("\n"); //new line
+        //"Date: and Time "
+        stringBuffer.append(context.getResources().getString(R.string.mdtp_date) + ": " + strDate);
+        stringBuffer.append(" " + strTime);
+        stringBuffer.append("\n"); //new line
+        //"Delivered by: "
+        stringBuffer.append(context.getResources().getString(R.string.delivered_by) + ": " + strDeliveredBy);
+        stringBuffer.append("\n"); //new line
+        //"Reference No: "
+        stringBuffer.append(context.getResources().getString(R.string.reference) + ": " + strRef);
+        stringBuffer.append("\n"); //new line
+        //"Location: "
+        stringBuffer.append(context.getResources().getString(R.string.location) + ": " + strLoc);
+
+        String details = stringBuffer.toString();
+        return details;
+    }
 }
 
 
