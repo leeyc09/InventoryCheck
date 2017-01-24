@@ -23,7 +23,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/item_new_items" />
+            tools:listitem="@layout/item_itemdetail" />
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
