@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck;
+package app.miji.com.inventorycheck.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.ItemRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.model.Item;

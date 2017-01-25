@@ -107,7 +107,7 @@
                 android:value="app.miji.com.inventorycheck.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".ItemListActivity"
+            android:name=".activity.ItemListActivity"
             android:label="@string/items"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

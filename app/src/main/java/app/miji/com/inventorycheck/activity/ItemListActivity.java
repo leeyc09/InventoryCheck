@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck;
+package app.miji.com.inventorycheck.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import app.miji.com.inventorycheck.activity.NewItemsActivity;
+import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.utility.Utility;
 
 public class ItemListActivity extends AppCompatActivity {

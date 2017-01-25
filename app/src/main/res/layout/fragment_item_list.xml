@@ -5,7 +5,7 @@
     android:id="@+id/content_new_items"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.miji.com.inventorycheck.ItemListFragment"
+    tools:context="app.miji.com.inventorycheck.fragment.ItemListFragment"
     tools:showIn="@layout/activity_item_list">
 
 

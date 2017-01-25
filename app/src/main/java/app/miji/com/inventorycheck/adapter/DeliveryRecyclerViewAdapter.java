@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import app.miji.com.inventorycheck.ItemListActivity;
-import app.miji.com.inventorycheck.ItemListFragment;
+import app.miji.com.inventorycheck.activity.ItemListActivity;
+import app.miji.com.inventorycheck.fragment.ItemListFragment;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.utility.Utility;
