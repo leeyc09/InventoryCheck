@@ -11,8 +11,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.activity.ItemListActivity;
+import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.fragment.ItemListFragment;
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.fragment.NewItemsFragment;
 import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 
@@ -83,6 +85,7 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
                 intent.putExtra(ItemListActivity.DETAILS, details);//whole delivery details
                 intent.putExtra(ItemListFragment.TRANSFER, holder.mTransfer);//transfer object
                 intent.putExtra(ItemListActivity.BASE64IMAGE, ""); //todo replace null string for image
+
                 mContext.startActivity(intent);
             }
         });

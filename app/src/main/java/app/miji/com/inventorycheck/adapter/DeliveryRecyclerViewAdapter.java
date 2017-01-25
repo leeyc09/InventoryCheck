@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.ItemListActivity;
 import app.miji.com.inventorycheck.fragment.ItemListFragment;
-import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Delivery;
 import app.miji.com.inventorycheck.utility.Utility;
 
@@ -56,7 +56,7 @@ public class DeliveryRecyclerViewAdapter extends RecyclerView.Adapter<DeliveryRe
         //TODO set image dynamically
         holder.mItemImageView.setImageResource(R.drawable.receipt);
 
-        final String details = Utility.getDeliveryDetails(mContext,mDate,mTime,mDeliveredBy,mRefNo,mLocation);
+        final String details = Utility.getDeliveryDetails(mContext, mDate, mTime, mDeliveredBy, mRefNo, mLocation);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -351,7 +351,7 @@ public class Utility {
 
         if (productFromShared != null) {
             for (Delivery delivery : productFromShared) {
-                Log.e(LOG_TAG, "DELIVERY LIST----------->" + delivery.getDeliveryMan().toString());
+                //Log.e(LOG_TAG, "DELIVERY LIST----------->" + delivery.getDeliveryMan().toString());
             }
         }
 

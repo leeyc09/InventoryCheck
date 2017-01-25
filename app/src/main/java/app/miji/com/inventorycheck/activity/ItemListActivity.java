@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.fragment.ItemListFragment;
+import app.miji.com.inventorycheck.fragment.NewItemsFragment;
+import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Sales;
+import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 
 public class ItemListActivity extends AppCompatActivity {
@@ -29,6 +35,15 @@ public class ItemListActivity extends AppCompatActivity {
     private LinearLayout card_detail;
     private boolean mSwitch = false;
 
+    private Delivery mDelivery;
+    private Transfer mTransfer;
+    private Sales mSales;
+
+    private Object mObjectToPass;
+
+    private String mFromActivity = null;
+
+    private String detail = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +55,36 @@ public class ItemListActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String detail = null;
         String base64Image = null;
 
         if (intent != null) {
             detail = intent.getStringExtra(DETAILS);
             //TODO get image
             //base64Image = intent.getStringExtra(BASE64IMAGE);
+
+
+            //if from delivery
+            if (intent.hasExtra(ItemListFragment.DELIVERY)) {
+                mDelivery = intent.getParcelableExtra(ItemListFragment.DELIVERY);
+                mObjectToPass = mDelivery;
+                mFromActivity = NewItemsFragment.DELIVERY; //means this is from delivery
+            }
+
+            //if from transfer
+            if (intent.hasExtra(ItemListFragment.TRANSFER)) {
+                mTransfer = intent.getParcelableExtra(ItemListFragment.TRANSFER);
+                mObjectToPass = mTransfer;
+                mFromActivity = NewItemsFragment.TRANSFER; //means this is from delivery
+            }
+
+            //if from sales
+            if (intent.hasExtra(ItemListFragment.SALES)) {
+                mSales = intent.getParcelableExtra(ItemListFragment.SALES);
+                mObjectToPass = mSales;
+                mFromActivity = NewItemsFragment.TRANSFER; //means this is from sales
+            }
+
+
         }
 
 
@@ -56,8 +94,11 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ItemListActivity.this, NewItemsActivity.class);
-                //add flag for editing items
-                intent.putExtra(NewItemsActivity.FLAG, 1);
+                intent.putExtra(NewItemsActivity.FLAG, 1);//add flag for editing items
+                intent.putExtra(NewItemsFragment.ITEMS, NewItemsFragment.ITEMS);
+                intent.putExtra(NewItemsActivity.ACTIVITY, mFromActivity); //means this is either from delivery,sales,transfer
+                intent.putExtra(NewItemsFragment.OBJECT, (Parcelable) mObjectToPass); //pass object
+                intent.putExtra(NewItemsActivity.DETAIL, detail);//pass details
                 startActivity(intent);
             }
         });

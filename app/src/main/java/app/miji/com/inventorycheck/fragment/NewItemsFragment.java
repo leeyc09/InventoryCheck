@@ -52,9 +52,13 @@ public class NewItemsFragment extends Fragment {
     private NewItemRecyclerViewAdapter mAdapter;
     private Context mContext;
 
+
     //if transfer is from stock in or stock out activity
     public static final String STOCK = "stock_activity";
     public int flag_stock;
+
+    //flag if previous activity is requesting for new items or edit items
+    private int flagNewOrEdit;
 
     //text input
     private TextInputLayout mTxtInQty;
@@ -86,10 +90,13 @@ public class NewItemsFragment extends Fragment {
 
     //activity flags
     private String fromActivity = null;
-    public static final String ACTVITY_FLAG = "activity_flag";
+
+
     public static final String DELIVERY = "delivery";
     public static final String SALES = "sales";
     public static final String TRANSFER = "transfer";
+    public static final String ITEMS = "items";
+    public static final String OBJECT = "object";
 
 
     public NewItemsFragment() {
@@ -102,39 +109,68 @@ public class NewItemsFragment extends Fragment {
         mContext = getContext();
 
 
-        Intent intent = getActivity().getIntent();
-
-        //check if intent is from mDelivery
-        if (intent.hasExtra(NewItemsActivity.DELIVERY)) {
-            Log.v(LOG_TAG, "------------intent from Delivery--------");
-            mDelivery = intent.getParcelableExtra(NewItemsActivity.DELIVERY);
-            fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
-            setDeliveryDetails(mDelivery);
-        }
-
-        if (intent.hasExtra(NewItemsActivity.TRANSFER)) {
-            Log.v(LOG_TAG, "------------intent from Transfer--------");
-            mTransfer = intent.getParcelableExtra(NewItemsActivity.TRANSFER);
-            fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
-            setTransferDetails(mTransfer);
-        }
-
-        if (intent.hasExtra(STOCK)) {
-            //used for determining which stock activity does transfer fragment fragment originate
-            flag_stock = intent.getIntExtra(STOCK, 0);
-        }
-
-        if(intent.hasExtra(NewItemsActivity.SALES)){
-            Log.v(LOG_TAG, "------------intent from Sales--------");
-            mSales = intent.getParcelableExtra(NewItemsActivity.SALES);
-            fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
-            setSalesDetails(mSales);
-        }
-
-
-
         //create new list
         mItemList = new ArrayList<>();
+
+        Intent intent = getActivity().getIntent();
+
+        if (intent != null) {
+
+            //check if intent is from mDelivery
+            if (intent.hasExtra(NewItemsActivity.DELIVERY)) {
+                Log.v(LOG_TAG, "------------intent from Delivery--------");
+                mDelivery = intent.getParcelableExtra(NewItemsActivity.DELIVERY);
+                fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
+                setDeliveryDetails(mDelivery);
+            }
+
+            if (intent.hasExtra(NewItemsActivity.TRANSFER)) {
+                Log.v(LOG_TAG, "------------intent from Transfer--------");
+                mTransfer = intent.getParcelableExtra(NewItemsActivity.TRANSFER);
+                fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
+                setTransferDetails(mTransfer);
+            }
+
+            if (intent.hasExtra(NewItemsActivity.SALES)) {
+                Log.v(LOG_TAG, "------------intent from Sales--------");
+                mSales = intent.getParcelableExtra(NewItemsActivity.SALES);
+                fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
+                setSalesDetails(mSales);
+            }
+
+            if (intent.hasExtra(STOCK)) {
+                //used for determining which stock activity does transfer fragment fragment originate
+                flag_stock = intent.getIntExtra(STOCK, 0);
+            }
+
+            //from ItemList, items needs to edit
+            if (intent.hasExtra(ITEMS)) {
+                fromActivity = intent.getStringExtra(NewItemsActivity.ACTIVITY);
+
+                switch (fromActivity) {
+                    case DELIVERY:
+                        mDelivery = intent.getParcelableExtra(OBJECT);
+                        setDeliveryDetails(mDelivery);
+                        mItemList = mDelivery.getItems();
+                        break;
+
+                    case TRANSFER:
+                        mTransfer = intent.getParcelableExtra(OBJECT);
+                        mItemList = mTransfer.getItems();
+                        setTransferDetails(mTransfer);
+                        break;
+
+                    case SALES:
+                        mSales = intent.getParcelableExtra(OBJECT);
+                        mItemList = mSales.getItems();
+                        setSalesDetails(mSales);
+                        break;
+                }
+
+            }
+
+        }
+
 
         //setup recyclerview
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_new_items);
@@ -374,7 +410,7 @@ public class NewItemsFragment extends Fragment {
             case SALES:
                 showSalesLogs();
                 //create new sales
-                mSales = new Sales(mDate,mTime,mCustomer,mReferenceNo,mLocation,imageReceipt, mItemList);
+                mSales = new Sales(mDate, mTime, mCustomer, mReferenceNo, mLocation, imageReceipt, mItemList);
                 //save Delivery
                 Utility.saveSales(mContext, mSales);
                 //go to stock in activity
