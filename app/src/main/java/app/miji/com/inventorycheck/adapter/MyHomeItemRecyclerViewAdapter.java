@@ -12,10 +12,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.activity.StockTakeActivity;
+import app.miji.com.inventorycheck.SetupActivity;
 import app.miji.com.inventorycheck.activity.ProductActivity;
 import app.miji.com.inventorycheck.activity.StockInActivity;
 import app.miji.com.inventorycheck.activity.StockOutActivity;
+import app.miji.com.inventorycheck.activity.StockTakeActivity;
 import app.miji.com.inventorycheck.model.HomeContent.HomeItem;
 
 
@@ -31,8 +32,7 @@ public class MyHomeItemRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeIt
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_home, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home, parent, false);
         return new ViewHolder(view);
     }
 
@@ -77,8 +77,11 @@ public class MyHomeItemRecyclerViewAdapter extends RecyclerView.Adapter<MyHomeIt
                         //TODO: start REPORT
                         break;
                     case 6:
-                        //TODO: start SETUP
+                        //SETUP
+                        appInfo = new Intent(mContext, SetupActivity.class);
+                        mContext.startActivity(appInfo);
                         break;
+
                 }
             }
         });
