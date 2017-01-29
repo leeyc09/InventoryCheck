@@ -147,7 +147,8 @@ public class TransferFragment extends Fragment {
 
 
                 //show location dialog box
-                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
+                //TODO showLocationDialogBox
+                //Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
 
             }
         });

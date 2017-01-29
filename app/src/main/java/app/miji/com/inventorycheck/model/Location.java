@@ -19,6 +19,9 @@ public class Location implements Parcelable {
         name = in.readString();
     }
 
+    public Location() {
+    }
+
     public static final Creator<Location> CREATOR = new Creator<Location>() {
         @Override
         public Location createFromParcel(Parcel in) {

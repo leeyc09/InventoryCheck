@@ -134,7 +134,8 @@ public class DeliveryFragment extends Fragment {
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
 
                 //show location dialog box
-                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
+                //TODO showLocationDialogBox
+                //Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
 
             }
         });

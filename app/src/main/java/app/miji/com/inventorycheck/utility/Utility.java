@@ -71,7 +71,7 @@ public class Utility {
         return prefs.getInt(NO_LOCATION_MESSAGE, 0);
     }
 
-    public static void showLocationDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid) {
+    public static void showLocationDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid, final DatabaseReference databaseReference, FirebaseDatabase firebaseDatabase) {
 
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
         alertDialogBuilderUserInput.setView(mView);
@@ -83,9 +83,6 @@ public class Utility {
                         //add input to database
                         String input = userInputDialogEditText.getText().toString();
 
-                        //Firebase database
-                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                        DatabaseReference databaseReference = firebaseDatabase.getReference().child("location");
 
                         //create location object to send to firebase
                         Location location = new Location(input);
