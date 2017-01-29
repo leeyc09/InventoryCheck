@@ -10,13 +10,14 @@ public class HomeContent {
     public static final List<HomeItem> HOME_ITEMS = new ArrayList<>();
 
     private static Integer[] mThumbIds = {
+            //TODO change drawable
             R.drawable.stockin,
             R.drawable.stockout,
-            R.drawable.stocktake,
-            R.drawable.adjust,
-            R.drawable.inventory,
-            R.drawable.report,
-            R.drawable.warehouse
+            R.drawable.stocktake, //stock take
+            R.drawable.stockin, //inventory adjustments
+            R.drawable.stockin, //products
+            R.drawable.stockin,  //report
+            R.drawable.stockin //setup
     };
 
     private static String[] titles = {

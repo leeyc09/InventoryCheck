@@ -1,6 +1,7 @@
 package app.miji.com.inventorycheck.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import app.miji.com.inventorycheck.LocationActivity;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.SetupContent.SetupItem;
 
@@ -30,13 +32,34 @@ public class SetupRecyclerViewAdapter extends RecyclerView.Adapter<SetupRecycler
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         String title = mValues.get(position).title;
 
         holder.mTxtSetup.setText(title);
 
         //TODO add onclick Listener
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //start another activity
+                Intent appInfo;
+                switch (position) {
+                    case 0:
+                        //LOCATION
+                        appInfo = new Intent(mContext, LocationActivity.class);
+                        mContext.startActivity(appInfo);
+                        break;
+                    case 1:
+                        //UNITS
+                        break;
+                    case 2:
+                        //CURRENCY
+                        break;
+
+                }
+            }
+        });
 
     }
 

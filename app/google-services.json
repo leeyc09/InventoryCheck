@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "602391405994",
+    "firebase_url": "https://inventory-check-1b2b9.firebaseio.com",
+    "project_id": "inventory-check-1b2b9",
+    "storage_bucket": "inventory-check-1b2b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602391405994:android:75320bfe0b77068e",
+        "android_client_info": {
+          "package_name": "app.miji.com.inventorycheck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602391405994-6voa5q1pgaqbtipsiuf4u48etf8gj2r2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.miji.com.inventorycheck",
+            "certificate_hash": "BF87E0E0D51DD1D80787F5BC20726DC7422E2051"
+          }
+        },
+        {
+          "client_id": "602391405994-i1nnrb3d5gf8u5rg4aru6mklnfb3ksge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7aAtYP3oNOxG0_wuGBRbWoPA0o4vFcc8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602391405994-i1nnrb3d5gf8u5rg4aru6mklnfb3ksge.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
