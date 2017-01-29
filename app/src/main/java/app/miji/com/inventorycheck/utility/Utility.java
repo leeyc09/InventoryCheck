@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -41,6 +43,7 @@ import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.model.Product;
 import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.model.Transfer;
@@ -70,7 +73,6 @@ public class Utility {
 
     public static void showLocationDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid) {
 
-
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
         alertDialogBuilderUserInput.setView(mView);
 
@@ -78,9 +80,17 @@ public class Utility {
                 .setCancelable(false)
                 .setPositiveButton(context.getString(R.string.save), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
-                        // TODO: do something with the user input
+                        //add input to database
                         String input = userInputDialogEditText.getText().toString();
-                        //TODO: add input to database
+
+                        //Firebase database
+                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                        DatabaseReference databaseReference = firebaseDatabase.getReference().child("location");
+
+                        //create location object to send to firebase
+                        Location location = new Location(input);
+                        //add to firebase database
+                        databaseReference.push().setValue(location);
 
                         //TODO: determine if success or not in saving location
 
@@ -117,6 +127,7 @@ public class Utility {
 
 
     private static void showLocationDialogMessage(LayoutInflater layoutInflaterAndroid, final Context context, boolean flagSuccess) {
+
         View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_message, null);
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
         alertDialogBuilderUserInput.setView(mView);
