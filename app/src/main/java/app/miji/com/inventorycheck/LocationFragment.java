@@ -52,8 +52,11 @@ public class LocationFragment extends Fragment {
 
         //Firebase database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("location");
 
+
+        mDatabaseReference = mFirebaseDatabase.getReference().child("location");
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +73,6 @@ public class LocationFragment extends Fragment {
         });
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_location);
-
         assert recyclerView != null;
         setupRecyclerView(recyclerView);
 
