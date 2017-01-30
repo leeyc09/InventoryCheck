@@ -94,7 +94,7 @@ public class LocationFragment extends Fragment {
 
     private void attachDatabaseReadListener() {
 
-        if (mChildEventListener != null) {
+        if (mChildEventListener == null) {
             mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -122,7 +122,7 @@ public class LocationFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                    Log.e(LOG_TAG, databaseError.getMessage());
                 }
             };
 
@@ -136,5 +136,6 @@ public class LocationFragment extends Fragment {
 
         mAdapter = new LocationRecyclerViewAdapter(getActivity(), list);
         recyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }
