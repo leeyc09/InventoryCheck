@@ -20,6 +20,7 @@ public class Location implements Parcelable {
     }
 
     public Location() {
+        // Default constructor required for calls to DataSnapshot.getValue(Location.class)
     }
 
     public static final Creator<Location> CREATOR = new Creator<Location>() {

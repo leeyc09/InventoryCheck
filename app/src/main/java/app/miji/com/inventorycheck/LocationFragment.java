@@ -42,9 +42,6 @@ public class LocationFragment extends Fragment {
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mFirebaseDatabase;
 
-    public LocationFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +49,6 @@ public class LocationFragment extends Fragment {
 
         //Firebase database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-
 
         mDatabaseReference = mFirebaseDatabase.getReference().child("location");
         //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
@@ -105,6 +101,7 @@ public class LocationFragment extends Fragment {
                     Log.e(LOG_TAG, "LOCATION FROM DB -------->  :  " + location.getName());
 
                     list.add(location);
+                    mAdapter.notifyDataSetChanged();
                 }
 
                 @Override

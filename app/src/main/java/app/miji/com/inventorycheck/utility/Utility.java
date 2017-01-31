@@ -80,32 +80,37 @@ public class Utility {
                 .setCancelable(false)
                 .setPositiveButton(context.getString(R.string.save), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
-                        //add input to database
                         String input = userInputDialogEditText.getText().toString();
+                        //validate user input
+                        if(input.trim().length()!=0){
 
+                            //add input to database
+                            //create location object to send to firebase
+                            Location location = new Location(input);
+                            //add to firebase database
+                            databaseReference.push().setValue(location);
 
-                        //create location object to send to firebase
-                        Location location = new Location(input);
-                        //add to firebase database
-                        databaseReference.push().setValue(location);
+                            //TODO: determine if success or not in saving location
 
-                        //TODO: determine if success or not in saving location
+                            boolean flagSuccess = true; //success, can be false
 
-                        boolean flagSuccess = true; //success, can be false
+                            if (flagSuccess) {
+                                //inform user that location is saved
+                                //check if user stills wants to be informed based on sharedPref
 
-                        if (flagSuccess) {
-                            //inform user that location is saved
-                            //check if user stills wants to be informed based on sharedPref
-
-                            int status = Utility.getLocationMessageDialogStatus(context);
-                            if (status == 0) {
-                                //show dialog message
+                                int status = Utility.getLocationMessageDialogStatus(context);
+                                if (status == 0) {
+                                    //show dialog message
+                                    showLocationDialogMessage(layoutInflaterAndroid, context, flagSuccess);
+                                }
+                            } else {
+                                //need to inform user that there is failurein saving location
                                 showLocationDialogMessage(layoutInflaterAndroid, context, flagSuccess);
                             }
-                        } else {
-                            //need to inform user that there is failurein saving location
-                            showLocationDialogMessage(layoutInflaterAndroid, context, flagSuccess);
                         }
+
+
+
 
 
                     }
@@ -254,9 +259,9 @@ public class Utility {
         Log.e(LOG_TAG, "QTY------------------>" + qty);
         Log.e(LOG_TAG, "UNIT------------------>" + unit);
 
-        int mItem = item.length();
-        int mQty = qty.length();
-        int mUnit = unit.length();
+        int mItem = item.trim().length();
+        int mQty = qty.trim().length();
+        int mUnit = unit.trim().length();
 
         boolean isValid = mItem != 0 && mQty != 0 && mUnit != 0; //if formed is properly filled out
 
@@ -289,6 +294,13 @@ public class Utility {
         return isValid;
     }
 
+
+    public static void setupLocationSpinnerWithDB(Context context, MaterialBetterSpinner materialSpinner, List<String> locations) {
+        //display locations from database
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
+                android.R.layout.simple_dropdown_item_1line, locations);
+        materialSpinner.setAdapter(adapter);
+    }
 
     public static void setupLocationSpinner(Context context, MaterialBetterSpinner materialSpinner) {
         //TODO change this dummy location
