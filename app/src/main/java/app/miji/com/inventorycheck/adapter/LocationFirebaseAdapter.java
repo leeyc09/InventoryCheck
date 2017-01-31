@@ -1,6 +1,7 @@
 package app.miji.com.inventorycheck.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +37,10 @@ public class LocationFirebaseAdapter extends FirebaseRecyclerAdapter<LocationFir
         //get data
         String mName = holder.mLocation.getName();
 
+
         //set data
         holder.mTxtName.setText(mName);
+
     }
 
     @Override

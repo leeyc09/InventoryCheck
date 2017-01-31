@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -71,7 +70,7 @@ public class Utility {
         return prefs.getInt(NO_LOCATION_MESSAGE, 0);
     }
 
-    public static void showLocationDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid, final DatabaseReference databaseReference, FirebaseDatabase firebaseDatabase) {
+    public static void showLocationDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid, final DatabaseReference databaseReference) {
 
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
         alertDialogBuilderUserInput.setView(mView);
@@ -82,7 +81,10 @@ public class Utility {
                     public void onClick(DialogInterface dialogBox, int id) {
                         String input = userInputDialogEditText.getText().toString();
                         //validate user input
-                        if(input.trim().length()!=0){
+                        if (input.trim().length() != 0) {
+
+                            //capitalize each word of location
+                            input = capitalize(input);
 
                             //add input to database
                             //create location object to send to firebase
@@ -110,9 +112,6 @@ public class Utility {
                         }
 
 
-
-
-
                     }
                 })
 
@@ -127,6 +126,15 @@ public class Utility {
         alertDialogAndroid.show();
     }
 
+    private static String capitalize(String text) {
+        String c = (text != null) ? text.trim() : "";
+        String[] words = c.split(" ");
+        String result = "";
+        for (String w : words) {
+            result += (w.length() > 1 ? w.substring(0, 1).toUpperCase() + w.substring(1, w.length()).toLowerCase() : w) + " ";
+        }
+        return result.trim();
+    }
 
     private static void showLocationDialogMessage(LayoutInflater layoutInflaterAndroid, final Context context, boolean flagSuccess) {
 

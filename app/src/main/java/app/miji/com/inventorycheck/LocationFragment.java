@@ -54,7 +54,7 @@ public class LocationFragment extends Fragment {
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
 
                 //show location dialog box
-                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid, mDatabaseReference, mFirebaseDatabase);
+                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid, mDatabaseReference);
             }
         });
 

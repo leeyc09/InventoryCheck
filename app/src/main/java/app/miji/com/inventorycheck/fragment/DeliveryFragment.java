@@ -17,16 +17,24 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -36,6 +44,14 @@ import gun0912.tedbottompicker.TedBottomPicker;
 public class DeliveryFragment extends Fragment {
 
 
+    //receive events about changes in the child locations of a given DatabaseReference
+    private ChildEventListener mChildEventListener;
+
+    //firebase database variables
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
+
+
     private static final String[] COUNTRIES = new String[]{
             "Belgium", "France", "Italy", "Germany", "Spain"
     };
@@ -43,6 +59,7 @@ public class DeliveryFragment extends Fragment {
 
     private final String LOG_TAG = DeliveryFragment.class.getSimpleName();
     private String base64Image;
+    private List<String> list;
 
     public DeliveryFragment() {
     }
@@ -51,6 +68,14 @@ public class DeliveryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_delivery, container, false);
+
+
+        //Firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        mDatabaseReference = mFirebaseDatabase.getReference().child("location");
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
 
         final ImageButton btnDate = (ImageButton) view.findViewById(R.id.btn_date);
         final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
@@ -120,9 +145,10 @@ public class DeliveryFragment extends Fragment {
             }
         });
 
+        list = new ArrayList<>();
+        attachDatabaseReadListener();
         //location spinner
         Utility.setupLocationSpinner(getActivity(), materialSpinner);
-
 
         //when txt_add_location is clicked, show add new location dialog box
         txtAddLocation.setOnClickListener(new View.OnClickListener() {
@@ -134,9 +160,7 @@ public class DeliveryFragment extends Fragment {
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
 
                 //show location dialog box
-                //TODO showLocationDialogBox
-                //Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
-
+                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid, mDatabaseReference);
             }
         });
 
@@ -256,6 +280,61 @@ public class DeliveryFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        detachDatabaseReadListener();
+    }
+
+    private void detachDatabaseReadListener() {
+        if (mChildEventListener != null) {
+            mDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
+    }
+
+    private void attachDatabaseReadListener() {
+        if (mChildEventListener == null) {
+
+
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    String location = dataSnapshot.getValue(Location.class).getName();
+
+                    Log.v(LOG_TAG, "LOCATION FROM DB -------->  :  " + location);
+
+                    list.add(location);
+
+
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(LOG_TAG, databaseError.getMessage());
+                }
+            };
+
+            mDatabaseReference.addChildEventListener(mChildEventListener);
+        }
+    }
+
 
 }
 
