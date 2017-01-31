@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck;
+package app.miji.com.inventorycheck.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.SetupRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.SetupContent;
 

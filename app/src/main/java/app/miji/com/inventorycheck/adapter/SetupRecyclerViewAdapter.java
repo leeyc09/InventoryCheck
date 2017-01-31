@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import app.miji.com.inventorycheck.LocationActivity;
+import app.miji.com.inventorycheck.activity.LocationActivity;
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.UnitActivity;
 import app.miji.com.inventorycheck.model.SetupContent.SetupItem;
 
 
@@ -52,6 +53,8 @@ public class SetupRecyclerViewAdapter extends RecyclerView.Adapter<SetupRecycler
                         break;
                     case 1:
                         //UNITS
+                        appInfo = new Intent(mContext, UnitActivity.class);
+                        mContext.startActivity(appInfo);
                         break;
                     case 2:
                         //CURRENCY

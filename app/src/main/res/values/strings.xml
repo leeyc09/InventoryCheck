@@ -65,9 +65,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_item_list">ItemListActivity</string>
+    <string name="title_activity_item_list">Items</string>
     <string name="items">Items</string>
     <string name="add_item">Add items</string>
     <string name="title_activity_setup">Setup</string>
-    <string name="title_activity_location">Location</string>
+    <string name="title_activity_location">Locations</string>
+    <string name="title_activity_unit">Units</string>
 </resources>

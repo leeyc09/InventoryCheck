@@ -1,4 +1,4 @@
-package app.miji.com.inventorycheck;
+package app.miji.com.inventorycheck.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
+import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.adapter.LocationFirebaseAdapter;
 import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.utility.Utility;

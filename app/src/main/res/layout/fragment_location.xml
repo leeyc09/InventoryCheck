@@ -5,7 +5,7 @@
     android:id="@+id/content_stock_take"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.miji.com.inventorycheck.LocationFragment"
+    tools:context="app.miji.com.inventorycheck.fragment.LocationFragment"
     tools:showIn="@layout/activity_location">
 
 
@@ -18,8 +18,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/item_location"></android.support.v7.widget.RecyclerView>
-
+        tools:listitem="@layout/item_location"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

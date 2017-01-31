@@ -643,6 +643,62 @@ public class Utility {
         String details = stringBuffer.toString();
         return details;
     }
+
+    public static void showUnitDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid) {
+
+        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
+        alertDialogBuilderUserInput.setView(mView);
+
+        alertDialogBuilderUserInput
+                .setCancelable(false)
+                .setPositiveButton(context.getString(R.string.save), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogBox, int id) {
+                        String input = userInputDialogEditText.getText().toString();
+                        //validate user input
+                        if (input.trim().length() != 0) {
+
+                            //capitalize each word of location
+                            input = capitalize(input);
+
+                            //add input to database
+                            //create location object to send to firebase
+                            //Location location = new Location(input);
+                            //add to firebase database
+                            //databaseReference.push().setValue(location);
+
+                            //TODO: determine if success or not in saving location
+
+                            boolean flagSuccess = true; //success, can be false
+
+                            if (flagSuccess) {
+                                //inform user that location is saved
+                                //check if user stills wants to be informed based on sharedPref
+
+                                int status = Utility.getLocationMessageDialogStatus(context);
+                                if (status == 0) {
+                                    //show dialog message
+                                    showLocationDialogMessage(layoutInflaterAndroid, context, flagSuccess);
+                                }
+                            } else {
+                                //need to inform user that there is failurein saving location
+                                showLocationDialogMessage(layoutInflaterAndroid, context, flagSuccess);
+                            }
+                        }
+
+
+                    }
+                })
+
+                .setNegativeButton(context.getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                dialogBox.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+        alertDialogAndroid.show();
+    }
 }
 
 

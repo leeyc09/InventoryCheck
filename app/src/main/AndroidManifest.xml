@@ -11,7 +11,6 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -116,7 +115,7 @@
             android:label="@string/items"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SetupActivity"
+            android:name=".activity.SetupActivity"
             android:label="@string/title_activity_setup"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -125,13 +124,22 @@
                 android:value="app.miji.com.inventorycheck.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".LocationActivity"
+            android:name=".activity.LocationActivity"
             android:label="@string/title_activity_location"
-            android:parentActivityName=".SetupActivity"
+            android:parentActivityName=".activity.SetupActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="app.miji.com.inventorycheck.SetupActivity" />
+                android:value="app.miji.com.inventorycheck.activity.SetupActivity" />
+        </activity>
+        <activity
+            android:name=".UnitActivity"
+            android:label="@string/title_activity_unit"
+            android:parentActivityName=".activity.SetupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.miji.com.inventorycheck.activity.SetupActivity" />
         </activity>
     </application>
 
