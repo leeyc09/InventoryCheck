@@ -12,7 +12,7 @@ import java.util.List;
 
 import app.miji.com.inventorycheck.activity.LocationActivity;
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.UnitActivity;
+import app.miji.com.inventorycheck.activity.UnitActivity;
 import app.miji.com.inventorycheck.model.SetupContent.SetupItem;
 
 

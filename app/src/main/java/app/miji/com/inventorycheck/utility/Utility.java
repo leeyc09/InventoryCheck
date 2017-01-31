@@ -46,6 +46,7 @@ import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.model.Product;
 import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.model.Transfer;
+import app.miji.com.inventorycheck.model.Unit;
 
 
 public class Utility {
@@ -644,7 +645,7 @@ public class Utility {
         return details;
     }
 
-    public static void showUnitDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid) {
+    public static void showUnitDialogBox(final Context context, View mView, final EditText userInputDialogEditText, final LayoutInflater layoutInflaterAndroid, final DatabaseReference databaseReference) {
 
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
         alertDialogBuilderUserInput.setView(mView);
@@ -657,14 +658,14 @@ public class Utility {
                         //validate user input
                         if (input.trim().length() != 0) {
 
-                            //capitalize each word of location
-                            input = capitalize(input);
+                            //all units should be in lowercase
+                            input = input.toLowerCase();
 
                             //add input to database
                             //create location object to send to firebase
-                            //Location location = new Location(input);
+                            Unit unit = new Unit(input);
                             //add to firebase database
-                            //databaseReference.push().setValue(location);
+                            databaseReference.push().setValue(unit);
 
                             //TODO: determine if success or not in saving location
 

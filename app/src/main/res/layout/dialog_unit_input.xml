@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/location"
+            android:src="@drawable/location" />
+
+        <TextView
+            android:id="@+id/txt_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/text_margin"
+            android:shadowColor="#000"
+            android:shadowDx="0.7"
+            android:shadowDy="0.5"
+            android:shadowRadius="2"
+            android:text="@string/unit"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dialog_header_textSize" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/userInputDialog"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_text_height"
+        android:layout_marginBottom="@dimen/dialog_text_marginBottom"
+        android:layout_marginEnd="@dimen/dialog_text_margin"
+        android:layout_marginLeft="@dimen/dialog_text_margin"
+        android:layout_marginRight="@dimen/dialog_text_margin"
+        android:layout_marginStart="@dimen/dialog_text_margin"
+        android:layout_marginTop="@dimen/dialog_text_margin"
+        android:inputType="textAutoComplete"
+        android:maxLines="1" />
+
+</LinearLayout>

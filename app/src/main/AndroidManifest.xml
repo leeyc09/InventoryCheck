@@ -133,7 +133,7 @@
                 android:value="app.miji.com.inventorycheck.activity.SetupActivity" />
         </activity>
         <activity
-            android:name=".UnitActivity"
+            android:name=".activity.UnitActivity"
             android:label="@string/title_activity_unit"
             android:parentActivityName=".activity.SetupActivity"
             android:theme="@style/AppTheme.NoActionBar">
