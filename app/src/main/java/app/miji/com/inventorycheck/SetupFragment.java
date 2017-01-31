@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import app.miji.com.inventorycheck.adapter.SetupRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.SetupContent;
 
-public class SetupActivityFragment extends Fragment {
+public class SetupFragment extends Fragment {
 
     private SetupRecyclerViewAdapter mAdapter;
 
-    public SetupActivityFragment() {
+    public SetupFragment() {
     }
 
     @Override

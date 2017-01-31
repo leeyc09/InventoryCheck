@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.miji.com.inventorycheck.SetupActivityFragment"
+    tools:context="app.miji.com.inventorycheck.SetupFragment"
     tools:showIn="@layout/activity_setup">
 
     <android.support.v7.widget.RecyclerView
