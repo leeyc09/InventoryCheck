@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 
 public class Unit implements Parcelable {
-    String name;
+    private String name;
 
     public Unit() {
         // Default constructor required for calls to DataSnapshot.getValue(Unit.class)

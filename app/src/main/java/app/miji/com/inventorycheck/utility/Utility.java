@@ -1,5 +1,6 @@
 package app.miji.com.inventorycheck.utility;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -21,10 +22,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -304,11 +308,17 @@ public class Utility {
     }
 
 
-    public static void setupLocationSpinnerWithDB(Context context, MaterialBetterSpinner materialSpinner, List<String> locations) {
-        //display locations from database
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_dropdown_item_1line, locations);
-        materialSpinner.setAdapter(adapter);
+    public static void setupLocationSpinnerWithDB(Activity activity, Spinner materialSpinner, Query ref) {
+
+        FirebaseListAdapter firebaseListAdapter = new FirebaseListAdapter(activity, Location.class, R.layout.item_location_spinner, ref) {
+            @Override
+            protected void populateView(View v, Object o, int position) {
+                Location location = (Location) o;
+                ((TextView) v.findViewById(R.id.txt_location)).setText(location.getName());
+            }
+        };
+
+        materialSpinner.setAdapter(firebaseListAdapter);
     }
 
     public static void setupLocationSpinner(Context context, MaterialBetterSpinner materialSpinner) {
@@ -667,23 +677,6 @@ public class Utility {
                             //add to firebase database
                             databaseReference.push().setValue(unit);
 
-                            //TODO: determine if success or not in saving location
-
-                            boolean flagSuccess = true; //success, can be false
-
-                            if (flagSuccess) {
-                                //inform user that location is saved
-                                //check if user stills wants to be informed based on sharedPref
-
-                                int status = Utility.getLocationMessageDialogStatus(context);
-                                if (status == 0) {
-                                    //show dialog message
-                                    showLocationDialogMessage(layoutInflaterAndroid, context, flagSuccess);
-                                }
-                            } else {
-                                //need to inform user that there is failurein saving location
-                                showLocationDialogMessage(layoutInflaterAndroid, context, flagSuccess);
-                            }
                         }
 
 

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -22,19 +23,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.model.Delivery;
-import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -44,22 +42,16 @@ import gun0912.tedbottompicker.TedBottomPicker;
 public class DeliveryFragment extends Fragment {
 
 
-    //receive events about changes in the child locations of a given DatabaseReference
-    private ChildEventListener mChildEventListener;
-
     //firebase database variables
     private DatabaseReference mDatabaseReference;
     private FirebaseDatabase mFirebaseDatabase;
-
-
-    private static final String[] COUNTRIES = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
+    private Query mQuery;
+    //receive events about changes in the child locations of a given DatabaseReference
+    private ChildEventListener mChildEventListener;
 
 
     private final String LOG_TAG = DeliveryFragment.class.getSimpleName();
     private String base64Image;
-    private List<String> list;
 
     public DeliveryFragment() {
     }
@@ -84,8 +76,10 @@ public class DeliveryFragment extends Fragment {
         final EditText txtDelivery = (EditText) view.findViewById(R.id.txt_delivery);
         final EditText txtReference = (EditText) view.findViewById(R.id.txt_reference);
         final TextInputLayout txtInDelivery = (TextInputLayout) view.findViewById(R.id.input_delivery);
+        final TextView txtInLocation = (TextView) view.findViewById(R.id.lbl_location);
         final TextInputLayout txtInRefNo = (TextInputLayout) view.findViewById(R.id.input_ref);
-        final MaterialBetterSpinner materialSpinner = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
+        final Spinner spinner = (Spinner) view.findViewById(R.id.my_spinner);
+
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final ImageView imgReceipt = (ImageView) view.findViewById(R.id.img_receipt);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -145,10 +139,11 @@ public class DeliveryFragment extends Fragment {
             }
         });
 
-        list = new ArrayList<>();
+        //read firebase location data
         attachDatabaseReadListener();
+
         //location spinner
-        Utility.setupLocationSpinner(getActivity(), materialSpinner);
+        Utility.setupLocationSpinnerWithDB(getActivity(), spinner, mQuery);
 
         //when txt_add_location is clicked, show add new location dialog box
         txtAddLocation.setOnClickListener(new View.OnClickListener() {
@@ -209,15 +204,19 @@ public class DeliveryFragment extends Fragment {
             public void onClick(View view) {
                 String strDeliveredBy = txtDelivery.getText().toString();
                 String strRef = txtReference.getText().toString();
-                String strLoc = materialSpinner.getText().toString();
                 String strDate = txtDate.getText().toString();
                 String strTime = txtTime.getText().toString();
 
+                String strLoc = "";
+                if (spinner.getSelectedItem() != null) {
+                    strLoc = spinner.getSelectedItem().toString();
+                }
 
                 //validate form
-                int deliveredBy = strDeliveredBy.length();
-                int refNo = strRef.length();
-                int location = strLoc.length();
+                int deliveredBy = strDeliveredBy.trim().length();
+                int refNo = strRef.trim().length();
+                int location = strLoc.trim().length();
+
                 boolean isValid = deliveredBy != 0 && refNo != 0 && location != 0; //if formed is properly filled out
 
                 Log.v(LOG_TAG, "Delivered By: " + deliveredBy);
@@ -244,9 +243,9 @@ public class DeliveryFragment extends Fragment {
 
                 //check if location is null
                 if (location == 0) {
-                    materialSpinner.setError(getString(R.string.required_field));
+                    txtInLocation.setError(getString(R.string.required_field));
                 } else {
-                    materialSpinner.setError(null);
+                    txtInLocation.setError(null);
                 }
 
 
@@ -295,17 +294,17 @@ public class DeliveryFragment extends Fragment {
     }
 
     private void attachDatabaseReadListener() {
+
         if (mChildEventListener == null) {
 
+            mQuery = mDatabaseReference.orderByChild("name");
 
             mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    String location = dataSnapshot.getValue(Location.class).getName();
+                    String location = dataSnapshot.child("name").getValue(String.class);
 
                     Log.v(LOG_TAG, "LOCATION FROM DB -------->  :  " + location);
-
-                    list.add(location);
 
 
                 }
@@ -331,7 +330,7 @@ public class DeliveryFragment extends Fragment {
                 }
             };
 
-            mDatabaseReference.addChildEventListener(mChildEventListener);
+            mQuery.addChildEventListener(mChildEventListener);
         }
     }
 
