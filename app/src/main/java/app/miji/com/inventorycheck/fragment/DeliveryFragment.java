@@ -33,6 +33,7 @@ import java.util.Calendar;
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.model.Delivery;
+import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
 
@@ -209,7 +210,8 @@ public class DeliveryFragment extends Fragment {
 
                 String strLoc = "";
                 if (spinner.getSelectedItem() != null) {
-                    strLoc = spinner.getSelectedItem().toString();
+                    Location location = (Location) spinner.getSelectedItem();
+                    strLoc = location.getName();
                 }
 
                 //validate form
