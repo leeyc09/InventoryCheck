@@ -16,7 +16,7 @@
     <dimen name="qty_width">100dp</dimen>
     <dimen name="unit_width">80dp</dimen>
     <dimen name="txtBarcode_width">200dp</dimen>
-    <dimen name="list_cardview_margin">8dp</dimen>
+    <dimen name="list_cardview_margin">4dp</dimen>
     <dimen name="cardview_padding_bottom">16dp</dimen>
     <dimen name="cardview_item_image_height">175dp</dimen>
     <dimen name="cardview_top_bottom_margin">24dp</dimen>
@@ -25,4 +25,6 @@
     <dimen name="list_image_padding">16dp</dimen>
     <dimen name="ic_clear_margin">16dp</dimen>
     <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="category_item_size">200dp</dimen>
+    <dimen name="category_item_padding">40dp</dimen>
 </resources>

@@ -11,5 +11,6 @@
     <color name="colorTextSecondary">#757575</color>
 
     <color name="colorDivider">#BDBDBD</color>
+    <color name="list_category_background">#424242</color>
 
 </resources>

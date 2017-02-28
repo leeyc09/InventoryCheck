@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Inventory Check</string>
+    <string name="app_name">Inventory King</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_stock_in">Stock In</string>
     <string name="section_format">Hello World from section: %1$d</string>
