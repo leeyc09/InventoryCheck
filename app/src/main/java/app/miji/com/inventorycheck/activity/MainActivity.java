@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         //setup recycler view
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_home);
-        int mColumnCount = getResources().getInteger(R.integer.list_column_count);;
+        int mColumnCount = getResources().getInteger(R.integer.list_column_count);
         //set Layout Manager
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,25 +46,4 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

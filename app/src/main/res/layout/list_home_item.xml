@@ -7,4 +7,5 @@
     android:layout_height="match_parent"
     android:padding="@dimen/list_side_margin"
     app:layoutManager="LinearLayoutManager"
+    android:background="@color/list_category_background"
     tools:listitem="@layout/item_home" />
