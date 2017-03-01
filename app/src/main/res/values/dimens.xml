@@ -27,4 +27,5 @@
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="category_item_size">200dp</dimen>
     <dimen name="category_item_padding">40dp</dimen>
+    <dimen name="item_details_padding">25dp</dimen>
 </resources>
