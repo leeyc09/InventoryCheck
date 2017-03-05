@@ -109,17 +109,6 @@ public class ItemListActivity extends AppCompatActivity {
         TextView txtDetail = (TextView) findViewById(R.id.txt_details);
         txtDetail.setText(detail);
 
-        //hide details when clicked
-        card_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideDetails();
-            }
-        });
-
-
-        //initially hide details
-        showDetails();
 
         //show image view popup
         final ImageView imageView = (ImageView) findViewById(R.id.imageView);
@@ -190,7 +179,7 @@ public class ItemListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_details:
-                showHideDetails(mSwitch);
+                //showHideDetails(mSwitch);
                 break;
         }
         return super.onOptionsItemSelected(item);
