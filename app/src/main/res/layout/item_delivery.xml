@@ -15,64 +15,53 @@
 
 
         <LinearLayout
-            android:id="@+id/root_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:hint="@string/mdtp_date"
+                android:textAppearance="?android:textAppearanceMedium" />
 
-                <TextView
-                    android:id="@+id/txt_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/mdtp_date"
-                    android:textAppearance="?android:textAppearanceMedium" />
+            <TextView
+                android:id="@+id/txt_text_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="item 1"
+                android:textAppearance="?android:textAppearanceMedium" />
 
-                <TextView
-                    android:id="@+id/txt_text_one"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="item 1"
-                    android:textAppearance="?android:textAppearanceMedium" />
+            <TextView
+                android:id="@+id/txt_text_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="item 2"
+                android:textAppearance="?android:textAppearanceMedium" />
 
-                <TextView
-                    android:id="@+id/txt_text_two"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="item 2"
-                    android:textAppearance="?android:textAppearanceMedium" />
-
-                <TextView
-                    android:id="@+id/txt_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="number"
-                    android:textAppearance="?android:textAppearanceMedium" />
-
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/txt_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="number"
+                android:textAppearance="?android:textAppearanceMedium" />
 
 
             <ImageView
                 android:id="@+id/img_item"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/text_margin"
                 android:layout_marginStart="@dimen/text_margin"
-                android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/item_image"
                 android:padding="@dimen/list_image_padding"
                 android:scaleType="fitXY"
-                android:src="@drawable/image_placeholder" />
+                android:src="@drawable/image_placeholder"
+                android:visibility="gone" />
 
         </LinearLayout>
 
