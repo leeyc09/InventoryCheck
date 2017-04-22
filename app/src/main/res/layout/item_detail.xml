@@ -43,7 +43,7 @@
             android:layout_toEndOf="@+id/txt_details"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            android:src="@drawable/warehouse"
+            android:src="@drawable/ic_bg_location"
             android:visibility="gone" />
 
     </LinearLayout>

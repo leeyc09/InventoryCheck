@@ -13,39 +13,10 @@
     tools:showIn="@layout/activity_stock_take">
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@android:color/white"
-        android:src="@android:drawable/ic_input_add" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/location" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_item"
-            style="@style/CustomTextInputLayout"
-            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
-
-            <AutoCompleteTextView
-                android:id="@+id/txt_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/search_item"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
-
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_items"
@@ -58,5 +29,14 @@
 
 
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@android:color/white" />
 
 </android.support.design.widget.CoordinatorLayout>

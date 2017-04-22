@@ -4,8 +4,7 @@
     tools:context="app.miji.com.inventorycheck.activity.StockTakeActivity">
     <item
         android:id="@+id/action_scan"
-        android:icon="@drawable/ic_action_scan"
         android:orderInCategory="100"
-        android:title="@string/scan"
+        android:title="@string/mdtp_done_label"
         app:showAsAction="always" />
 </menu>

@@ -84,12 +84,10 @@ public class DeliveryListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_delivery_list, container, false);
 
         //inflate views
-        MaterialBetterSpinner spinnerLocation = (MaterialBetterSpinner) view.findViewById(R.id.spinner_location);
-        AutoCompleteTextView txtItem = (AutoCompleteTextView) view.findViewById(R.id.txt_item);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_delivery);
 
         //setup location spinner
-        Utility.setupLocationSpinner(getActivity(), spinnerLocation);
+        //Utility.setupLocationSpinner(getActivity(), spinnerLocation);
 
         int mColumnCount = getResources().getInteger(R.integer.list_stockTake_column_count);
         //set Layout Manager

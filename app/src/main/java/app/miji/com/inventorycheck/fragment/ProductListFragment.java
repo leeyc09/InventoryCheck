@@ -49,15 +49,7 @@ public class ProductListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
-
-        MaterialBetterSpinner spinnerLocation = (MaterialBetterSpinner) view.findViewById(R.id.spinner_location);
-        TextInputLayout txtInItem = (TextInputLayout) view.findViewById(R.id.input_item);
-        AutoCompleteTextView txtItem = (AutoCompleteTextView) view.findViewById(R.id.txt_item);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_items);
-
-
-        //setup location spinner
-        Utility.setupLocationSpinner(getActivity(), spinnerLocation);
 
         int mColumnCount = getResources().getInteger(R.integer.list_stockTake_column_count);
         //set Layout Manager

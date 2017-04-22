@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!--
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
             android:id="@+id/spinner_location"
             android:layout_width="match_parent"
@@ -35,7 +36,7 @@
                 android:hint="@string/search_item"
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
-
+        -->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_transfer"
