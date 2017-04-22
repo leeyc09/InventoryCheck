@@ -71,4 +71,6 @@
     <string name="title_activity_setup">Setup</string>
     <string name="title_activity_location">Locations</string>
     <string name="title_activity_unit">Units</string>
+    <string name="action_filter">filter</string>
+    <string name="action_search">search</string>
 </resources>

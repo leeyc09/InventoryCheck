@@ -3,8 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="app.miji.com.inventorycheck.activity.StockOutActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_filter"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_filter"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="200"
+        android:title="@string/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="ifRoom" />
+
 </menu>
