@@ -73,4 +73,5 @@
     <string name="title_activity_unit">Units</string>
     <string name="action_filter">filter</string>
     <string name="action_search">search</string>
+    <string name="search_results">Search Results</string>
 </resources>

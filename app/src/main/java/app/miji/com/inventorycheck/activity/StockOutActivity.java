@@ -1,5 +1,8 @@
 package app.miji.com.inventorycheck.activity;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -162,6 +166,20 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_stock_out, menu);
+
+        //-------------Search Widget ------------------------
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+        // Do not iconify the widget; expand it by default
+        searchView.setIconifiedByDefault(false);
+        // Add submit button on search widget
+        searchView.setSubmitButtonEnabled(true);
+        //Query refinement for search suggestions
+        searchView.setQueryRefinementEnabled(true);
+
         return true;
     }
 
@@ -172,8 +190,8 @@ public class StockOutActivity extends AppCompatActivity implements SheetLayout.O
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+            //onSearchRequested();
             return true;
         }
 
