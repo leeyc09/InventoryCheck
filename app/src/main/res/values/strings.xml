@@ -74,4 +74,7 @@
     <string name="action_filter">filter</string>
     <string name="action_search">search</string>
     <string name="search_results">Search Results</string>
+    <string name="built_in_scanner">Built-in Scanner</string>
+    <string name="bluetooth_scanner">Bluetooth Scanner</string>
+    <string name="manual_add">Add Manually</string>
 </resources>
