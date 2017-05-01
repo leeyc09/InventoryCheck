@@ -13,7 +13,7 @@ public class Sales implements Parcelable {
     String date;
     String time;
     String customer;
-    String ReferenceNo;
+    String referenceNo;
     String location;
     String image;
     List<Item> items;
@@ -27,7 +27,7 @@ public class Sales implements Parcelable {
         this.date = date;
         this.time = time;
         this.customer = customer;
-        ReferenceNo = referenceNo;
+        this.referenceNo = referenceNo;
         this.location = location;
         this.image = image;
         this.items = items;
@@ -37,7 +37,7 @@ public class Sales implements Parcelable {
         date = in.readString();
         time = in.readString();
         customer = in.readString();
-        ReferenceNo = in.readString();
+        referenceNo = in.readString();
         location = in.readString();
         image = in.readString();
         items = in.createTypedArrayList(Item.CREATOR);
@@ -65,7 +65,7 @@ public class Sales implements Parcelable {
         parcel.writeString(date);
         parcel.writeString(time);
         parcel.writeString(customer);
-        parcel.writeString(ReferenceNo);
+        parcel.writeString(referenceNo);
         parcel.writeString(location);
         parcel.writeString(image);
         parcel.writeTypedList(items);
@@ -96,11 +96,11 @@ public class Sales implements Parcelable {
     }
 
     public String getReferenceNo() {
-        return ReferenceNo;
+        return referenceNo;
     }
 
     public void setReferenceNo(String referenceNo) {
-        ReferenceNo = referenceNo;
+        referenceNo = referenceNo;
     }
 
     public String getLocation() {

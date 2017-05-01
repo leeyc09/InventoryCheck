@@ -43,10 +43,6 @@ public class NewProductFragment extends Fragment {
 
     private List<Product> list;
 
-    /*Required Empty constructor for Firebase*/
-    public NewProductFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,6 +100,8 @@ public class NewProductFragment extends Fragment {
 
                     //add to firebase database
                     mDatabaseReference.push().setValue(product);
+
+
 
                     //Go to product List
                     Intent intent = new Intent(getActivity(), ProductActivity.class);
