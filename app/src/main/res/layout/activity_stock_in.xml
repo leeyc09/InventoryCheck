@@ -57,7 +57,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:scaleType="center"
-        android:src="@drawable/ic_delivery" />
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@android:color/white"/>
 
     <com.github.fabtransitionactivity.SheetLayout
         android:id="@+id/bottom_sheet"

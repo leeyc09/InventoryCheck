@@ -14,11 +14,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.InputStream;
 import java.util.List;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.ProductActivity;
+import app.miji.com.inventorycheck.adapter.LocationFirebaseAdapter;
+import app.miji.com.inventorycheck.adapter.ProductFirebaseAdapter;
 import app.miji.com.inventorycheck.model.Product;
 import app.miji.com.inventorycheck.utility.Utility;
 import app.miji.com.inventorycheck.widget.PlaceholderImageView;
@@ -28,6 +33,13 @@ import gun0912.tedbottompicker.TedBottomPicker;
  * A placeholder fragment containing a simple view.
  */
 public class NewProductFragment extends Fragment {
+    private static final String LOG_TAG = NewProductFragment.class.getSimpleName();
+
+    private ProductFirebaseAdapter mAdapter;
+
+    //firebase database variables
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
 
     private List<Product> list;
 
@@ -38,6 +50,14 @@ public class NewProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_product, container, false);
+
+        //Firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        mDatabaseReference = mFirebaseDatabase.getReference().child("product");
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
+
 
         final PlaceholderImageView imageProduct = (PlaceholderImageView) view.findViewById(R.id.img_receipt);
         final EditText txtProdCode = (EditText) view.findViewById(R.id.txt_prod_code);
@@ -63,23 +83,28 @@ public class NewProductFragment extends Fragment {
                 String price = txtPrice.getText().toString();
                 String lowStock = txtLowStock.getText().toString();
                 String notes = txtNotes.getText().toString();
+                float quantity = 0;
+                String unit = null;
                 //TODO add image
                 String image = null;
 
 
                 //Name is required
                 int name = txtName.getText().toString().length();
+
                 if (name != 0) {
                     txtInName.setErrorEnabled(false);
-                    //TODO insert fields to database
 
                     //create new product
-                    Product product = new Product(productCode,barcode,productName,description,price,lowStock,notes,image);
+                    Product product = new Product(productCode,barcode,productName,description,price,lowStock,notes,image, quantity,unit);
 
-                    //save product to shared pref
-                    Utility.saveProduct(getContext(), product);
+                    //here
+                    //Utility.saveProduct(getContext(), product);
 
+                    //add to firebase database
+                    mDatabaseReference.push().setValue(product);
 
+                    //Go to product List
                     Intent intent = new Intent(getActivity(), ProductActivity.class);
                     startActivity(intent);
                 } else {

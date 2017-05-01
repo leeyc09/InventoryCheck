@@ -6,7 +6,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,23 +15,33 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.miji.com.inventorycheck.R;
+import app.miji.com.inventorycheck.adapter.ProductFirebaseAdapter;
 import app.miji.com.inventorycheck.adapter.ProductRecyclerViewAdapter;
 import app.miji.com.inventorycheck.model.Product;
 import app.miji.com.inventorycheck.utility.Utility;
 
 public class ProductListFragment extends Fragment {
+    private static final String LOG_TAG = LocationFragment.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private ProductRecyclerViewAdapter mAdapter;
     private List<Product> list;
+
+
+    //firebase database variables
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private ProductFirebaseAdapter mFirebaseAdapter;
+
 
     public ProductListFragment() {
         // Required empty public constructor
@@ -59,7 +68,15 @@ public class ProductListFragment extends Fragment {
             mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
         }
 
-        setupRecyclerView(mRecyclerView);
+        //Firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        mDatabaseReference = mFirebaseDatabase.getReference().child("product");
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
+
+        //setupRecyclerView(mRecyclerView);
+        setupFirebaseRecyclerView(mRecyclerView);
         return view;
     }
 
@@ -72,6 +89,21 @@ public class ProductListFragment extends Fragment {
 
         setUpItemTouchHelper();
         setUpAnimationDecoratorHelper();
+    }
+
+    private void setupFirebaseRecyclerView(RecyclerView recyclerView) {
+        //sort data alphabetically
+        Query query = mDatabaseReference.orderByChild("name");
+
+        mFirebaseAdapter = new ProductFirebaseAdapter(query, Product.class);
+        recyclerView.setAdapter(mFirebaseAdapter);
+        mFirebaseAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mFirebaseAdapter.destroy();
     }
 
     /**

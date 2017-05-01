@@ -13,8 +13,15 @@ public class Product implements Parcelable {
     private String lowStock;
     private String notes;
     private String image;
+    private Float quantity;
+    private String unit;
 
-    public Product(String productCode, String barcode, String name, String description, String price, String lowStock, String notes, String image) {
+    /**Empty Constructor for Firebase**/
+    public Product(){
+
+    }
+
+    public Product(String productCode, String barcode, String name, String description, String price, String lowStock, String notes, String image, Float quantity,String unit) {
         this.productCode = productCode;
         this.barcode = barcode;
         this.name = name;
@@ -23,6 +30,8 @@ public class Product implements Parcelable {
         this.lowStock = lowStock;
         this.notes = notes;
         this.image = image;
+        this.quantity = quantity;
+        this.unit = unit;
     }
 
     protected Product(Parcel in) {
@@ -34,6 +43,8 @@ public class Product implements Parcelable {
         lowStock = in.readString();
         notes = in.readString();
         image = in.readString();
+        quantity = in.readFloat();
+        unit = in.readString();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -112,6 +123,22 @@ public class Product implements Parcelable {
         this.image = image;
     }
 
+    public Float getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Float quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -127,5 +154,7 @@ public class Product implements Parcelable {
         parcel.writeString(lowStock);
         parcel.writeString(notes);
         parcel.writeString(image);
+        parcel.writeFloat(quantity);
+        parcel.writeString(unit);
     }
 }

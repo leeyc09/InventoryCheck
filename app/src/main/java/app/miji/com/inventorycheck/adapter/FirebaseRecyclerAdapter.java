@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * It marshals received data into the given class type.
  * Extend this class and provide an implementation of the abstract methods, which will notify when
  * the adapter list changes.
- *
+ * <p>
  * This class also simplifies the management of configuration change (e.g.: device rotation)
  * allowing the restore of the list.
  *
