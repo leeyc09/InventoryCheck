@@ -44,7 +44,6 @@ public class ProductListFragment extends Fragment {
 
 
     public ProductListFragment() {
-        // Required empty public constructor
     }
 
 

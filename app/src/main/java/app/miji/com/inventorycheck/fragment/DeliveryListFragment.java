@@ -10,17 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.adapter.DeliveryRecyclerViewAdapter;
+import app.miji.com.inventorycheck.adapter.DeliveryFirebaseAdapter;
 import app.miji.com.inventorycheck.model.Delivery;
-import app.miji.com.inventorycheck.utility.Utility;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,9 +39,10 @@ public class DeliveryListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-
-    private DeliveryRecyclerViewAdapter mAdapter;
-    private List<Delivery> list;
+    //firebase database variables
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DeliveryFirebaseAdapter mFirebaseAdapter;
 
     public DeliveryListFragment() {
         // Required empty public constructor
@@ -89,6 +87,12 @@ public class DeliveryListFragment extends Fragment {
         //setup location spinner
         //Utility.setupLocationSpinner(getActivity(), spinnerLocation);
 
+        //Firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("delivery");
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
+
         int mColumnCount = getResources().getInteger(R.integer.list_stockTake_column_count);
         //set Layout Manager
         if (mColumnCount <= 1) {
@@ -97,17 +101,18 @@ public class DeliveryListFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
         }
 
-        setupRecyclerView(recyclerView);
+        setupFirebaseRecyclerView(recyclerView);
 
         return view;
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        list = new ArrayList<>();
-        list = Utility.getDeliveryData(getContext());
+    private void setupFirebaseRecyclerView(RecyclerView recyclerView) {
+        //sort data alphabetically
+        Query query = mDatabaseReference.orderByChild("date");
 
-        mAdapter = new DeliveryRecyclerViewAdapter(getActivity(), list);
-        recyclerView.setAdapter(mAdapter);
+        mFirebaseAdapter = new DeliveryFirebaseAdapter(query, Delivery.class);
+        recyclerView.setAdapter(mFirebaseAdapter);
+        mFirebaseAdapter.notifyDataSetChanged();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
