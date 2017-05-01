@@ -19,6 +19,7 @@ public class Location implements Parcelable {
         name = in.readString();
     }
 
+    /**Empty Constructor for Firebase**/
     public Location() {
         // Default constructor required for calls to DataSnapshot.getValue(Location.class)
     }

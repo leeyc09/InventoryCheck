@@ -18,6 +18,11 @@ public class Sales implements Parcelable {
     String image;
     List<Item> items;
 
+    /*Required Empty constructor for Firebase*/
+    public Sales() {
+        // Default constructor required for calls to DataSnapshot.getValue(Sales.class)
+    }
+
     public Sales(String date, String time, String customer, String referenceNo, String location, String image, List<Item> items) {
         this.date = date;
         this.time = time;

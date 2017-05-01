@@ -14,6 +14,11 @@ public class Transfer implements Parcelable {
     String toLocation;
     List<Item> items;
 
+    /*Required Empty constructor for Firebase*/
+    public Transfer() {
+        // Default constructor required for calls to DataSnapshot.getValue(Transfer.class)
+    }
+
     public Transfer(String date, String time, String transferID, String fromLocation, String toLocation, List<Item> items) {
         this.date = date;
         this.time = time;

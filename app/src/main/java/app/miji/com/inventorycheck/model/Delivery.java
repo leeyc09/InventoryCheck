@@ -14,6 +14,11 @@ public class Delivery implements Parcelable {
     String image;
     List<Item> items;
 
+    /*Required Empty constructor for Firebase*/
+    public Delivery() {
+        // Default constructor required for calls to DataSnapshot.getValue(Delivery.class)
+    }
+
     public Delivery(String date, String time, String location, String deliveryMan, String referenceNo, String image, List<Item> items) {
         this.date = date;
         this.time = time;

@@ -18,7 +18,7 @@ public class Product implements Parcelable {
 
     /**Empty Constructor for Firebase**/
     public Product(){
-
+        // Default constructor required for calls to DataSnapshot.getValue(Product.class)
     }
 
     public Product(String productCode, String barcode, String name, String description, String price, String lowStock, String notes, String image, Float quantity,String unit) {

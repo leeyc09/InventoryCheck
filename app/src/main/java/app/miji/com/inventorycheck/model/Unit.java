@@ -10,6 +10,7 @@ import android.os.Parcelable;
 public class Unit implements Parcelable {
     private String name;
 
+    /*Required Empty constructor for Firebase*/
     public Unit() {
         // Default constructor required for calls to DataSnapshot.getValue(Unit.class)
     }

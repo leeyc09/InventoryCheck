@@ -13,6 +13,11 @@ public class Item implements Parcelable{
     String unit;
     String image;
 
+    /*Required Empty constructor for Firebase*/
+    public Item() {
+        // Default constructor required for calls to DataSnapshot.getValue(Item.class)
+    }
+
     public Item(String name, String qty, String unit, String image) {
         this.name = name;
         this.qty = qty;

@@ -43,6 +43,7 @@ public class NewProductFragment extends Fragment {
 
     private List<Product> list;
 
+    /*Required Empty constructor for Firebase*/
     public NewProductFragment() {
     }
 
