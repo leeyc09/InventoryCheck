@@ -3,53 +3,52 @@ package app.miji.com.inventorycheck.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import com.google.firebase.database.Query;
 
-import app.miji.com.inventorycheck.activity.ItemListActivity;
-import app.miji.com.inventorycheck.activity.NewItemsActivity;
-import app.miji.com.inventorycheck.fragment.ItemListFragment;
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.fragment.NewItemsFragment;
+import app.miji.com.inventorycheck.activity.ItemListActivity;
+import app.miji.com.inventorycheck.fragment.ItemListFragment;
 import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 
 /**
- * For Transfer list item
+ * Created by isse on 02/05/2017.
  */
 
-public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRecyclerViewAdapter.ViewHolder> {
-    private Context mContext;
-    private int flagActivity;
-    private List<Transfer> list;
+public class TransferFirebaseAdapter extends FirebaseRecyclerAdapter<TransferFirebaseAdapter.ViewHolder, Transfer> {
 
-    public TransferRecyclerViewAdapter(Context context, int flag, List<Transfer> list) {
-        this.mContext = context;
-        this.flagActivity = flag;
-        this.list = list;
+    private static final String LOG_TAG = TransferFirebaseAdapter.class.getSimpleName();
+
+    public TransferFirebaseAdapter(Query query, Class<Transfer> itemClass) {
+        super(query, itemClass);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TransferFirebaseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transfer, parent, false);
-        return new TransferRecyclerViewAdapter.ViewHolder(view);
+        Context context = parent.getContext();
+
+        return new TransferFirebaseAdapter.ViewHolder(view, context);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-
-        holder.mTransfer = list.get(position);
+    public void onBindViewHolder(final TransferFirebaseAdapter.ViewHolder holder, int position) {
+        holder.mTransfer = getItem(position);
+        final Context mContext = holder.getContext();
+        String flagActivity = mContext.getClass().getSimpleName();
 
         //get data
-        final String mDate = list.get(position).getDate();
-        final String mTime = list.get(position).getTime();
-        final String mFrom = list.get(position).getFromLocation();
-        final String mTo = list.get(position).getToLocation();
-        final String mTransferId = list.get(position).getTransferID();
+        final String mDate = holder.mTransfer.getDate();
+        final String mTime = holder.mTransfer.getTime();
+        final String mFrom = holder.mTransfer.getFromLocation();
+        final String mTo = holder.mTransfer.getToLocation();
+        final String mTransferId = holder.mTransfer.getTransferID();
 
         final String details = Utility.getTransferDetails(mContext, mDate, mTime, mTransferId, mFrom, mTo);
 
@@ -63,12 +62,12 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
         final String to = mContext.getString(R.string.to) + ": " + mTo;
         final String from = mContext.getString(R.string.from) + ": " + mFrom;
         switch (flagActivity) {
-            case 0:
+            case "StockInActivity":
                 //from StockInActivity
                 holder.mItem1.setText(from);
                 holder.mItem2.setText(to);
                 break;
-            case 1:
+            case "StockOutActivity":
                 //from StockOutActivity
                 holder.mItem1.setText(to);
                 holder.mItem2.setText(from);
@@ -89,19 +88,31 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
                 mContext.startActivity(intent);
             }
         });
-
-
     }
 
     @Override
-    public int getItemCount() {
-        if (list != null)
-            return list.size();
-        return 0;
+    protected void itemAdded(Transfer item, String key, int position) {
+        Log.d(LOG_TAG, "Added a new item to the adapter.");
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    protected void itemChanged(Transfer oldItem, Transfer newItem, String key, int position) {
+        Log.d(LOG_TAG, "Changed an item.");
+    }
+
+    @Override
+    protected void itemRemoved(Transfer item, String key, int position) {
+        Log.d(LOG_TAG, "Removed an item from the adapter.");
+    }
+
+    @Override
+    protected void itemMoved(Transfer item, String key, int oldPosition, int newPosition) {
+        Log.d(LOG_TAG, "Moved an item.");
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
+        final Context mContext;
         final TextView mTxtDate;
         final TextView mItem1;
         final TextView mItem2;
@@ -109,14 +120,18 @@ public class TransferRecyclerViewAdapter extends RecyclerView.Adapter<TransferRe
 
         Transfer mTransfer;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, Context context) {
             super(itemView);
             mView = itemView;
+            mContext = context;
             mTxtDate = (TextView) itemView.findViewById(R.id.txt_date);
             mItem1 = (TextView) itemView.findViewById(R.id.txt_text_one);
             mItem2 = (TextView) itemView.findViewById(R.id.txt_text_two);
             mNumber = (TextView) itemView.findViewById(R.id.txt_number);
+        }
 
+        public Context getContext() {
+            return mContext;
         }
     }
 }

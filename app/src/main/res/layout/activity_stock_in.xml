@@ -26,10 +26,10 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMaxWidth="0dp"
             app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabIndicatorColor="@color/colorPrimaryLight"/>
+            app:tabIndicatorColor="@color/colorPrimaryLight"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -46,9 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_transfer"
-        android:scaleType="center"
-        app:backgroundTint="@color/colorAccent_2"/>
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/colorAccent_2" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_delivery"
@@ -56,18 +56,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:scaleType="center"
         android:src="@android:drawable/ic_input_add"
-        android:tint="@android:color/white"/>
+        android:tint="@android:color/white" />
 
     <com.github.fabtransitionactivity.SheetLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        app:ft_container_gravity="center"
+        android:elevation="2dp"
         app:ft_color="@color/colorPrimary"
-        android:elevation="2dp"/>
+        app:ft_container_gravity="center" />
 
 
 </android.support.design.widget.CoordinatorLayout>
