@@ -9,25 +9,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import app.miji.com.inventorycheck.R;
-import app.miji.com.inventorycheck.adapter.SalesRecyclerViewAdapter;
+import app.miji.com.inventorycheck.adapter.SalesFirebaseAdapter;
 import app.miji.com.inventorycheck.model.Sales;
-import app.miji.com.inventorycheck.utility.Utility;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SalesListFragment extends Fragment {
 
-    private SalesRecyclerViewAdapter mAdapter;
-    private List<Sales> list;
+    //firebase database variables
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private SalesFirebaseAdapter mFirebaseAdapter;
 
     public SalesListFragment() {
         // Required empty public constructor
@@ -41,7 +37,7 @@ public class SalesListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sales_list, container, false);
 
         //inflate views
-       RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_sales);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_sales);
 
 
         int mColumnCount = getResources().getInteger(R.integer.list_stockTake_column_count);
@@ -52,17 +48,28 @@ public class SalesListFragment extends Fragment {
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
         }
 
-        setupRecyclerView(recyclerView);
+        //setupRecyclerView(recyclerView);
+        setupFirebaseRecyclerView(recyclerView);
 
         return view;
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        list = new ArrayList<>();
-        list = Utility.getSalesData(getContext());
+    private void setupFirebaseRecyclerView(RecyclerView recyclerView) {
 
-        mAdapter = new SalesRecyclerViewAdapter(getActivity(),list);
-        recyclerView.setAdapter(mAdapter);
+        //Firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("sales");
+
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
+
+
+        //sort data by date
+        Query query = mDatabaseReference.orderByChild("date");
+
+        mFirebaseAdapter = new SalesFirebaseAdapter(query, Sales.class);
+        recyclerView.setAdapter(mFirebaseAdapter);
+        mFirebaseAdapter.notifyDataSetChanged();
     }
 
 }
