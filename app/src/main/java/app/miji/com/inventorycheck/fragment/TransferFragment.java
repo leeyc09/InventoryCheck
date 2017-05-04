@@ -11,33 +11,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
 import app.miji.com.inventorycheck.activity.TransferActivity;
+import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class TransferFragment extends Fragment {
-
-    //TODO: change these location base on database
-    private static final String[] COUNTRIES = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
-
 
     private int flag_activity = 0;
     private final String LOG_TAG = TransferFragment.class.getSimpleName();
+
+    //firebase database variables
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private Query mQuery;
+    //receive events about changes in the child locations of a given DatabaseReference
+    private ChildEventListener mChildEventListener;
 
     public TransferFragment() {
     }
@@ -47,15 +52,24 @@ public class TransferFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transfer, container, false);
 
+        //Firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        mDatabaseReference = mFirebaseDatabase.getReference().child("location");
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
+
         final ImageButton btnDate = (ImageButton) view.findViewById(R.id.btn_date);
         final ImageButton btnTime = (ImageButton) view.findViewById(R.id.btn_time);
         final EditText txtDate = (EditText) view.findViewById(R.id.txt_date);
         final EditText txtTime = (EditText) view.findViewById(R.id.txt_time);
         final TextView txtTransferId = (TextView) view.findViewById(R.id.txt_transferID);
-        final MaterialBetterSpinner spinnerFromLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner_from_loc);
-        final MaterialBetterSpinner spinnerToLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner_to_loc);
+        final TextView txtFromLocation = (TextView) view.findViewById(R.id.lbl_fromLocation);
+        final TextView txtToLocation = (TextView) view.findViewById(R.id.lbl_toLocation);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        final Spinner spinnerTo = (Spinner) view.findViewById(R.id.to_spinner);
+        final Spinner spinnerFrom = (Spinner) view.findViewById(R.id.from_spinner);
 
 
         //get flag for spinner hint label
@@ -66,13 +80,13 @@ public class TransferFragment extends Fragment {
         switch (flag_activity) {
             case 0:
                 //from stock in
-                spinnerFromLocation.setHint(getString(R.string.from_location));
-                spinnerToLocation.setHint(getString(R.string.to_location));
+                txtFromLocation.setText(getString(R.string.from_location));
+                txtToLocation.setText(getString(R.string.to_location));
                 break;
             case 1:
                 //from stock out
-                spinnerFromLocation.setHint(getString(R.string.to_location));
-                spinnerToLocation.setHint(getString(R.string.from_location));
+                txtFromLocation.setText(getString(R.string.to_location));
+                txtToLocation.setText(getString(R.string.from_location));
                 break;
         }
 
@@ -131,9 +145,12 @@ public class TransferFragment extends Fragment {
             }
         });
 
+        //read firebase location data
+        attachDatabaseReadListener();
+
         //location spinner
-        Utility.setupLocationSpinner(getActivity(), spinnerFromLocation);
-        Utility.setupLocationSpinner(getActivity(), spinnerToLocation);
+        Utility.setupLocationSpinnerWithDB(getActivity(), spinnerTo, mQuery);
+        Utility.setupLocationSpinnerWithDB(getActivity(), spinnerFrom, mQuery);
 
 
         //when txt_add_location is clicked, show add new location dialog box
@@ -145,11 +162,8 @@ public class TransferFragment extends Fragment {
                 View mView = layoutInflaterAndroid.inflate(R.layout.dialog_location_input, null);
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
 
-
                 //show location dialog box
-                //TODO showLocationDialogBox
-                //Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
-
+                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid, mDatabaseReference);
             }
         });
 
@@ -159,36 +173,36 @@ public class TransferFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //validate form
-                int toLocation = spinnerToLocation.getText().toString().length();
-                int fromLocation = spinnerFromLocation.getText().toString().length();
-                boolean isValid = toLocation != 0 && fromLocation != 0; //if formed is properly filled out
-
-                Log.v(LOG_TAG, "To Location: " + toLocation);
-                Log.v(LOG_TAG, "From Location: " + fromLocation);
+                boolean isValid = spinnerFrom.getSelectedItem() != null && spinnerTo.getSelectedItem() != null;
 
 
                 //check if location is null
-                if (fromLocation == 0) {
-                    spinnerFromLocation.setError(getString(R.string.required_field));
+                if (spinnerFrom.getSelectedItem() == null) {
+                    txtFromLocation.setError(getString(R.string.required_field));
                 } else {
-                    spinnerFromLocation.setError(null);
+                    txtFromLocation.setError(null);
                 }
 
                 //check if location is null
-                if (toLocation == 0) {
-                    spinnerToLocation.setError(getString(R.string.required_field));
+                if (spinnerTo.getSelectedItem() == null) {
+                    txtToLocation.setError(getString(R.string.required_field));
                 } else {
-                    spinnerToLocation.setError(null);
+                    txtToLocation.setError(null);
                 }
 
 
                 //if valid proceed to the next activity
                 if (isValid) {
+                    //convert Location to String
+                    Location locationFrom = (Location) spinnerFrom.getSelectedItem();
+                    Location locationTo = (Location) spinnerTo.getSelectedItem();
+
+                    String strFromLocation = locationFrom.getName();
+                    String strToLocation = locationTo.getName();
 
                     String strTime = txtTime.getText().toString();
                     String strDate = txtDate.getText().toString();
-                    String strFromLocation = spinnerFromLocation.getText().toString();
-                    String strToLocation = spinnerToLocation.getText().toString();
+
                     //TODO generate unique transfer id, include in transfer details
                     String strTransferId = "0000011251";
 
@@ -218,5 +232,40 @@ public class TransferFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void attachDatabaseReadListener() {
+
+        if (mChildEventListener == null) {
+
+            mQuery = mDatabaseReference.orderByChild("name");
+
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    String location = dataSnapshot.child("name").getValue(String.class);
+                    Log.v(LOG_TAG, "LOCATION FROM DB -------->  :  " + location);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(LOG_TAG, databaseError.getMessage());
+                }
+            };
+
+            mQuery.addChildEventListener(mChildEventListener);
+        }
     }
 }

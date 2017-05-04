@@ -103,22 +103,35 @@
                 android:textAppearance="?android:textAppearanceMedium" />
 
 
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                android:id="@+id/material_spinner_from_loc"
+            <TextView
+                android:id="@+id/lbl_fromLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/from_location"
+                android:textColor="@color/colorAccent_2"/>
+
+            <Spinner
+                android:id="@+id/from_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/from_location"
-                android:inputType="text"
-                app:met_floatingLabel="highlight" />
+                style="@android:style/Widget.EditText"/>
 
+            <TextView
+                android:id="@+id/lbl_toLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/to_location"
+                android:textColor="@color/colorAccent_2"/>
 
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                android:id="@+id/material_spinner_to_loc"
+            <Spinner
+                android:id="@+id/to_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/to_location"
-                android:inputType="text"
-                app:met_floatingLabel="highlight" />
+                style="@android:style/Widget.EditText"/>
+
+
 
             <TextView
                 android:id="@+id/txt_add_location"
