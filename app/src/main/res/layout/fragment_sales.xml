@@ -120,13 +120,19 @@
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
-            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                android:id="@+id/material_spinner"
+            <TextView
+                android:id="@+id/lbl_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textColor="@color/colorAccent_2"/>
+
+            <Spinner
+                android:id="@+id/my_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/location"
-                android:inputType="text"
-                app:met_floatingLabel="highlight" />
+                style="@android:style/Widget.EditText"/>
 
 
             <TextView

@@ -15,8 +15,15 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -26,6 +33,7 @@ import java.util.Calendar;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
+import app.miji.com.inventorycheck.model.Location;
 import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
@@ -37,12 +45,16 @@ public class SalesFragment extends Fragment {
 
     private String base64Image = null;
 
+    //firebase database variables
+    private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private Query mQuery;
+    //receive events about changes in the child locations of a given DatabaseReference
+    private ChildEventListener mChildEventListener;
+
+
     public SalesFragment() {
     }
-
-    private static final String[] COUNTRIES = new String[]{
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
 
     private final String LOG_TAG = DeliveryFragment.class.getSimpleName();
 
@@ -60,10 +72,20 @@ public class SalesFragment extends Fragment {
         final EditText txtReference = (EditText) view.findViewById(R.id.txt_reference);
         final TextInputLayout txtInCustomer = (TextInputLayout) view.findViewById(R.id.input_customer);
         final TextInputLayout txtInRefNo = (TextInputLayout) view.findViewById(R.id.input_ref);
-        final MaterialBetterSpinner spinnerLocation = (MaterialBetterSpinner) view.findViewById(R.id.material_spinner);
         final TextView txtAddLocation = (TextView) view.findViewById(R.id.txt_add_location);
         final ImageView imgReceipt = (ImageView) view.findViewById(R.id.img_receipt);
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        final Spinner spinner = (Spinner) view.findViewById(R.id.my_spinner);
+
+
+        //Firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        mDatabaseReference = mFirebaseDatabase.getReference().child("location");
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
+
+
 
         // Get Current Date
         final Calendar c = Calendar.getInstance();
@@ -119,9 +141,11 @@ public class SalesFragment extends Fragment {
             }
         });
 
-        //location spinner
-        Utility.setupLocationSpinner(getActivity(), spinnerLocation);
+        //read firebase location data
+        attachDatabaseReadListener();
 
+        //location spinner
+        Utility.setupLocationSpinnerWithDB(getActivity(), spinner, mQuery);
 
         //when txt_add_location is clicked, show add new location dialog box
         txtAddLocation.setOnClickListener(new View.OnClickListener() {
@@ -133,9 +157,7 @@ public class SalesFragment extends Fragment {
                 final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
 
                 //show location dialog box
-                //TODO showLocationDialogBox
-                //Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid);
-
+                Utility.showLocationDialogBox(mContext, mView, userInputDialogEditText, layoutInflaterAndroid, mDatabaseReference);
             }
         });
 
@@ -188,11 +210,16 @@ public class SalesFragment extends Fragment {
                 String strTime = txtTime.getText().toString();
                 String strCustomer = txtCustomer.getText().toString();
                 String strRefNo = txtReference.getText().toString();
-                String strLocation = spinnerLocation.getText().toString();
+
+                String strLocation = "";
+                if (spinner.getSelectedItem() != null) {
+                    Location location = (Location) spinner.getSelectedItem();
+                    strLocation = location.getName();
+                }
 
                 int customer = txtCustomer.getText().toString().length();
                 int refNo = txtReference.getText().toString().length();
-                int location = spinnerLocation.getText().toString().length();
+                int location = strLocation.trim().length();
                 boolean isValid = customer != 0 && refNo != 0 && location != 0; //if formed is properly filled out
 
                 Log.v(LOG_TAG, "Delivered By: " + customer);
@@ -216,14 +243,6 @@ public class SalesFragment extends Fragment {
                 } else {
                     txtInRefNo.setErrorEnabled(false);
                 }
-
-                //check if location is null
-                if (location == 0) {
-                    spinnerLocation.setError(getString(R.string.required_field));
-                } else {
-                    spinnerLocation.setError(null);
-                }
-
 
                 //if valid proceed to the next activity
                 if (isValid) {
@@ -256,6 +275,40 @@ public class SalesFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void attachDatabaseReadListener() {
+        if (mChildEventListener == null) {
+
+            mQuery = mDatabaseReference.orderByChild("name");
+
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    String location = dataSnapshot.child("name").getValue(String.class);
+                    Log.v(LOG_TAG, "LOCATION FROM DB -------->  :  " + location);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(LOG_TAG, databaseError.getMessage());
+                }
+            };
+
+            mQuery.addChildEventListener(mChildEventListener);
+        }
     }
 
 

@@ -100,7 +100,7 @@ public class Sales implements Parcelable {
     }
 
     public void setReferenceNo(String referenceNo) {
-        referenceNo = referenceNo;
+        this.referenceNo = referenceNo;
     }
 
     public String getLocation() {

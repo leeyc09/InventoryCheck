@@ -5,20 +5,19 @@
     <item
         android:id="@+id/action_details"
         android:orderInCategory="100"
-        android:title="@string/scan"
-        android:icon="@android:drawable/ic_menu_info_details"
-        app:showAsAction="always" />
+        android:title="@string/image_details"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_scan"
         android:orderInCategory="200"
-        android:title="@string/scan"
+        android:title="@string/scan_items"
         android:icon="@drawable/ic_action_scan"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_save"
         android:orderInCategory="300"
         android:title="@string/save"
-        android:icon="@android:drawable/ic_menu_save"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_save"/>
 </menu>

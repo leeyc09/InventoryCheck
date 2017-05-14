@@ -47,7 +47,6 @@ public class SalesFirebaseAdapter extends FirebaseRecyclerAdapter<SalesFirebaseA
         String mCustomer = holder.mSales.getCustomer();
         String mRefNo = holder.mSales.getReferenceNo();
         String mImage = holder.mSales.getImage();
-        //String mItems = holder.mSales.getItems();
 
         final String details = Utility.getSalesDetails(mContext, mDate, mTime, mCustomer, mRefNo, mLocation);
 

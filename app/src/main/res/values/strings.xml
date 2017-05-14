@@ -77,4 +77,6 @@
     <string name="built_in_scanner">Built-in Scanner</string>
     <string name="bluetooth_scanner">Bluetooth Scanner</string>
     <string name="manual_add">Add Manually</string>
+    <string name="image_details">Image Details</string>
+    <string name="scan_items">Scan Items</string>
 </resources>
