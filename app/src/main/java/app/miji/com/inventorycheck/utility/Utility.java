@@ -58,11 +58,7 @@ public class Utility {
     private static final String LOG_TAG = Utility.class.getSimpleName();
 
     //KEYS
-    private static final String KEY_DELIVERY_ITEMS = "delivery";
-    private static final String KEY_STOCK_IN_TRANSFER_ITEMS = "transfer_stockIn";
-    private static final String KEY_STOCK_OUT_TRANSFER_ITEMS = "transfer_stockOut";
     private static final String KEY_SALES_ITEMS = "sales";
-    private static final String KEY_PRODUCT = "product";
 
 
     private static void saveLocationMessageDialogStatus(Context context, int checkStatus) {
@@ -321,18 +317,7 @@ public class Utility {
         materialSpinner.setAdapter(firebaseListAdapter);
     }
 
-    public static void setupLocationSpinner(Context context, MaterialBetterSpinner materialSpinner) {
-        //TODO change this dummy location
-        final String[] LOCATIONS = new String[]{
-                "Belgium", "France", "Italy", "Germany", "Spain"
-        };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_dropdown_item_1line, LOCATIONS);
-        materialSpinner.setAdapter(adapter);
-    }
-
-    public static void setupItemSpinner(Context context, final AutoCompleteTextView autoCompleteTextView) {
+      public static void setupItemSpinner(Context context, final AutoCompleteTextView autoCompleteTextView) {
         //TODO change this dummy items
         final String[] ITEMS = new String[]{"Cupcake", "Brownies", "Tiramisu", "Cake", "Burger"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
@@ -350,142 +335,6 @@ public class Utility {
         });
     }
 
-
-    public static void saveDelivery(Context context, Delivery delivery) {
-
-        Gson gson = new Gson();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_DELIVERY_ITEMS, Context.MODE_PRIVATE);
-
-        String jsonSaved = sharedPref.getString(KEY_DELIVERY_ITEMS, "");
-        String jsonNewproductToAdd = gson.toJson(delivery);
-        Log.e(LOG_TAG, "DELIVERY JSON----------->" + jsonNewproductToAdd);
-
-        JSONArray jsonArrayProduct = new JSONArray();
-
-        try {
-            if (jsonSaved.length() != 0) {
-                jsonArrayProduct = new JSONArray(jsonSaved);
-            }
-            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //SAVE NEW ARRAY
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(KEY_DELIVERY_ITEMS, jsonArrayProduct.toString());
-        editor.commit();
-    }
-
-
-    public static List<Delivery> getDeliveryData(Context context) {
-        Gson gson = new Gson();
-        List<Delivery> productFromShared = new ArrayList<>();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_DELIVERY_ITEMS, Context.MODE_PRIVATE);
-        String jsonPreferences = sharedPref.getString(KEY_DELIVERY_ITEMS, "");
-
-        Type type = new TypeToken<List<Delivery>>() {
-        }.getType();
-        productFromShared = gson.fromJson(jsonPreferences, type);
-
-        if (productFromShared != null) {
-            for (Delivery delivery : productFromShared) {
-                //Log.e(LOG_TAG, "DELIVERY LIST----------->" + delivery.getDeliveryMan().toString());
-            }
-        }
-
-        return productFromShared;
-    }
-
-
-    public static void saveTransfer_StockIn(Context context, Transfer transfer) {
-        Gson gson = new Gson();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_IN_TRANSFER_ITEMS, Context.MODE_PRIVATE);
-
-        String jsonSaved = sharedPref.getString(KEY_STOCK_IN_TRANSFER_ITEMS, "");
-        String jsonNewproductToAdd = gson.toJson(transfer);
-        Log.e(LOG_TAG, "TRANSFER JSON STOCK IN----------->" + jsonNewproductToAdd);
-
-        JSONArray jsonArrayProduct = new JSONArray();
-
-        try {
-            if (jsonSaved.length() != 0) {
-                jsonArrayProduct = new JSONArray(jsonSaved);
-            }
-            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //SAVE NEW ARRAY
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(KEY_STOCK_IN_TRANSFER_ITEMS, jsonArrayProduct.toString());
-        editor.commit();
-    }
-
-    public static List<Transfer> getTransferData_StockIn(Context context) {
-        Gson gson = new Gson();
-        List<Transfer> productFromShared = new ArrayList<>();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_IN_TRANSFER_ITEMS, Context.MODE_PRIVATE);
-        String jsonPreferences = sharedPref.getString(KEY_STOCK_IN_TRANSFER_ITEMS, "");
-
-        Type type = new TypeToken<List<Transfer>>() {
-        }.getType();
-        productFromShared = gson.fromJson(jsonPreferences, type);
-
-        if (productFromShared != null) {
-            for (Transfer transfer : productFromShared) {
-                Log.e(LOG_TAG, "TRANSFER LIST STOCK IN----------->" + transfer.getFromLocation().toString());
-            }
-        }
-
-        return productFromShared;
-    }
-
-    public static void saveTransfer_StockOut(Context context, Transfer transfer) {
-        Gson gson = new Gson();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_OUT_TRANSFER_ITEMS, Context.MODE_PRIVATE);
-
-        String jsonSaved = sharedPref.getString(KEY_STOCK_OUT_TRANSFER_ITEMS, "");
-        String jsonNewproductToAdd = gson.toJson(transfer);
-        Log.e(LOG_TAG, "TRANSFER JSON STOCK OUT----------->" + jsonNewproductToAdd);
-
-        JSONArray jsonArrayProduct = new JSONArray();
-
-        try {
-            if (jsonSaved.length() != 0) {
-                jsonArrayProduct = new JSONArray(jsonSaved);
-            }
-            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //SAVE NEW ARRAY
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(KEY_STOCK_OUT_TRANSFER_ITEMS, jsonArrayProduct.toString());
-        editor.commit();
-    }
-
-
-    public static List<Transfer> getTransferData_StockOut(Context context) {
-        Gson gson = new Gson();
-        List<Transfer> productFromShared = new ArrayList<>();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_STOCK_OUT_TRANSFER_ITEMS, Context.MODE_PRIVATE);
-        String jsonPreferences = sharedPref.getString(KEY_STOCK_OUT_TRANSFER_ITEMS, "");
-
-        Type type = new TypeToken<List<Transfer>>() {
-        }.getType();
-        productFromShared = gson.fromJson(jsonPreferences, type);
-
-        if (productFromShared != null) {
-            for (Transfer transfer : productFromShared) {
-                Log.e(LOG_TAG, "TRANSFER LIST STOCK OUT----------->" + transfer.getFromLocation().toString());
-            }
-        }
-
-        return productFromShared;
-    }
 
     public static void saveSales(Context context, Sales sales) {
         Gson gson = new Gson();
@@ -531,49 +380,6 @@ public class Utility {
         return productFromShared;
     }
 
-    public static void saveProduct(Context context, Product product) {
-        Gson gson = new Gson();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_PRODUCT, Context.MODE_PRIVATE);
-
-        String jsonSaved = sharedPref.getString(KEY_PRODUCT, "");
-        String jsonNewproductToAdd = gson.toJson(product);
-        Log.e(LOG_TAG, "PRODUCT JSON----------->" + jsonNewproductToAdd);
-
-        JSONArray jsonArrayProduct = new JSONArray();
-
-        try {
-            if (jsonSaved.length() != 0) {
-                jsonArrayProduct = new JSONArray(jsonSaved);
-            }
-            jsonArrayProduct.put(new JSONObject(jsonNewproductToAdd));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //SAVE NEW ARRAY
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(KEY_PRODUCT, jsonArrayProduct.toString());
-        editor.commit();
-    }
-
-    public static List<Product> getProductData(Context context) {
-        Gson gson = new Gson();
-        List<Product> productFromShared = new ArrayList<>();
-        SharedPreferences sharedPref = context.getSharedPreferences(KEY_PRODUCT, Context.MODE_PRIVATE);
-        String jsonPreferences = sharedPref.getString(KEY_PRODUCT, "");
-
-        Type type = new TypeToken<List<Product>>() {
-        }.getType();
-        productFromShared = gson.fromJson(jsonPreferences, type);
-
-        if (productFromShared != null) {
-            for (Product product : productFromShared) {
-                Log.e(LOG_TAG, "SALES LIST----------->" + product.getName().toString());
-            }
-        }
-
-        return productFromShared;
-    }
 
     public static String getDeliveryDetails(Context context, String strDate, String strTime, String strDeliveredBy, String strRef, String strLoc) {
         //create detail string

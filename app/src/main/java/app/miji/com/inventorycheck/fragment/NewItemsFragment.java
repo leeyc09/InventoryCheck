@@ -25,12 +25,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.miji.com.inventorycheck.R;
 import app.miji.com.inventorycheck.activity.NewItemsActivity;
@@ -43,6 +46,8 @@ import app.miji.com.inventorycheck.model.Sales;
 import app.miji.com.inventorycheck.model.Transfer;
 import app.miji.com.inventorycheck.utility.Utility;
 import gun0912.tedbottompicker.TedBottomPicker;
+
+import static android.R.attr.key;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -125,6 +130,8 @@ public class NewItemsFragment extends Fragment {
         Intent intent = getActivity().getIntent();
 
         if (intent != null) {
+
+
 
             //check if intent is from Delivery
             if (intent.hasExtra(NewItemsActivity.DELIVERY)) {
@@ -375,15 +382,26 @@ public class NewItemsFragment extends Fragment {
         Log.e(LOG_TAG, "TRANSFER ID--------> " + mTransferId);
         Log.e(LOG_TAG, "ITEMS--------> :");
 
-        for (Item item : mItemList) {
-            Log.e(LOG_TAG, "--------> :" + item.getName().toString());
+
+        if(mItemList != null){
+            for (Item item : mItemList) {
+                Log.e(LOG_TAG, "--------> :" + item.getName().toString());
+            }
+        }else{
+            Log.e(LOG_TAG, "NO ITEMS");
         }
+
     }
 
 
     private void saveStockDetails() {
         Log.e(LOG_TAG, "From Activity ---------------->" + fromActivity);
-        Intent intent;
+        Intent intent = getActivity().getIntent();
+
+        // 0 ---> NEW DATA
+        // 1 ---> EDIT DATA
+        flagNewOrEdit = intent.getIntExtra(NewItemsActivity.FLAG, 0);
+        Log.e(LOG_TAG, "flagNewOrEdit ---------------->" + flagNewOrEdit);
 
         //Firebase database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -392,17 +410,25 @@ public class NewItemsFragment extends Fragment {
 
             case DELIVERY:
                 showDeliveryLogs();
+
                 //create new mDelivery
                 mDelivery = new Delivery(mDate, mTime, mLocation, mDeliveryMan, mReferenceNo, imageReceipt, mItemList);
-                //save Delivery
-                Utility.saveDelivery(mContext, mDelivery);
+                String refDelivery = "delivery";
 
-                //--------------save to firebase-----------------
-                mDatabaseReference = mFirebaseDatabase.getReference().child("delivery");
-                //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
-                mDatabaseReference.keepSynced(true);
-                //add to firebase database
-                mDatabaseReference.push().setValue(mDelivery);
+                if(flagNewOrEdit == 0){
+                    //save to Firebase
+                    saveDataToFirebase(refDelivery, mDelivery);
+                }else{
+                    //update data in FIrebase in Firebase
+                    Map<String, Object> postValues = mDelivery.toMap();
+                    //TODO getKey from selected item in the list
+                    String deliveryKey = "-Kk6JVoyWsWJGOvXWNgH";
+
+                    updateDataInFirebase(deliveryKey, refDelivery, postValues);
+                }
+
+
+
 
                 //go to stock in activity
                 intent = new Intent(getActivity(), StockInActivity.class);
@@ -415,27 +441,19 @@ public class NewItemsFragment extends Fragment {
                 mTransfer = new Transfer(mDate, mTime, mTransferId, mFromLocation, mToLocation, mItemList);
                 Log.e(LOG_TAG, "FROM ACTIVITY===============>" + flag_stock);
                 //save transfer depending from Stock in/stock out activity
-                if (flag_stock == 0) {
-                    Utility.saveTransfer_StockIn(mContext, mTransfer);//from stock in
+                if (flag_stock == 0) { //0 --> from stock IN
 
-                    //--------------save to firebase-----------------
-                    mDatabaseReference = mFirebaseDatabase.getReference().child("transfer_stock_in");
-                    //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
-                    mDatabaseReference.keepSynced(true);
-                    //add to firebase database
-                    mDatabaseReference.push().setValue(mTransfer);
+                    //save to Firebase
+                    String refTransferStockIn = "transfer_stock_in";
+                    saveDataToFirebase(refTransferStockIn, mTransfer);
 
                     //go to stock in activity
                     intent = new Intent(getActivity(), StockInActivity.class);
                 } else {
-                    Utility.saveTransfer_StockOut(mContext, mTransfer);//from stock out
 
-                    //--------------save to firebase-----------------
-                    mDatabaseReference = mFirebaseDatabase.getReference().child("transfer_stock_out");
-                    //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
-                    mDatabaseReference.keepSynced(true);
-                    //add to firebase database
-                    mDatabaseReference.push().setValue(mTransfer);
+                    //save to Firebase
+                    String refTransferStockOut = "transfer_stock_out";
+                    saveDataToFirebase(refTransferStockOut, mTransfer);
 
                     //go to stock out activity
                     intent = new Intent(getActivity(), StockOutActivity.class);
@@ -449,15 +467,10 @@ public class NewItemsFragment extends Fragment {
                 showSalesLogs();
                 //create new sales
                 mSales = new Sales(mDate, mTime, mCustomer, mReferenceNo, mLocation, imageReceipt, mItemList);
-                //save Delivery
-                Utility.saveSales(mContext, mSales);
 
-                //--------------save to firebase-----------------
-                mDatabaseReference = mFirebaseDatabase.getReference().child("sales");
-                //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
-                mDatabaseReference.keepSynced(true);
-                //add to firebase database
-                mDatabaseReference.push().setValue(mSales);
+                //save to Firebase
+                String refSales = "sales";
+                saveDataToFirebase(refSales, mSales);
 
                 //go to sales activity
                 intent = new Intent(getActivity(), StockOutActivity.class);
@@ -467,6 +480,22 @@ public class NewItemsFragment extends Fragment {
         }
 
 
+    }
+
+    private void updateDataInFirebase(String key, String reference, Map<String, Object> postValues) {
+        mDatabaseReference = mFirebaseDatabase.getReference().child(reference).child(key);
+        mDatabaseReference.updateChildren(postValues);
+    }
+
+    /*
+    * method for saving data to firebase
+    * */
+    private void saveDataToFirebase(String referenceName, Object objectToSave) {
+        mDatabaseReference = mFirebaseDatabase.getReference().child(referenceName);
+        //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
+        mDatabaseReference.keepSynced(true);
+        //add to firebase database
+        mDatabaseReference.push().setValue(objectToSave);
     }
 
 

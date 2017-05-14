@@ -3,7 +3,11 @@ package app.miji.com.inventorycheck.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Delivery implements Parcelable {
     String date;
@@ -107,6 +111,7 @@ public class Delivery implements Parcelable {
         this.items = items;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -121,5 +126,19 @@ public class Delivery implements Parcelable {
         parcel.writeString(referenceNo);
         parcel.writeString(image);
         parcel.writeTypedList(items);
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("date", date);
+        result.put("time", time);
+        result.put("location", location);
+        result.put("deliveryMan", deliveryMan);
+        result.put("referenceNo", referenceNo);
+        result.put("image", image);
+        result.put("items", items);
+
+        return result;
     }
 }

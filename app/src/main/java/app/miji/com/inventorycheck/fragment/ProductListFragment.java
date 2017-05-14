@@ -74,23 +74,11 @@ public class ProductListFragment extends Fragment {
         //The Firebase Realtime Database synchronizes and stores a local copy of the data for active listeners.
         mDatabaseReference.keepSynced(true);
 
-        //setupRecyclerView(mRecyclerView);
         setupFirebaseRecyclerView(mRecyclerView);
         return view;
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
-        list = new ArrayList<>();
-        list = Utility.getProductData(getContext());
-
-        mAdapter = new ProductRecyclerViewAdapter(getContext(), list);
-        recyclerView.setAdapter(mAdapter);
-
-        setUpItemTouchHelper();
-        setUpAnimationDecoratorHelper();
-    }
-
-    private void setupFirebaseRecyclerView(RecyclerView recyclerView) {
+     private void setupFirebaseRecyclerView(RecyclerView recyclerView) {
         //sort data alphabetically
         Query query = mDatabaseReference.orderByChild("name");
 

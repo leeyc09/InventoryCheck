@@ -305,15 +305,12 @@ public class DeliveryFragment extends Fragment {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     String location = dataSnapshot.child("name").getValue(String.class);
-
                     Log.v(LOG_TAG, "LOCATION FROM DB -------->  :  " + location);
-
-
                 }
 
                 @Override
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                    Log.v(LOG_TAG, "onChildChanged:  " + dataSnapshot.getRef().getKey());
                 }
 
                 @Override

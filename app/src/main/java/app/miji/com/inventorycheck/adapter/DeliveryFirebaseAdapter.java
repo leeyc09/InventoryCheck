@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import app.miji.com.inventorycheck.R;
@@ -37,10 +38,12 @@ public class DeliveryFirebaseAdapter extends FirebaseRecyclerAdapter<DeliveryFir
         return new DeliveryFirebaseAdapter.ViewHolder(view, context);
     }
 
+
     @Override
     public void onBindViewHolder(final DeliveryFirebaseAdapter.ViewHolder holder, int position) {
         holder.mDelivery = getItem(position);
         final Context mContext = holder.getContext();
+
 
         //get data
         String mDate = holder.mDelivery.getDate();
@@ -71,6 +74,7 @@ public class DeliveryFirebaseAdapter extends FirebaseRecyclerAdapter<DeliveryFir
                 mContext.startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -81,6 +85,7 @@ public class DeliveryFirebaseAdapter extends FirebaseRecyclerAdapter<DeliveryFir
     @Override
     protected void itemChanged(Delivery oldItem, Delivery newItem, String key, int position) {
         Log.d(LOG_TAG, "Changed an item.");
+        notifyDataSetChanged();
     }
 
     @Override
@@ -92,6 +97,8 @@ public class DeliveryFirebaseAdapter extends FirebaseRecyclerAdapter<DeliveryFir
     protected void itemMoved(Delivery item, String key, int oldPosition, int newPosition) {
         Log.d(LOG_TAG, "Moved an item.");
     }
+
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
